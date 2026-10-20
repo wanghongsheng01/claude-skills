@@ -1,6 +1,6 @@
 ---
 name: "academic-latex-polish"
-description: "Polish the English of a LaTeX research paper to the register of published PVLDB/SIGMOD papers without changing any fact, number, macro, citation or reference."
+description: "Polish the English of a LaTeX research paper to the register of published CCF-A papers in its field (PVLDB/SIGMOD for data management; NeurIPS/ICML/ICLR for statistical ML and conformal methods) without changing any fact, number, macro, citation or reference."
 ---
 
 # Academic LaTeX polish (PVLDB/SIGMOD register)
@@ -8,6 +8,7 @@ description: "Polish the English of a LaTeX research paper to the register of pu
 Use this skill when the user asks to polish, copy-edit or improve the readability of a LaTeX paper, especially a data-management or Text-to-SQL paper bound for PVLDB, SIGMOD, ICDE or an Elsevier/Springer journal. The rules come from studying published PVLDB papers (e.g., Jin et al., PVLDB 19; ParSEval, PVLDB 18).
 
 ## Workflow
+0. **Study published papers of the same direction first.** Download the LaTeX sources of 4--6 published CCF-A papers that the manuscript cites or competes with (`curl -L https://arxiv.org/e-print/<id>`; untar each into its own folder). Measure their register with `scripts/style_stats.py` and compare with the manuscript; read their introductions and result paragraphs. Typical published values: mean sentence length 22--30 words, under 20% of sentences above 35 words, about 1 parenthesis and at most 0.3 semicolons per 100 words. Use the gap to decide what to fix.
 1. **Snapshot first.** Copy `sections/`, `tables/` and `figs/` to a scratch folder before editing. That copy is the baseline for the preservation check.
 2. **Ask the user what to leave alone.** Typical exclusions:
    - author-written declarations and AI-use statements;
@@ -59,6 +60,18 @@ Use this skill when the user asks to polish, copy-edit or improve the readabilit
 8. **Voice.** Use "we" for the authors' actions and the present tense for results.
 9. **Code literals.** Inside `\texttt{}`, write single quotes as `\textquotesingle{}` so that SQL literals print upright in every font setup.
 
+## Lessons from conformal/selective-prediction papers (NeurIPS/ICLR, e.g., Hierarchical Selective Classification, Conformal Alignment, Conformal Factuality, Conformal Risk Control)
+1. **One idea per sentence.** Drafts often pack a claim, its reason and a caveat into one sentence joined by a colon and semicolons. Split them: claim. Reason ("because ..."). Caveat ("However, ...").
+2. **Name the method as a sentence subject.** After the method is introduced, start sentences with it ("\hlcl{} scores ... It accepts ...") instead of chaining "and ..., and ...".
+3. **Results paragraphs.** State the comparison in words first, then the numbers: "On X at $\alpha=0.05$, the method accepts A against B." Do not stack several results in one sentence separated by semicolons; give each dataset its own sentence.
+4. **Parenthetical numbers in prose.** Convert "(effort 0.12 against 0.30)" into "Its effort is 0.12, against 0.30 for ...". Keep a parenthesis only for one compact statistic, such as a paired difference, after its claim.
+5. **Definitions.** Replace "(a marginal FDR, mFDR)" by "known as the marginal FDR (mFDR)"; replace "(wrong accepted over accepted)" by an appositive "that is, the share of ...".
+6. **Dataset descriptions.** A long sentence listing corpora with nested parentheses becomes an itemized list, one corpus per item.
+7. **Captions.** Use full sentences ("Bold marks ...", "$^\dagger$ marks ...") instead of "Bold: ...; $\dagger$: ...", and avoid parentheses in captions except for panel pointers such as (left).
+8. **Equations end with punctuation** that matches the sentence; a sentence never restarts in lower case after a display.
+9. **Word limits.** Elsevier abstracts are often limited to 250 words; recount after splitting sentences, because splitting adds words.
+10. **Leave alone** the declarations, CRediT, competing interests, funding and algorithm pseudocode, except for spelling consistency (e.g., licence -> license, labelled -> labeled when the paper uses American spelling).
+
 ## Preservation checker
 Save this as `check_preserve.py` (outside the paper repository) and run it as `python3 check_preserve.py OLD.tex NEW.tex`.
 
@@ -89,5 +102,7 @@ if na != nb:
     print('[numbers, review] missing:', dict(na - nb), ' added:', dict(nb - na))
 print('OK' if not bad else 'PROTECTED TOKENS CHANGED'); sys.exit(1 if bad else 0)
 ```
+
+The checker treats added environments, added math such as an extra `$\alpha$`, and a number moved into a `\textbf{}` list label as changes. Inspect each reported difference: a new `itemize` for a dataset list or a repeated `$\alpha$` after splitting a sentence is acceptable; a missing `\res`/`\stat`/`\V` macro never is. Also count the paper's own number macros directly (e.g., `\res{...}{...}{...}{...}`, `\stat{...}`) before and after.
 
 Adapt the macro pattern (`\\V\{...\}`) to the paper's own number macros if it uses a different name.

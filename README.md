@@ -8,6 +8,7 @@ academic-latex-polish/
   SKILL.md                  instructions: writing rules, workflow, preservation checker
   scripts/check_preserve.py check that macros, refs, cites, labels, math and numbers survive an edit
   scripts/fix_tt_quotes.py  upright quotes inside \texttt{}; Unicode quotes/dashes -> LaTeX
+  scripts/style_stats.py    compare sentence length, parentheses and semicolons with published papers
 ```
 
 ### Install on another machine
@@ -24,4 +25,5 @@ Ask Claude to "polish the paper with academic-latex-polish", or invoke the skill
 ```bash
 python3 academic-latex-polish/scripts/check_preserve.py OLD.tex NEW.tex
 python3 academic-latex-polish/scripts/fix_tt_quotes.py sections/*.tex
+python3 academic-latex-polish/scripts/style_stats.py refpapers/* paper/
 ```
