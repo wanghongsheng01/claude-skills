@@ -78,6 +78,15 @@ Published IS papers in this area measure as follows (body text): mean sentence l
 ## Highlights (Elsevier)
 3–5 bullets, each at most 85 characters with spaces, each a complete finding or contribution in plain words, no parentheses, no undefined abbreviations.
 
+## Reviewer-driven lessons (2026-10, audit paper for IS)
+- **Every title term must be defined in the body.** A title phrase such as "comparison contract" that never reappears leaves the reviewer unable to map title to content; define it in the introduction and formalize it in the method section.
+- **Join the halves.** If a paper has two case studies from different settings, say in the introduction why both are there and give a short primer on the less familiar setting before its section.
+- **Give practitioners something to do.** End the findings paragraph of the introduction with a short list of recommendations, each bounded to the audited versions and each tied to a measured result; never recommend beyond what was measured.
+- **Collect provenance in one table.** Protocol dates, amendments, exploratory status and blinding scattered across sections read as defensive; a study-by-study chronology table lets the text stay short.
+- **Define overloaded words once.** Terms such as native, adapter, consumer, materialization, endpoint, witness and independent need a terminology paragraph.
+- **Disclose AI used in the research process in the method section**, not only in the writing declaration.
+- **Cite supplements by number** where the corresponding analysis is described.
+
 ## Rewrite pitfalls (caught by an independent check in 2026-10)
 Rewriting for flow silently changes claims. After every rewrite, have a separate agent that did not write the text compare old and new section by section. Typical shifts:
 - **Modal loss:** "can fail" becomes "fails", "supports changing" becomes "calls for", "do not determine" becomes "cannot determine", "cannot independently certify" loses "independently".

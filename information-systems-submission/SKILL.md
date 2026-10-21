@@ -122,6 +122,19 @@ List every tool and purpose. Basic grammar, spelling and reference checkers and 
 - Remove internal codes (project numbers, file versions, "version-3") from text, captions, tables, figure labels and file names.
 - State each caveat once where it applies and once in Limitations.
 
+## Pre-submission review protocol (used 2026-10-21)
+Before declaring a package ready, run three reviewers in parallel, none of whom wrote the text:
+1. **Editor and reviewer simulation**: desk-screen verdict, major and minor issues, concrete wording-only edits with line numbers.
+2. **Guide compliance audit**: every rule above as PASS/FAIL/WARN with evidence, `pdffonts` on the manuscript and figures, and an inspection of every supplementary archive (supplements are published exactly as received).
+3. **Reference verification**: every entry against publisher pages, DOIs and repositories, including commit hashes of cited software.
+Apply the fixes, then have a fourth agent compare the revised text with the authors' original for meaning shifts before packaging.
+
+Typical findings in archives: internal project codes, version suffixes, an earlier journal named in a frozen protocol, absolute workstation paths and agent-session notes. If the files are hash-pinned evidence, do not edit them; add an index file to the deposit that explains each trace, and mention it in the data statement.
+
+Typical PDF finding: a local TeX installation without cm-super produces Type 3 bitmap fonts because elsarticle loads T1 encoding. Compile the final PDF on Overleaf or a full TeX Live and confirm with `pdffonts` that no Type 3 fonts remain.
+
+Organize the final package by portal item type (`01_Manuscript`, `02_LaTeX_source`, `03_Figures`, `04_Highlights`, `05_Cover_letter`, `06_Declaration_of_interest`, `07_Supplementary`) plus a `PORTAL_FIELDS.md` generated from the manuscript, so the author can copy each field and upload each file without searching.
+
 ## Before pressing Submit
 - [ ] Guide re-read if older than six months; tags current.
 - [ ] `check_submission.py` reports no ERROR.
