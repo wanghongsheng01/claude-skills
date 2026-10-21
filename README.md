@@ -54,7 +54,7 @@ Ask Claude to "design this AMP figure following amp-figure-design", or invoke th
 - use uppercase A/B/C panel labels for Briefings in Bioinformatics
 
 ## information-systems-submission
-Pre-submission checklist (投稿前须知) for the Elsevier journal *Information Systems* (ISSN 0306-4379, CCF B). Scope test, required files, elsarticle formatting, highlights, exact declaration wording (CRediT, competing interests, data availability, generative AI), reproducibility programme and portal steps. Items that only the ScienceDirect Guide for Authors can confirm are marked [CHECK].
+Pre-submission checklist (投稿前须知) for the Elsevier journal *Information Systems* (ISSN 0306-4379, CCF B). Scope test, required files, elsarticle formatting, highlights, exact declaration wording (CRediT, competing interests, data availability, generative AI), reproducibility programme and portal steps. Rules are tagged [GUIDE] (read from the Guide for Authors on 2026-10-21), [ELSEVIER] or [CHECK].
 
 ```
 information-systems-submission/

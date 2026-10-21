@@ -83,6 +83,9 @@ def main():
     else:
         k = [x.strip() for x in kw.group(1).split("\\sep") if x.strip()]
         report("ERROR" if not 1 <= len(k) <= a.max_keywords else "OK", f"{len(k)} keywords: {'; '.join(k)}")
+        for x in k:
+            if re.search(r"\b(and|of)\b", x):
+                report("WARN", f"keyword uses 'and'/'of' (guide advises against): {x}")
 
     for label, pat in [("CRediT statement", r"CRediT"),
                        ("competing-interest declaration", r"competing interest"),
@@ -90,6 +93,12 @@ def main():
                        ("funding statement", r"\\section\*\{Funding|Funding\}|[Ff]unding")]:
         report("OK" if re.search(pat, tex, re.I) else "ERROR", f"{label} {'found' if re.search(pat, tex, re.I) else 'missing'}")
 
+    da = re.search(r"\\section\*\{[^}]*[Dd]ata[^}]*availability[^}]*\}(.*?)(\\section|\\appendix|\\begin\{thebibliography\})", tex, re.S)
+    if da and not re.search(r"doi\.org|zenodo|mendeley data|figshare|dryad|osf\.io|software heritage", da.group(1), re.I):
+        report("WARN", "data statement names no repository or DOI; Option C requires a deposit or a reason why data cannot be shared")
+    fu = re.search(r"\\section\*\{Funding[^}]*\}(.*?)\\section", tex, re.S)
+    if fu and not re.search(r"role|involvement|did not receive", fu.group(1), re.I):
+        report("WARN", "funding statement does not state the sponsor's role (guide asks for it)")
     ai = re.search(r"\\section\*\{([^}]*generative AI[^}]*)\}", tex, re.I)
     if not ai:
         report("WARN", "no generative-AI declaration section (required if any AI tool was used)")
@@ -98,9 +107,9 @@ def main():
     else:
         report("OK", "generative-AI declaration heading matches Elsevier wording")
     if ai:
-        after = tex[ai.end():]
-        if re.search(r"\\section", after.split("thebibliography")[0]) and "\\appendix" not in after:
-            report("WARN", "AI declaration is not the last section before the references")
+        after = tex[ai.end():].split("\\begin{thebibliography}")[0].split("\\bibliography{")[0]
+        if re.search(r"\\(sub)*section|\\appendix", after):
+            report("ERROR", "AI declaration must be the last section, directly before the reference list (guide)")
 
     if re.search(r"\\bibliographystyle\{([^}]*)\}", tex):
         st = re.search(r"\\bibliographystyle\{([^}]*)\}", tex).group(1)
@@ -137,6 +146,8 @@ def main():
                 report("WARN", f"{env} {lab} is never referenced in the text")
 
     for g in re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]*)\}", tex):
+        if not re.match(r"Figure_[A-Z]?\d+", pathlib.Path(g).name):
+            report("WARN", f"figure file '{g}' should follow the guide's naming, e.g. Figure_1.pdf")
         cands = [folder / g] + [folder / (g + e) for e in (".pdf", ".png", ".jpg", ".eps")]
         if not any(c.exists() for c in cands):
             report("ERROR", f"figure file missing: {g}")
@@ -152,6 +163,8 @@ def main():
 
     if a.highlights:
         hp = folder / a.highlights
+        if "highlights" not in hp.name.lower():
+            report("ERROR", "highlights file name must contain 'highlights' (guide)")
         if not hp.exists():
             report("ERROR", f"highlights file not found: {hp}")
         else:
