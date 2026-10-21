@@ -78,10 +78,21 @@ Published IS papers in this area measure as follows (body text): mean sentence l
 ## Highlights (Elsevier)
 3–5 bullets, each at most 85 characters with spaces, each a complete finding or contribution in plain words, no parentheses, no undefined abbreviations.
 
+## Rewrite pitfalls (caught by an independent check in 2026-10)
+Rewriting for flow silently changes claims. After every rewrite, have a separate agent that did not write the text compare old and new section by section. Typical shifts:
+- **Modal loss:** "can fail" becomes "fails", "supports changing" becomes "calls for", "do not determine" becomes "cannot determine", "cannot independently certify" loses "independently".
+- **Quantifier creep:** "alone cannot decide all four" becomes "cannot decide"; "makes conclusions replayable" becomes "replays every conclusion".
+- **Gap overstatement:** "prior studies take X as given" when the original concedes that prior work already audits X. State the narrow gap the paper actually fills.
+- **Citation drift:** a paper cited for "effect of cleaning" when it studies data quality; "on these inputs" when the cited study used other datasets; "at a larger scale" or "shows" where "raises a related concern" or "suggests" is accurate.
+- **Dropped caveats in captions and abstract:** the closing scope sentence of the abstract and caveats inside captions disappear first; restore them.
+- **Causal connectives:** "since" or "so" inserted where the original only juxtaposed two facts.
+- **Moved limitations:** a limitation moved from a specific subsection into the conclusion widens its scope; keep it where it applied.
+
 ## Checklist before handing back
 - [ ] `is_style_check.py` within targets or deviations justified.
 - [ ] No AI-tell words, internal codes or previous-journal traces.
 - [ ] Every number and claim preserved (`check_preserve.py`), caveats merged not dropped.
+- [ ] Independent reviewer agent compared old and new text for meaning shifts; all fixed.
 - [ ] Introduction has the eight moves; contributions list present.
 - [ ] Figures regenerated from scripts, captions noun-phrase first.
 - [ ] New references verified from primary sources.

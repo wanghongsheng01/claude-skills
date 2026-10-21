@@ -45,5 +45,7 @@ Related editorial: Chirigati, Capone, Rampin, Freire, Shasha. A collaborative ap
 
 **Vocabulary.** System papers (B, E) use some promotional words ("seamlessly", "leverage", "novel"); the empirical study (A) is plain. No em dashes appear in the five full texts. Established field vocabulary is used; new terms are defined once in a preliminaries section.
 
-## Case study: what changed when a DKE-desk-rejected audit paper was rewritten for IS (2026-10)
-Original register: mean sentence 15.7 words, 1% over 35 words, 0.90 semicolons and 1.71 negations per 100 words, about 40 uses of private nouns such as "authority", "obligation" and "contract", internal codes (P19, v5, v7, version-3) and a "Recent DKE studies" paragraph. The rewrite merged short sentences, moved related work forward and anchored it in PVLDB/SIGMOD/ICDE evaluation studies, stated each caveat once, removed codes and journal traces, and kept every number and table.
+## Case study: rewriting a DKE-desk-rejected audit paper for IS (2026-10)
+Before: mean sentence 15.7 words, 1% over 35 words, 0.90 semicolons and 1.71 negations per 100 words, private nouns ("authority", "obligation", "contract") about 40 times, internal codes (P19, v5, v7, version-3) and a "Recent DKE studies" paragraph.
+After: mean 19.0 words, 0.12 semicolons per 100 words, abstract 249 words, related work moved to Section 2 and anchored in PVLDB/SIGMOD/ICDE evaluation studies plus one IS paper, codes and journal traces removed, three schematics redrawn, every number preserved.
+An independent reviewer agent then found 14 meaning shifts introduced by the rewrite, listed in SKILL.md under "Rewrite pitfalls".
