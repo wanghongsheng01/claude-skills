@@ -8,11 +8,11 @@ description: "Pre-submission checklist for the Elsevier journal Information Syst
 Use this skill whenever a manuscript is being prepared for, or moved to, **Information Systems** (Elsevier, ISSN 0306-4379). It is not the Wiley *Information Systems Journal* and not *Information Systems Research*; check the ISSN first.
 
 Status tags:
-- **[GUIDE]** stated in the journal's Guide for Authors, read in full on 2026-10-21 (the user saved the ScienceDirect page; see `references/verification-log.md`);
+- **[GUIDE]** stated in the journal's Guide for Authors or its open-access page, read in full on 2026-10-21 through Claude in Chrome (see `references/verification-log.md`);
 - **[ELSEVIER]** Elsevier-wide policy referenced by the guide;
 - **[CHECK]** still unconfirmed.
 
-The Guide for Authors lives at https://www.sciencedirect.com/journal/information-systems/publish/guide-for-authors. ScienceDirect refuses bots and the in-app browser, so if the guide may have changed, ask the user to save it from a normal browser ("Print → Save as PDF") and re-read it. Do not route around the block with caches or mirrors.
+The Guide for Authors lives at https://www.sciencedirect.com/journal/information-systems/publish/guide-for-authors and the open-access page at https://www.sciencedirect.com/journal/information-systems/publish/open-access-options. ScienceDirect refuses WebFetch and the in-app browser, but **Claude in Chrome (the person's real Chrome) reads both pages in full** with `get_page_text`; use it when the session has it and the person agrees. Otherwise ask the person to save the page from their own browser ("Print → Save as PDF"). Do not route around the block with caches or mirrors.
 
 ## Workflow
 1. **Re-read the guide** if this file is more than about six months old, and update the tags.
@@ -111,9 +111,10 @@ List every tool and purpose. Basic grammar, spelling and reference checkers and 
 - Submitting implies the work is unpublished (preprints, theses and lectures excepted), not under consideration elsewhere, approved by all authors and institutions.
 - The portal offers optional free preprint posting on SSRN after desk review; the corresponding author needs all co-authors' approval first. The choice does not affect the decision.
 - Editors may suggest a transfer to another Elsevier journal through the Article Transfer Service.
-- Open access is optional; the APC is shown on the journal's open-access page and is the corresponding author's responsibility if chosen [CHECK amount]. Subscription publishing costs nothing.
+- Two publishing choices [GUIDE]: subscription, with no publication fee, or gold open access with an APC of **USD 3150 excluding taxes** (all article types; a personalized price is shown during submission). Licences: CC BY, CC BY-NC, CC BY-NC-ND. The choice does not affect peer review.
+- Self-archiving of the accepted manuscript for subscription articles has a **24-month embargo**; the published PDF may not be posted on ResearchGate or Academia.edu [GUIDE].
 - Proof corrections are due within two days of the proof e-mail.
-- Submission system: "Submit your article" on the journal page (Editorial Manager; https://www.editorialmanager.com/infosys/ [CHECK]).
+- Submission system [GUIDE]: https://submit.elsevier.com/INFOSYS (the "Submit your article" link on the guide). Journal metrics shown on the page in October 2026: CiteScore 11.8, Impact Factor 4.0.
 
 ## Desk-reject prevention (lessons from a 2026 scope rejection at a sister Elsevier journal)
 - The first page must make the reviewer pool obvious: name the systems and the community in the title, abstract and first paragraphs.

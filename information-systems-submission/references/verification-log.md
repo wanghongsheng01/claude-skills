@@ -30,3 +30,11 @@ The user saved the ScienceDirect Guide for Authors from a normal browser as a si
 - figures as separate files named like Figure_1;
 - AI declaration at the end, in a new section before the reference list;
 - funding statement must give the sponsor's role.
+
+## 2026-10-21 (evening): Claude in Chrome
+At the user's request the Guide for Authors and the open-access page were opened in the user's own Chrome through the Claude in Chrome extension and read in full with get_page_text. The text matched the earlier OCR reading item by item. Newly confirmed:
+- APC USD 3150 excluding taxes, all article types; licences CC BY, CC BY-NC, CC BY-NC-ND; subscription option free;
+- 24-month self-archiving embargo for subscription articles;
+- submission link https://submit.elsevier.com/INFOSYS;
+- CiteScore 11.8 and Impact Factor 4.0 shown on the journal header.
+No [CHECK] items remain. Future updates: use Claude in Chrome first when available.
