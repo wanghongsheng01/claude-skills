@@ -52,3 +52,38 @@ Ask Claude to "design this AMP figure following amp-figure-design", or invoke th
 - use heatmaps with values printed in cells for continuous data (Wan 2024 Fig. 4a)
 - use low-saturation ochre-blue-gray palette, not viridis
 - use uppercase A/B/C panel labels for Briefings in Bioinformatics
+
+## information-systems-submission
+Pre-submission checklist (投稿前须知) for the Elsevier journal *Information Systems* (ISSN 0306-4379, CCF B). Scope test, required files, elsarticle formatting, highlights, exact declaration wording (CRediT, competing interests, data availability, generative AI), reproducibility programme and portal steps. Items that only the ScienceDirect Guide for Authors can confirm are marked [CHECK].
+
+```
+information-systems-submission/
+  SKILL.md                      checklist with VERIFIED / ELSEVIER / CHECK status and sources
+  scripts/check_submission.py   checks a LaTeX folder: journal line, abstract words, keywords, declarations,
+                                AI heading, citations, labels, figure files, highlights, forbidden codes
+  references/verification-log.md what was readable on which date and how to update the skill
+```
+
+```bash
+python3 information-systems-submission/scripts/check_submission.py paper/ --main main.tex \
+        --highlights highlights.txt --forbid 'OLDJOURNAL|ProjectCode'
+```
+
+## information-systems-writing
+Writing guide for *Information Systems* papers in data quality, data cleaning, entity resolution, benchmarking and reproducibility. Built from published IS papers (measured register, title, abstract and introduction moves, results and limitations style, captions, references) plus the rules of `academic-latex-polish`. Includes an AI-flavor and register checker and a matplotlib style for figures.
+
+```
+information-systems-writing/
+  SKILL.md                         title, abstract, section plan, language targets, anti-AI-flavor rules,
+                                   figures, references, highlights, final checklist
+  scripts/is_style_check.py        sentence length, long sentences, parentheses, semicolons, negations,
+                                   em dashes, AI-tell words and internal codes, per section
+  references/observed-papers.md    the surveyed IS papers with DOIs and observations
+  assets/is_figure_style.py        matplotlib defaults, colour-blind-safe palette, box/arrow helpers
+```
+
+```bash
+python3 information-systems-writing/scripts/is_style_check.py paper/main.tex --codes 'P19|v[0-9]+'
+```
+
+Install either skill like the others: `cp -r claude-skills/<skill> ~/.claude/skills/`.
