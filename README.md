@@ -86,4 +86,26 @@ information-systems-writing/
 python3 information-systems-writing/scripts/is_style_check.py paper/main.tex --codes 'P19|v[0-9]+'
 ```
 
-Install either skill like the others: `cp -r claude-skills/<skill> ~/.claude/skills/`.
+## information-systems-portal
+Submission-portal companion for *Information Systems* (投递 Information Systems 投稿窗口). Use it when the manuscript is ready and is about to be entered at https://submit.elsevier.com/INFOSYS. It builds the required Abstract file and page-by-page answers for all ten portal steps directly from `main.tex`, verifies the Overleaf-compiled PDF, and records the portal's traps (required Abstract upload, the "no competing interests" checkbox, many-file supplementary zips, stale Overleaf compiles). The full classification list is included, so no portal screenshots need to be parsed.
+
+```
+information-systems-portal/
+  SKILL.md                         ten portal steps, upload folder layout, traps, consistency checks
+  scripts/build_portal_kit.py      main.tex -> 00_Abstract/Abstract.docx + PORTAL_ANSWERS.md (every field)
+  scripts/verify_final_pdf.py      fonts, ??/placeholders, expected/forbidden text, diff vs previous build,
+                                   zip-vs-current main.tex
+  references/classifications.md    the portal's fixed classification list and picks by paper type
+```
+
+```bash
+python3 information-systems-portal/scripts/build_portal_kit.py --tex paper/main.tex --out upload_ready \
+        --highlights paper/highlights.txt
+python3 information-systems-portal/scripts/verify_final_pdf.py --pdf upload_ready/01_Manuscript/Manuscript.pdf \
+        --expect "latest edited sentence" --previous old/Manuscript.pdf \
+        --zip upload_ready/02_LaTeX_source/LaTeX_source.zip --tex paper/main.tex
+```
+
+Order of use for an *Information Systems* paper: `information-systems-writing` while writing, `information-systems-submission` to prepare and review the package, `information-systems-portal` at the upload step.
+
+Install any of these skills like the others: `cp -r claude-skills/<skill> ~/.claude/skills/`.

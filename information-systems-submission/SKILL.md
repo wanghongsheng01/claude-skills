@@ -22,7 +22,7 @@ The Guide for Authors lives at https://www.sciencedirect.com/journal/information
 5. **Format** with elsarticle as in "Formatting".
 6. **Run the checker**: `python3 scripts/check_submission.py <latex-folder> --main main.tex --highlights highlights.txt [--forbid 'OLDJOURNAL|ProjectCode']`. Fix every ERROR; read every WARN.
 7. **Compile on Overleaf or a full TeX Live** (pdfLaTeX), check fonts are embedded (`pdffonts`), references resolve, and figures are legible at 100% zoom.
-8. **Portal pass** with the user. Never click Submit, accept terms, choose open access or pay on the user's behalf.
+8. **Portal pass** with the user: switch to the `information-systems-portal` skill, which generates the Abstract file and every portal answer from `main.tex` and verifies the Overleaf PDF. Never click Submit, accept terms, choose open access or pay on the user's behalf.
 
 ## Scope fit [GUIDE]
 Information systems are "the software and hardware systems that support data-intensive applications". The journal publishes the design and implementation of languages, data models, process models, algorithms, software and hardware for information systems. Subject areas include the data-management topics of SIGMOD/PODS, VLDB, ICDE and ICDT/EDBT, plus data mining and machine learning, information retrieval over structured data, internet and cloud data management, business process management, web semantics, visual and audio information systems, scientific computing and data science. It welcomes systems papers, theory papers that break new ground or unify existing algorithms, and application-domain papers with high-performance, scalable solutions.
@@ -133,7 +133,7 @@ Typical findings in archives: internal project codes, version suffixes, an earli
 
 Typical PDF finding: a local TeX installation without cm-super produces Type 3 bitmap fonts because elsarticle loads T1 encoding. Compile the final PDF on Overleaf or a full TeX Live and confirm with `pdffonts` that no Type 3 fonts remain.
 
-Organize the final package by portal item type (`01_Manuscript`, `02_LaTeX_source`, `03_Figures`, `04_Highlights`, `05_Cover_letter`, `06_Declaration_of_interest`, `07_Supplementary`) plus a `PORTAL_FIELDS.md` generated from the manuscript, so the author can copy each field and upload each file without searching.
+Organize the final package by portal item type (`00_Abstract` (required by the portal), `01_Manuscript`, `02_LaTeX_source`, `03_Figures`, `04_Highlights`, `05_Cover_letter`, `06_Declaration_of_interest`, `07_Supplementary`) plus a `PORTAL_FIELDS.md` generated from the manuscript, so the author can copy each field and upload each file without searching.
 
 ## Before pressing Submit
 - [ ] Guide re-read if older than six months; tags current.
@@ -146,6 +146,7 @@ Organize the final package by portal item type (`01_Manuscript`, `02_LaTeX_sourc
 - [ ] AI declaration is the last section before the references and lists every tool.
 - [ ] Every supplementary file is cited in the text with a caption and named neutrally.
 - [ ] Related submissions disclosed if asked; author list final.
+- [ ] Portal steps done with `information-systems-portal` (`PORTAL_ANSWERS.md`, `verify_final_pdf.py` PASS).
 - [ ] The user, not the assistant, presses Submit.
 
 ## Sources
