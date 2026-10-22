@@ -9,6 +9,10 @@ This skill covers the **portal step**: what to upload and what to type on each p
 
 Recorded from a complete submission on 2026-10-22 (research paper, LaTeX, Zenodo deposit). If a page differs from this description, the portal has changed: follow the page, then update this file.
 
+## Language convention (permanent agreement with the author)
+- **English** for everything reviewers, editors or the portal will see: manuscript, abstract file, highlights, cover letter, declarations, supplementary descriptions, every text typed into the portal, and responses to reviewers.
+- **Chinese (中文)** for every report to the author: progress, check results, step-by-step instructions, decisions needed, and internal notes such as package READMEs and review logs.
+
 ## Workflow
 1. **Finish the manuscript** with `information-systems-submission` (checker clean, Zenodo DOI filled in, final `main.tex`).
 2. **Build the portal kit** (generates the required Abstract file and every page's answers from `main.tex`):

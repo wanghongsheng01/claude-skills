@@ -7,6 +7,10 @@ description: "Write, restructure or revise a paper for the Elsevier journal Info
 
 Use this skill when drafting or rewriting a manuscript for **Information Systems** (Elsevier, ISSN 0306-4379). The norms come from published IS papers in data quality, data cleaning, entity resolution and experimental studies (list and measurements in `references/observed-papers.md`), from the journal's reproducibility guidelines, and from the existing `academic-latex-polish` rules in this repository. Formal requirements (files, declarations, template) live in `information-systems-submission`.
 
+## Language convention (permanent agreement with the author)
+- **English** for everything reviewers, editors or the portal will see: manuscript, abstract file, highlights, cover letter, declarations, supplementary descriptions, every text typed into the portal, and responses to reviewers.
+- **Chinese (中文)** for every report to the author: progress, check results, step-by-step instructions, decisions needed, and internal notes such as package READMEs and review logs.
+
 ## Workflow
 1. **Read the paper end to end** and write down, in one line each: the object studied, the question, the evidence, the main findings, and what a reader can reuse. If these five lines are not clear, fix the content plan before polishing sentences.
 2. **Snapshot the source** (`cp -r paper paper.orig`) so every number and claim can be checked afterwards with `academic-latex-polish/scripts/check_preserve.py`.

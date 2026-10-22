@@ -106,6 +106,8 @@ python3 information-systems-portal/scripts/verify_final_pdf.py --pdf upload_read
         --zip upload_ready/02_LaTeX_source/LaTeX_source.zip --tex paper/main.tex
 ```
 
+Language convention for all three *Information Systems* skills: English for everything reviewers, editors or the portal see; Chinese for reports to the author.
+
 Order of use for an *Information Systems* paper: `information-systems-writing` while writing, `information-systems-submission` to prepare and review the package, `information-systems-portal` at the upload step.
 
 Install any of these skills like the others: `cp -r claude-skills/<skill> ~/.claude/skills/`.

@@ -14,6 +14,10 @@ Status tags:
 
 The Guide for Authors lives at https://www.sciencedirect.com/journal/information-systems/publish/guide-for-authors and the open-access page at https://www.sciencedirect.com/journal/information-systems/publish/open-access-options. ScienceDirect refuses WebFetch and the in-app browser, but **Claude in Chrome (the person's real Chrome) reads both pages in full** with `get_page_text`; use it when the session has it and the person agrees. Otherwise ask the person to save the page from their own browser ("Print → Save as PDF"). Do not route around the block with caches or mirrors.
 
+## Language convention (permanent agreement with the author)
+- **English** for everything reviewers, editors or the portal will see: manuscript, abstract file, highlights, cover letter, declarations, supplementary descriptions, every text typed into the portal, and responses to reviewers.
+- **Chinese (中文)** for every report to the author: progress, check results, step-by-step instructions, decisions needed, and internal notes such as package READMEs and review logs.
+
 ## Workflow
 1. **Re-read the guide** if this file is more than about six months old, and update the tags.
 2. **Scope test** (desk-reject risk): answer the four questions in "Scope fit" in writing and fix title, abstract and introduction if any answer is weak.
