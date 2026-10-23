@@ -16,7 +16,7 @@ All hex values extracted from published AMP / protein-generative-model figures.
 
 ## Heatmap scales
 
-### Diverging (for MIC, dual-direction)
+### Diverging (when the quantity has a meaningful center)
 Low → mid → high:
 ```
 #2166AC (deep blue) → #F7F7F7 (near white) → #B2182B (brick red)
@@ -43,8 +43,7 @@ Source: AMPSphere / Cell 2024 Fig. 6B/C.
 ## Bar chart primary
 `#5B8DC9` (sky blue) — DOME Fig. 1.
 
-## What to avoid
-- Neon / fluorescent colors
-- High-saturation pure red #FF0000, pure blue #0000FF, pure green #00FF00
-- Viridis, plasma, inferno (not used in any surveyed AMP paper)
-- Rainbow color scales
+## Choosing a scale
+- Avoid decorative saturation and rainbow scales when they obscure ordering or distinctions.
+- Sequential scales such as viridis can be appropriate for ordered magnitudes. Absence from this selected sample is not a reason to prohibit them.
+- Check final-size contrast, grayscale readability where relevant, and redundant encoding for categories. A specific hex palette is not a journal acceptance requirement.

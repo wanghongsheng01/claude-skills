@@ -47,7 +47,7 @@ Use this skill when the user asks to polish, copy-edit or improve the readabilit
      - a pointer to a section, table or figure.
    - Turn other asides into a separate sentence or an appositive, or use "such as".
    - Move qualifiers such as "(post hoc)" or "(Stage 3)" out of headings into the first sentence of the section.
-5. **Numbers.** State the claim first, then the count or share, as in "certifies 1,979 of the 7,995 pairs (24.8%)". Follow a statistic with a plain verdict, such as "the difference is significant".
+5. **Numbers.** State the claim first, then the count or share, as in "certifies 1,979 of the 7,995 pairs (24.8%)". Follow a statistic with a plain interpretation within the evidence's scope. Use "statistically significant" only when the existing, appropriate test supports that statement; preserve its experimental unit, test, correction and threshold. Never add significance, confidence intervals or replication during language polishing.
    - Write ranges with negative bounds as "$-0.05$ to $0.12$", not with an en dash.
 6. **Terms and quotes.**
    - Introduce new terms with `\emph{}`.

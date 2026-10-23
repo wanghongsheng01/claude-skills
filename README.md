@@ -46,12 +46,30 @@ mkdir -p ~/.claude/skills && cp -r claude-skills/amp-figure-design ~/.claude/ski
 ```
 
 ### Use
-Ask Claude to "design this AMP figure following amp-figure-design", or invoke the skill by name. The skill will tell you:
-- never draw hand-drawn boxed tables with ✓/✗ marks (not present in any surveyed venue)
-- use solid/hollow dot matrices for binary grids (Diff-AMP Fig. 6)
-- use heatmaps with values printed in cells for continuous data (Wan 2024 Fig. 4a)
-- use low-saturation ochre-blue-gray palette, not viridis
-- use uppercase A/B/C panel labels for Briefings in Bioinformatics
+Ask Claude to "design this AMP figure following amp-figure-design", or invoke the skill by name. The skill offers observed examples rather than venue-wide prohibitions:
+- choose a table, dot matrix or heatmap according to the data and research question;
+- use semantic, readable colors and inspect labels at final size;
+- keep compared quantities, experimental units and uncertainty explicit;
+- learn from bbac343's controlled-design diagram, paired comparisons and complete heatmap matrix.
+
+## bib-amp-evidence-writing
+Review and revise AMP evaluation/generation papers for *Briefings in Bioinformatics*. This skill connects paragraph structure to scientific questions, keeps reconstruction/generation/activity evidence distinct, verifies references against primary sources and separates reviewer and editor roles when independent review is requested. It includes original analysis of all 37 scientific paragraphs in bbac343, actual figure/table observations, public-review search limits and a measured seven-paper bibliography/length sample. Counts are observations, not acceptance thresholds.
+
+```
+bib-amp-evidence-writing/
+  SKILL.md                              concise workflow and evidence boundaries
+  references/bbac343-writing-experiment-map.md  original paragraph/figure/experiment analysis
+  references/source-verification.md     citation ledger and public-review identity checks
+  references/review-editor-workflow.md   independent review, revision and recheck
+  references/bib-publication-sample.md   seven verified publication records with counting limits
+  scripts/check_citation_closure.py     offline direct-cite/bibitem coverage checker
+```
+
+```bash
+python3 bib-amp-evidence-writing/scripts/check_citation_closure.py --tex paper/main.tex --out closure.json
+```
+
+The checker verifies explicit citation-key closure; it does not establish bibliographic truth or support for a scientific claim. Install only when requested, using the same folder-copy approach described above.
 
 ## information-systems-submission
 Pre-submission checklist (投稿前须知) for the Elsevier journal *Information Systems* (ISSN 0306-4379, CCF B). Scope test, required files, elsarticle formatting, highlights, exact declaration wording (CRediT, competing interests, data availability, generative AI), reproducibility programme and portal steps. Rules are tagged [GUIDE] (read from the Guide for Authors on 2026-10-21), [ELSEVIER] or [CHECK].

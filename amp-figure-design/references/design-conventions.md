@@ -1,6 +1,6 @@
 # Detailed figure design conventions for AMP / protein-generative-model papers
 
-Grounded in direct observation of published figures. Every observation cites a specific paper + figure number.
+Grounded in a selected sample of published figures. Every observation cites a specific paper + figure number. These observations are design examples, not journal-wide requirements; a style absent from the sample is not thereby prohibited. The 2026-10-23 recheck of bbac343 is documented in the companion [exemplar map](../../bib-amp-evidence-writing/references/bbac343-writing-experiment-map.md).
 
 ## Table of contents
 1. Color
@@ -27,13 +27,13 @@ One hue per method / dataset / condition, fixed across all figures in the paper.
 ### 1.3 Heatmap color scales
 - **Diverging blue-white-red** for MIC / dual-direction data: **Wan 2024 Fig. 4a** (40+ peptides × 11 strains MIC), deep blue = low MIC (good), white = middle, red = high MIC (bad).
 - **Sequential orange-brown** for one-direction data: **AMPSphere (Santos-Júnior et al. 2024, Cell 187:3761), Fig. 6B/C** (100 peptides × 19 strains MIC), light cream yellow → deep brown orange.
-- **Do not use viridis.** It appears in none of the surveyed papers.
+- Viridis was not recorded in this sample. This does not make it inappropriate: choose a perceptually ordered sequential scale for ordered magnitudes, and a diverging scale only for a meaningful center.
 
 ### 1.4 Colorblind safety
 No paper explicitly declares Okabe-Ito, but the actual approach approximates ColorBrewer qualitative palettes. Information is never carried by color alone: color + number + shape / line style are used as redundant encodings.
 
 ### 1.5 pass/fail encoding
-No ✓/✗ symbols. Low MIC (pass) = dark blue block; high MIC (fail) = red block. Yes/No decisions are written as text on arrows in flowcharts.
+The cited examples use MIC magnitudes or written Yes/No decisions rather than checkmarks. A continuous MIC color is not automatically a clinical pass/fail verdict; any activity threshold must be defined for the study.
 
 ---
 
@@ -62,7 +62,7 @@ High but ordered. Grid alignment, shared axes, unified legends. Example: **Cell 
 ## 3. Typography
 
 ### 3.1 Font family
-Sans-serif only. No serif (Times New Roman) in any surveyed figure. Approximates Arial / Helvetica or a Nature-style custom sans-serif.
+Sans-serif is the observed preference in this sample, approximating Arial / Helvetica. It is a useful default rather than a prohibition on other legible fonts.
 
 ### 3.2 Font size hierarchy
 ```
@@ -121,20 +121,20 @@ Key observation: even essentially binary antimicrobial activity is encoded as a 
 - **García-Jacas Table 4** (Brief Bioinform 23:bbac094): diversity values, missing values marked with "–".
 
 ### 4.5 Verdict on hand-drawn "boxed table with ✓/✗"
-**Not present in any surveyed venue.** This includes:
+**Not recorded in the selected examples.** This includes:
 - Nature BME: Das 2021, Huang 2023, Wan 2024 — no ✓/✗.
 - Briefings in Bioinformatics: Diff-AMP 2024, García-Jacas 2022, Sidorczuk 2022 — no ✓/✗.
 - NatComm / Cell / Science: HydrAMP, AMPSphere, ESMFold — no ✓/✗.
 - DOME / FAIR / MIQE / ARRIVE 2.0 — no ✓/✗.
 
-This style belongs to PPT slides / conference posters / course materials / blog graphics, not peer-reviewed figures.
+The observation does not establish a venue-wide prohibition. Prefer the form that communicates the measured quantities clearly at final publication size.
 
 ---
 
 ## 5. Schematic / workflow / checklist figures
 
 ### 5.1 Standard visual language
-Flat vector, no 3D, no shadows, no gradients, no hand-drawn borders.
+Simple vector diagrams are a useful default; the examples below include other forms, so they do not establish a universal ban on 3D or varied shapes.
 
 | Paper | Figure | Description |
 |-------|--------|-------------|
@@ -148,7 +148,7 @@ Flat vector, no 3D, no shadows, no gradients, no hand-drawn borders.
 | Sidorczuk 2022 | **Fig. 1** | Shape semantics: hexagon=model, rectangle=dataset, ellipse=sampling method, parallelogram=architecture, cloud=result. Training set blue, benchmark set red, model orange. |
 
 ### 5.2 DOME / FAIR / MIQE / ARRIVE checklist figures
-**The checklist itself is not a Figure.** It is a Box text block or a three-line table:
+**The cited checklists use text or tables.** Examples are:
 
 | Paper | Checklist carrier | Form |
 |-------|-------------------|------|
@@ -158,7 +158,7 @@ Flat vector, no 3D, no shadows, no gradients, no hand-drawn borders.
 | ARRIVE 2.0 (Percie du Sert 2020, PLoS Biol) | Table 1 + Table 2 | three-line tables |
 
 ### 5.3 If the user wants a "checklist" figure
-Do not draw a tick-box table. Two safe options:
+Choose a carrier appropriate to the content. Two useful options are:
 
 **Option A (recommended): DOME Fig. 2 style conceptual workflow.**
 - Left-to-right single-direction workflow, 4 zones (e.g. Data / Optimization / Model / Evaluation for AMP).
@@ -172,7 +172,7 @@ Do not draw a tick-box table. Two safe options:
 - Make it Table 1 (main text) or Supplementary Table.
 - Use E (essential) / D (desirable) letter grading.
 - Three-line table, no vertical lines, no color.
-- MIQE / ARRIVE 2.0 use this; it is universally safe.
+- MIQE / ARRIVE 2.0 illustrate this form; it still needs content and layout review.
 
 ### 5.4 Common tools
 - Protein structure renders: PyMOL (Wan 2024, Diff-AMP).

@@ -1,0 +1,4 @@
+interface:
+  display_name: "BiB AMP Evidence Writing"
+  short_description: "Review AMP evaluation papers and evidence"
+  default_prompt: "Use $bib-amp-evidence-writing to review and improve this AMP evaluation manuscript using verified literature and separate reviewer and editor roles."
