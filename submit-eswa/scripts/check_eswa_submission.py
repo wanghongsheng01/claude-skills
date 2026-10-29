@@ -9,6 +9,7 @@ Usage:
         [--title-page title_page.txt|.tex|.md] [--highlights highlights.txt]
         [--identity 'Surname1|Surname2|univ-domain|Company|github-user|zenodo\\.1234567']
         [--forbid 'Old Journal Name|OLDCODE'] [--abstract-limit 250] [--max-keywords 7]
+        [--package path/to/upload_folder]
 
 Prints ERROR / WARN / OK lines and exits 1 if any ERROR is found. It only reads files.
 """
@@ -182,6 +183,24 @@ def check_title_page(path, identity):
         report("OK" if re.search(pat, t) else "WARN", f"title page: {label} {'found' if re.search(pat, t) else 'missing'}")
 
 
+def check_package(pkg, graphics):
+    """A hand-written package script that lists figures by name silently drops a figure added later."""
+    import zipfile
+    have = {f.name for f in pkg.rglob("*") if f.is_file()}
+    zips = [z for z in pkg.rglob("*.zip")]
+    inzip = set()
+    for z in zips:
+        inzip |= {pathlib.Path(n).name for n in zipfile.ZipFile(z).namelist()}
+    for g in graphics:
+        name = pathlib.Path(g).name
+        cands = {name} | {name + e for e in (".pdf", ".png", ".jpg", ".eps", ".tif")}
+        if not cands & have:
+            report("ERROR", f"package: figure {name} is not among the upload files")
+        if zips and not cands & inzip:
+            report("ERROR", f"package: figure {name} is not in the source zip")
+    report("OK", f"package checked for {len(graphics)} figure files")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("folder")
@@ -193,6 +212,7 @@ def main():
     ap.add_argument("--forbid", default=None, help="regex of earlier journal names or internal codes")
     ap.add_argument("--abstract-limit", type=int, default=250)
     ap.add_argument("--max-keywords", type=int, default=7)
+    ap.add_argument("--package", default=None, help="upload folder: every included figure must be in it and in its source zip")
     a = ap.parse_args()
 
     folder = pathlib.Path(a.folder)
@@ -277,6 +297,8 @@ def main():
             report("WARN", f"figure file '{g}': name separate artwork files Figure_1, Figure_2, ...")
         if not any((folder / (g + e)).exists() for e in ("", ".pdf", ".png", ".jpg", ".eps", ".tif")):
             report("ERROR", f"figure file missing: {g}")
+    if a.package:
+        check_package(pathlib.Path(a.package), re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]*)\}", tex))
 
     if a.forbid:
         rx = re.compile(a.forbid)

@@ -29,7 +29,8 @@ ScienceDirect blocks WebFetch and the built-in browser. Claude in Chrome reads t
    ```bash
    python3 scripts/check_eswa_submission.py paper/ --main manuscript.tex --bib references.bib \
      --title-page title_page.md --highlights highlights.txt \
-     --identity 'Surname1|Surname2|university|company|github-user|zenodo\.12345' --forbid 'Old Journal Name'
+     --identity 'Surname1|Surname2|university|company|github-user|zenodo\.12345' --forbid 'Old Journal Name' \
+     --package ../upload_folder
    ```
 7. **Compile** on Overleaf or a full TeX Live (pdfLaTeX). Then check the PDF:
    ```bash
@@ -175,6 +176,7 @@ Portal: https://www.editorialmanager.com/eswa/ — sign in with "Continue with E
 - The plain-text abstract pasted into the portal counts more words than the LaTeX source (symbols such as 1 − δ become several tokens); keep the source at ≤246 words.
 - Do not reuse a declarations-tool file from another journal (it names that journal); generate a new one.
 - Figures must appear near their first mention, as in published ESWA articles. A tall figure placed with `[t]` only (no `p`) is deferred to the end of the document, and every later figure queues behind it, so all figures end up after the references. Use `[!tbp]`, put Figure 1 where it is first cited, and read the page numbers of the `fig:` labels in `output.aux` after compiling.
+- A package script that names figure files one by one drops a figure added later (here Figure_5 was missing from both the upload folder and the source zip). Copy with a glob (`figures/Figure_[0-9]*.pdf`) and run the checker with `--package`, which compares every `\includegraphics` file with the upload folder and the source zip.
 
 ## Before approving the submission
 - [ ] Guide re-read if this file is older than six months; tags updated.
