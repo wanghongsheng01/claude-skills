@@ -187,3 +187,50 @@ python3 review-eswa/scripts/review_packet.py paper/manuscript.tex --out review_p
 ```
 
 Order of use for an ESWA paper: `write-eswa` while writing, `review-eswa` for the pre-submission review, `submit-eswa` to build, check and upload the package. Language convention for all three: English for everything the journal sees; Chinese for reports to the author.
+## submit-dmkd
+Submission guide (投稿 DMKD 指南) for the Springer journal *Data Mining and Knowledge Discovery* (ISSN 1384-5810 / 1573-756X). Article types and their judging criteria, the research-gap test, the Springer Nature `sn-jnl` template with author-year `sn-basic` references, abstract 150-250 words, 4-6 keywords, the mandatory Statements and Declarations, LLM disclosure in the Methods section, single-anonymous review, and the Snapp portal with its LaTeX zip rules. Rules are tagged [VERIFIED] (read on official pages on 2026-10-29), [SN], [INFERRED] or [UNKNOWN].
+
+```
+submit-dmkd/
+  SKILL.md                          workflow, article types, format table, declarations, files, checklist
+  scripts/check_dmkd_submission.py  checks a LaTeX folder: sn-jnl options, flat source, abstract, keywords,
+                                    declarations, author-year bibitems, labels, figures, leftovers
+  scripts/build_snapp_package.py    flat LaTeX zip + manifest with SHA-256 + upload list
+  references/guide-digest.md        every rule with its source URL and tag
+  references/snapp-walkthrough.md   portal steps and consistency checks (Chinese instructions)
+  references/verification-log.md    what was read when, what is still unknown
+```
+
+```bash
+python3 submit-dmkd/scripts/check_dmkd_submission.py paper/ --main main.tex --forbid 'Information Systems|elsarticle'
+python3 submit-dmkd/scripts/build_snapp_package.py paper/ --main main.tex --out upload/ --pdf paper/main.pdf
+```
+The Springer class file is not included; download the template from https://www.springernature.com/gp/authors/campaigns/latex-author-support.
+
+## write-dmkd
+Writing guide (Write-DMKD 写作指南) built from 30 published DMKD papers (22 evaluation, benchmark and methodology papers; 8 method papers): titles, abstracts, the eight introduction moves with research questions, related work, definitions, experiments and statistics, seven ways DMKD evaluation papers argue generality across domains, results, threats to validity, figures, references and length, plus a section on repositioning database-venue papers for DMKD.
+
+```
+write-dmkd/
+  SKILL.md                         rules with counts and the papers they come from
+  scripts/dmkd_structure_check.py  compares a manuscript with the observed DMKD medians and checks register
+  references/observed-papers.md    full observations with DOIs
+  references/dmkd_paper_survey.csv one row per surveyed paper
+```
+
+```bash
+python3 write-dmkd/scripts/dmkd_structure_check.py paper/main.tex
+```
+
+## review-dmkd
+Simulated DMKD review (Review-DMKD 审稿指南): editor-in-chief desk screen, two or three independent reviewer personas scored on seven weighted criteria, an action-editor decision rule, the 25 most likely objections ranked by evidence, and what made accepted no-new-algorithm DMKD papers work. DMKD reviews are closed, so the form is derived from the journal's criteria, the ECML PKDD journal-track call, current action editors' public writings and 13 accepted DMKD precedents; inferences are labelled.
+
+```
+review-dmkd/
+  SKILL.md                       procedure, criteria and weights, objections, precedents
+  assets/review_form.md          reviewer report template
+  assets/desk_screen.md          editor-in-chief screen
+  references/evidence-notes.md   sources and evidence, with tags
+```
+
+Order of use for a DMKD paper: `write-dmkd` while writing, `review-dmkd` before submission, `submit-dmkd` to build and check the package and at the portal. Language convention: English for everything reviewers, editors or the portal see; Chinese for reports to the author.
