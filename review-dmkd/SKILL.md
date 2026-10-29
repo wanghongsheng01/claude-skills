@@ -79,6 +79,13 @@ Keogh and Kasetty 2003, Campos et al. 2016, Bagnall et al. 2017, Hewamalage et a
 5. Fair treatment of the audited work.
 6. A deliberate article type: a new procedure → Regular Paper; an extensive independent comparison → Survey Paper.
 
+## Lessons from use (2026-10-29, benchmark-audit paper)
+Two independent reviewer instances raised the same three points, and all three changed the paper:
+- **Noise floor.** A "ranking changes in X of Y comparisons" claim must be compared with the variation between replicates the producer itself provides (random downsamples, resamples, seeds), with a tolerance for near-ties and more than one measure. Check whether most comparisons are pseudo-replicates of a few datasets, and whether the headline survives a binomial or bootstrap test.
+- **Validate the procedure, not only the systems.** A paper whose contribution is an audit or attribution procedure should plant perturbations with known causes and report recovery, including the cases the procedure gets wrong.
+- **Attribution conventions.** "Nobody but X is responsible" results depend on the attribution rule; ask for a formal rule, a "documentation" outcome where producer documentation and implementation disagree, and counting one policy as one cause.
+Reviewers also re-derived numbers from the released JSON files; give them result files with a one-to-one map to every number in the paper.
+
 ## Output files
 - `review/desk_screen.md`, `review/reviewer_<n>.md`, `review/ae_decision.md` (English).
 - `review/修改清单.md` (Chinese fix list) and `review/复审记录.md` (Chinese re-check log).

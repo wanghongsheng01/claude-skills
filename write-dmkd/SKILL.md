@@ -65,6 +65,12 @@ Section 2 (16/28 call it "Related work"; others use "Background"). Organize by c
 ### Arguing generality across domains (answer to "extend this to other domains")
 Seven moves seen in DMKD evaluation papers: (1) domain breadth of the testbed; (2) the same evaluation template repeated across data modalities (Bodria et al. 2023: tabular, image, text sections each ending in a quantitative comparison); (3) controlled factor sweeps; (4) meta-feature or instance-space analysis; (5) an "Extensions" section carrying the protocol to other tasks (Grzenda et al. 2020); (6) a survey of how the literature evaluates; (7) a real-world application section. Moves 2 and 5 transfer a method across domains most directly; add a cross-domain synthesis table that uses the same columns for every domain.
 
+### Lessons from use (2026-10-29)
+- Report rates of change against the producer's own replicate variation (noise floor) and give the test; with few comparisons, say "consistent direction, not established effect".
+- When the contribution is a procedure, include a planted-cause validation and report its failures.
+- State the attribution or decision convention as a numbered Definition before the results that depend on it.
+- Wide tables: in sn-jnl `\scriptsize` is 9 pt and the single-column text width is 31 pc; wrap wide tables in `\resizebox{\linewidth}{!}{...}` or cut columns.
+
 ## Results, discussion, conclusion
 - One results subsection per RQ, each opening or closing with its one-sentence answer; then a "lessons for benchmark designers and users" subsection (Fanourakis et al. 2023; Hewamalage et al. 2023).
 - A Discussion with a "Threats to validity" subsection pre-empts objections (Le et al. 2023). Limitations are mentioned in 24/28 papers.

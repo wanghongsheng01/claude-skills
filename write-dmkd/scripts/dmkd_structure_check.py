@@ -83,7 +83,7 @@ def main():
     line("  DMKD / KDD / JMLR references", f"{dmkd} / {kdd} / {jmlr}", "23/30 cite DMKD; 27/30 cite KDD")
     bare = len(re.findall(r"\\cite\{", tex))
     line("Bare \\cite{} (use citep/citet)", bare)
-    stats_terms = re.findall(r"Wilcoxon|Friedman|Nemenyi|Holm|critical difference|effect size|significance test",
+    stats_terms = re.findall(r"Wilcoxon|Friedman|Nemenyi|Holm|critical difference|effect size|significance test|binomial|bootstrap|DeLong|confidence interval",
                              main_body, re.I)
     line("Statistics vocabulary", len(stats_terms), "13/28 use formal tests; otherwise justify their absence")
     line("Threats to validity / limitations", "yes" if re.search(r"threats to validity|limitation", main_body, re.I)
