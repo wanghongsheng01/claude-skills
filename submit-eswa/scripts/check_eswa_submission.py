@@ -20,6 +20,8 @@ import sys
 AI_HEADING = ("Declaration of generative AI and AI-assisted technologies "
               "in the manuscript preparation process")
 JOURNAL = "Expert Systems with Applications"
+# Files that are seen by the editor only and are not anonymized (skipped by identity/forbid scans).
+NON_ANON = re.compile(r"title|cover|declaration|response|portal|readme", re.I)
 
 problems = {"ERROR": 0, "WARN": 0}
 
@@ -150,7 +152,7 @@ def check_anonymity(folder, tex_raw, tex, identity):
     if identity:
         rx = re.compile(identity, re.I)
         for f in sorted(folder.rglob("*")):
-            if f.is_file() and f.suffix in {".tex", ".bib", ".txt", ".md", ".bst", ".cls"} and "title" not in f.name.lower():
+            if f.is_file() and f.suffix in {".tex", ".bib", ".txt", ".md", ".bst", ".cls"} and not NON_ANON.search(f.name):
                 if f.suffix in {".bst", ".cls"}:
                     continue
                 for i, line in enumerate(f.read_text(errors="ignore").splitlines(), 1):
@@ -160,7 +162,7 @@ def check_anonymity(folder, tex_raw, tex, identity):
                         continue
                     if rx.search(line):
                         report("ERROR", f"identity string in {f.name}:{i}: {line.strip()[:100]}")
-            if f.is_file() and rx.search(f.name):
+            if f.is_file() and rx.search(f.name) and not NON_ANON.search(f.name):
                 report("ERROR", f"identity string in file name: {f.name}")
 
 
@@ -272,7 +274,7 @@ def main():
     if a.forbid:
         rx = re.compile(a.forbid)
         for f in sorted(folder.rglob("*")):
-            if f.is_file() and f.suffix in {".tex", ".bib", ".txt", ".md"}:
+            if f.is_file() and f.suffix in {".tex", ".bib", ".txt", ".md"} and not NON_ANON.search(f.name):
                 for i, line in enumerate(f.read_text(errors="ignore").splitlines(), 1):
                     if rx.search(line):
                         report("ERROR", f"forbidden string in {f.name}:{i}: {line.strip()[:90]}")

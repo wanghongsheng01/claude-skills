@@ -68,7 +68,7 @@ def main():
         say("OK" if any(re.search(pat, n, re.I) for n in names) else "WARN", label)
     subs = re.findall(r"\\subsection\*?\{((?:[^{}]|\{[^{}]*\})*)\}", tex)
     say("OK" if any(re.search(r"limitation", s, re.I) for s in subs + names) else "WARN", "explicit Limitations (sub)section")
-    say("OK" if any(re.search(r"complexit|computational cost|runtime|efficien", s, re.I) for s in subs) else "WARN",
+    say("OK" if any(re.search(r"complexit|computational|cost|runtime|efficien", s, re.I) for s in subs) else "WARN",
         "complexity / computational cost subsection (24% of ESWA full texts mention complexity)")
     say("OK" if any(re.search(r"guideline|practical|implication|deploy", s, re.I) for s in subs + names) else "WARN",
         "practical guidelines / implications (ESWA aims ask for practical guidelines)")

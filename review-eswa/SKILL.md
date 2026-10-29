@@ -79,3 +79,9 @@ Log everything in `review_log.md` (Chinese summary for the author, English findi
 - `references/evidence.md` — the source notes (process, timelines, criteria, criticisms, desk-reject reasons, response practices) with URLs and tags.
 - `references/response_template.md` — point-by-point response skeleton.
 - `scripts/review_packet.py` — builds a reviewer packet (plain-text manuscript with line numbers, section map, claims-with-numbers list, figure/table captions) from a `.tex` file, so reviewer agents cite exact lines.
+
+## Lessons from the first use (2026-10)
+- Three agents (editor + application reviewer, methods/statistics reviewer with access to the released code, compliance/reference auditor) found complementary problems; give the methods reviewer the code and result files and ask for a text–code correspondence table with file:line on both sides.
+- Ask reviewers to mark which fixes need new experiments. Apply text and existing-result fixes at once; list the offline re-runs for the author's decision instead of running them unasked.
+- Typical findings on a method paper framed for ESWA: guarantee wording broader than the theorem; pooled targets hiding sub-level error; central claim without intervals; no multiplicity adjustment; baselines with different deployment criteria or grids; cost of labeled data and API calls omitted; no system integration; vote counts of non-significant differences in the abstract.
+- Re-run the simulated desk screen after revision; the scope verdict should move from RISK to PASS before submission.

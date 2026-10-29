@@ -97,3 +97,13 @@ Typical size: ~10k words of body text (7.3k–19.1k), 6 figures (3–14), 9 tabl
 - `scripts/eswa_style_check.py` — section plan, intro length, contribution list, roadmap, RQs, limitations, practical guidelines, complexity subsection, figure/table counts, reference count and recency, ESWA references, AI-tell words, sentence length.
 - `references/observed-papers.md` — the 10 full-text papers and topic examples with DOIs and observations.
 - `references/eswa_stats_summary.txt`, `references/eswa_title_abstract_ref_stats.csv` — raw statistics (OpenAlex/Crossref, 2026-10-29).
+
+## Lessons from the first use (2026-10, a method paper re-framed for ESWA)
+- **State the guarantee exactly once and the same way everywhere.** Write what is bounded (a long-run/population rate, pooled over what), with which probability and under which assumption, and what it does *not* bound (one batch, one sub-level). Reviewers check abstract, discussion and highlights against the theorem.
+- **Put intervals on the central claim, not only on the secondary one.** A per-setting table of corrected paired differences for the main comparison, with significant/never-worse counts and a Holm-adjusted count, convinced the simulated reviewers more than a vote count of mean differences.
+- **Give the system view.** A subsection "Integration into <system>" (offline phase inputs/outputs, stored policy metadata, online path, review interface, random audit, recalibration triggers) answers "methods paper in an application journal". Make Figure 1 show the component inside the workflow, with the method steps as a second panel.
+- **Count every cost a deployer pays**: labeled calibration data (give the amortization formula and one worked example), API calls per item, compute.
+- **Turn ablations into guidelines** ("start with the simple score; fit the learned one only if it helps on held-out data") and add a regime → recommended-rule table.
+- **Figures at final size**: the elsarticle `preprint` text width is 384 pt (5.31 in). Draw figures at that width (matplotlib `figsize=(5.3, h)`, fonts 6.5–7.5 pt) instead of scaling a 7.4 in figure down. Mark invalid points (e.g. hollow markers) instead of letting a plot mislead.
+- **elsarticle prints "Appendix A" for `\ref{app:x}`**: write `(\ref{app:proofs})`, not `Appendix~\ref{...}`.
+- Generate every number in the text from result files (macros), including derived counts (Holm, interval tables), so a reviewer agent can verify them against code.

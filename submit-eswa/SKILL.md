@@ -169,6 +169,12 @@ Portal: https://www.editorialmanager.com/eswa/ — sign in with "Continue with E
 - Remove every trace of the earlier journal (`\journal{}`, cover letter, file names, comments) and every identity string (double-anonymized).
 - No metaphor-inspired algorithm branding; use standard terminology.
 
+## Lessons from the first use (2026-10)
+- `check_eswa_submission.py --identity` skips editor-only files whose names contain title, cover, declaration, response, portal or readme; everything else in the folder is treated as part of the anonymized upload.
+- No local TeX: create a separate private Overleaf project for the journal version (never overwrite the earlier journal's project), push via git, set the main document, compile through the editor (or its compile endpoint) and read `output.log` for undefined references and overfull boxes before viewing the PDF.
+- The plain-text abstract pasted into the portal counts more words than the LaTeX source (symbols such as 1 − δ become several tokens); keep the source at ≤246 words.
+- Do not reuse a declarations-tool file from another journal (it names that journal); generate a new one.
+
 ## Before approving the submission
 - [ ] Guide re-read if this file is older than six months; tags updated.
 - [ ] `check_eswa_submission.py`: 0 errors. `verify_eswa_pdf.py`: RESULT PASS.
