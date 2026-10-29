@@ -129,3 +129,61 @@ Language convention for all three *Information Systems* skills: English for ever
 Order of use for an *Information Systems* paper: `information-systems-writing` while writing, `information-systems-submission` to prepare and review the package, `information-systems-portal` at the upload step.
 
 Install any of these skills like the others: `cp -r claude-skills/<skill> ~/.claude/skills/`.
+
+## submit-eswa
+Submission guide (投稿 ESWA 指南) for the Elsevier journal *Expert Systems with Applications* (ISSN 0957-4174). Built from the live 2026 Guide for Authors, read in full on 2026-10-29: scope test, **double-anonymized** review (separate title page and anonymized manuscript), APA author–year references (`elsarticle` + `authoryear` + `model5-names.bst`), the 250-word abstract limit, 1–7 keywords, highlights of at most 85 characters, Figure_N artwork files, Option C research data, exact declaration wording, Editorial Manager upload items, APC, timelines and desk-reject prevention.
+
+```
+submit-eswa/
+  SKILL.md                          rules tagged [GUIDE]/[SD]/[EM]/[CHECK], workflow, checklist
+  scripts/check_eswa_submission.py  LaTeX checker: journal line, author-year setup, bare \cite, abstract, keywords,
+                                    scope words, anonymity (identity regex over all source files), declarations,
+                                    labels, figure names, highlights, title page
+  scripts/verify_eswa_pdf.py        PDF metadata/text identity scan, ??/placeholders, Type 3 or unembedded fonts,
+                                    expected/forbidden text, stale-build check (pypdf)
+  scripts/make_docx.py              Markdown-lite -> .docx (title page, highlights, cover letter, responses)
+  assets/manuscript_skeleton.tex    anonymized ESWA manuscript skeleton
+  assets/title_page_template.md     title page with everything the guide requires
+  assets/model5-names.bst           Elsevier APA-style (name-year) BibTeX style (LPPL)
+  references/guide-digest.md        section-by-section digest of the guide
+  references/verification-log.md    what was read when; how to refresh
+```
+
+```bash
+python3 submit-eswa/scripts/check_eswa_submission.py paper/ --main manuscript.tex --bib references.bib \
+  --title-page title_page.md --highlights highlights.txt --identity 'Surname|University|github-user' --forbid 'Old Journal'
+python3 submit-eswa/scripts/verify_eswa_pdf.py --pdf Manuscript.pdf --identity 'Surname|University|github-user'
+```
+
+## write-eswa
+Writing guide (ESWA 写作指南) measured on 251 ESWA papers (OpenAlex/Crossref) and 10 full texts: title length and patterns, abstract moves, introduction plan (contribution bullets, roadmap, research questions), related-work comparison tables, method/setup/results/discussion structure, the experiments ESWA reviewers expect (repeated runs, significance, ablation, sensitivity, cost), figure and table practice, reference count (median 50–57), recency (57–64% from the last five years) and ESWA citations, and how to frame a method as an intelligent-system contribution with practical guidelines.
+
+```
+write-eswa/
+  SKILL.md                              framing test, title, abstract, section plan, experiments, figures, references, style
+  scripts/eswa_style_check.py           compares a manuscript with the observed ESWA shape
+  references/observed-papers.md         surveyed papers with DOIs and observations
+  references/eswa_stats_summary.txt     aggregated statistics
+  references/eswa_title_abstract_ref_stats.csv, eswa_fulltext_survey.csv   raw data
+```
+
+```bash
+python3 write-eswa/scripts/eswa_style_check.py paper/manuscript.tex --bib paper/references.bib
+```
+
+## review-eswa
+Review guide (ESWA 审稿指南): how ESWA screens (editor desk check) and reviews (two or more reviewers, Accept/Minor/Major/Reject), with Elsevier's official reviewer criteria, publicly reported ESWA criticisms and timelines, each tagged by source reliability. Mode 1 runs an independent pre-submission self-review with editor and reviewer agents; Mode 2 helps a human reviewer draft an ESWA report within Elsevier's confidentiality and generative-AI rules; it also covers point-by-point responses to ESWA reviewers.
+
+```
+review-eswa/
+  SKILL.md                         process facts, desk screen, reviewer checklist, editor decision, response practice
+  scripts/review_packet.py         line-numbered reviewer packet (section map, captions, numeric claims, expanded macros)
+  references/evidence.md           sources with URLs and reliability tags
+  references/response_template.md  point-by-point response skeleton
+```
+
+```bash
+python3 review-eswa/scripts/review_packet.py paper/manuscript.tex --out review_packet.md --numbers paper/tables/numbers.tex
+```
+
+Order of use for an ESWA paper: `write-eswa` while writing, `review-eswa` for the pre-submission review, `submit-eswa` to build, check and upload the package. Language convention for all three: English for everything the journal sees; Chinese for reports to the author.

@@ -1,0 +1,60 @@
+=== RELEVANT (LLM/UQ/HTC/AL-HITL) (N=51)
+ title words: n=51 mean=12.1 median=12 IQR=10-15 min=5 max=19
+ colon share: 0.41  name/acronym-before-colon share: 0.22  contains acronym: 0.37
+  starts_A_An: 0.06  kw_framework: 0.14  kw_approach_method: 0.08  kw_via: 0.12  kw_for: 0.63  kw_llm: 0.41
+ abstract words: n=13 mean=213 median=206 IQR=160-282 min=105 max=305
+ crossref ref count: n=51 mean=51.9 median=50 IQR=39-63 min=24 max=120
+ share refs last5y: n=51 mean=0.551 median=0.567 IQR=0.409-0.708 min=0.056 max=0.923
+ share ESWA refs: n=51 mean=0.0373 median=0.023 IQR=0-0.06 min=0 max=0.214
+ eswa refs count: n=51 mean=1.86 median=1 IQR=0-3 min=0 max=9
+ arxiv refs count: n=51 mean=3.86 median=0 IQR=0-6 min=0 max=27
+=== llm (N=23)
+ title words: n=23 mean=13 median=12 IQR=10-16 min=8 max=19
+ colon share: 0.48  name/acronym-before-colon share: 0.26  contains acronym: 0.52
+  starts_A_An: 0.00  kw_framework: 0.22  kw_approach_method: 0.04  kw_via: 0.09  kw_for: 0.70  kw_llm: 0.87
+ abstract words: n=9 mean=226 median=234 IQR=160-291 min=105 max=305
+ crossref ref count: n=23 mean=58.7 median=57 IQR=42-69 min=28 max=120
+ share refs last5y: n=23 mean=0.657 median=0.643 IQR=0.567-0.75 min=0.409 max=0.923
+ share ESWA refs: n=23 mean=0.0377 median=0.025 IQR=0-0.051 min=0 max=0.214
+ eswa refs count: n=23 mean=1.96 median=1 IQR=0-3 min=0 max=7
+ arxiv refs count: n=23 mean=6.43 median=4 IQR=0-10 min=0 max=27
+=== uq (N=11)
+ title words: n=11 mean=11.6 median=12 IQR=8-14 min=5 max=18
+ colon share: 0.45  name/acronym-before-colon share: 0.09  contains acronym: 0.18
+  starts_A_An: 0.09  kw_framework: 0.09  kw_approach_method: 0.00  kw_via: 0.27  kw_for: 0.55  kw_llm: 0.00
+ abstract words: n=3 mean=172 median=171 IQR=156-189 min=156 max=189
+ crossref ref count: n=11 mean=48.3 median=43 IQR=38-67 min=28 max=77
+ share refs last5y: n=11 mean=0.438 median=0.433 IQR=0.325-0.549 min=0.214 max=0.692
+ share ESWA refs: n=11 mean=0.0363 median=0 IQR=0-0.077 min=0 max=0.186
+ eswa refs count: n=11 mean=1.64 median=0 IQR=0-3 min=0 max=8
+ arxiv refs count: n=11 mean=1.18 median=0 IQR=0-1 min=0 max=8
+=== htc (N=7)
+ title words: n=7 mean=10.6 median=10 IQR=10-12 min=9 max=12
+ colon share: 0.14  name/acronym-before-colon share: 0.14  contains acronym: 0.29
+  starts_A_An: 0.14  kw_framework: 0.14  kw_approach_method: 0.00  kw_via: 0.14  kw_for: 0.57  kw_llm: 0.00
+ abstract words: n=0
+ crossref ref count: n=7 mean=50.7 median=53 IQR=44-63 min=24 max=67
+ share refs last5y: n=7 mean=0.561 median=0.52 IQR=0.463-0.708 min=0.333 max=0.774
+ share ESWA refs: n=7 mean=0.0661 median=0.074 IQR=0.023-0.083 min=0 max=0.143
+ eswa refs count: n=7 mean=3.43 median=4 IQR=1-4 min=0 max=9
+ arxiv refs count: n=7 mean=1.43 median=0 IQR=0-2 min=0 max=8
+=== al (N=10)
+ title words: n=10 mean=11.7 median=10.5 IQR=9-15.5 min=7 max=17
+ colon share: 0.40  name/acronym-before-colon share: 0.30  contains acronym: 0.30
+  starts_A_An: 0.10  kw_framework: 0.00  kw_approach_method: 0.30  kw_via: 0.00  kw_for: 0.60  kw_llm: 0.10
+ abstract words: n=1 mean=220 median=220 IQR=220-220 min=220 max=220
+ crossref ref count: n=10 mean=41.4 median=41 IQR=34.5-48 min=32 max=55
+ share refs last5y: n=10 mean=0.424 median=0.369 IQR=0.251-0.696 min=0.056 max=0.837
+ share ESWA refs: n=10 mean=0.0175 median=0 IQR=0-0.0307 min=0 max=0.085
+ eswa refs count: n=10 mean=0.8 median=0 IQR=0-1.25 min=0 max=4
+ arxiv refs count: n=10 mean=2.6 median=0 IQR=0-1.25 min=0 max=22
+=== RANDOM ESWA 2024-2026 articles (N=200)
+ title words: n=200 mean=12.2 median=12 IQR=10-14 min=5 max=25
+ colon share: 0.45  name/acronym-before-colon share: 0.29  contains acronym: 0.48
+  starts_A_An: 0.10  kw_framework: 0.08  kw_approach_method: 0.10  kw_via: 0.06  kw_for: 0.60  kw_llm: 0.04
+ abstract words: n=27 mean=221 median=197 IQR=179-254 min=126 max=395
+ crossref ref count: n=200 mean=57.5 median=52 IQR=43.2-62 min=3 max=382
+ share refs last5y: n=200 mean=0.558 median=0.552 IQR=0.43-0.696 min=0.154 max=1
+ share ESWA refs: n=200 mean=0.0443 median=0.031 IQR=0-0.067 min=0 max=0.333
+ eswa refs count: n=200 mean=2.35 median=2 IQR=0-4 min=0 max=13
+ arxiv refs count: n=200 mean=2.4 median=0 IQR=0-3 min=0 max=87
