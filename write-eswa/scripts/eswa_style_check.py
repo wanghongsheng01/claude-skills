@@ -67,7 +67,8 @@ def main():
                        ("conclusion", r"conclusion")]:
         say("OK" if any(re.search(pat, n, re.I) for n in names) else "WARN", label)
     subs = re.findall(r"\\subsection\*?\{((?:[^{}]|\{[^{}]*\})*)\}", tex)
-    say("OK" if any(re.search(r"limitation", s, re.I) for s in subs + names) else "WARN", "explicit Limitations (sub)section")
+    say("OK" if any(re.search(r"limitation|threats to validity", s, re.I) for s in subs + names) else "WARN",
+        "explicit Limitations or Threats to validity (sub)section")
     say("OK" if any(re.search(r"complexit|computational|cost|runtime|efficien", s, re.I) for s in subs) else "WARN",
         "complexity / computational cost subsection (24% of ESWA full texts mention complexity)")
     say("OK" if any(re.search(r"guideline|practical|implication|deploy", s, re.I) for s in subs + names) else "WARN",
@@ -93,6 +94,13 @@ def main():
     tells = re.findall(AI_TELLS, body, re.I)
     if tells:
         say("WARN", f"{len(tells)} AI-tell/hype words: " + ", ".join(sorted(set(t[0].lower() for t in tells)))[:200])
+    # Self-defeating wording: speculation, unreleased evidence and "did not" admissions read as
+    # invitations to reject. Keep facts and the exact guarantee; drop or reframe the rest.
+    selfdef = re.findall(r"(we have not (?:verified|studied|run|tested)|which we have not|we did not run|cannot tell|"
+                         r"does not help|not part of the released|plausible reason|is approximate|slightly optimistic|"
+                         r"rather than a general|rather than any single)", body, re.I)
+    if selfdef:
+        say("WARN", f"{len(selfdef)} self-defeating phrases: " + "; ".join(sorted(set(x.lower() for x in selfdef))))
     if re.search(r"et al\.(~|\s)\\cite\{", tex):
         say("WARN", "'et al. \\cite' pattern: use \\citet in author-year style")
 

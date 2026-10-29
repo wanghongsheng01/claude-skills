@@ -108,3 +108,11 @@ Typical size: ~10k words of body text (7.3k–19.1k), 6 figures (3–14), 9 tabl
 - **Figures at final size**: the elsarticle `preprint` text width is 384 pt (5.31 in). Draw figures at that width (matplotlib `figsize=(5.3, h)`, fonts 6.5–7.5 pt) instead of scaling a 7.4 in figure down. Mark invalid points (e.g. hollow markers) instead of letting a plot mislead.
 - **elsarticle prints "Appendix A" for `\ref{app:x}`**: write `(\ref{app:proofs})`, not `Appendix~\ref{...}`.
 - Generate every number in the text from result files (macros), including derived counts (Holm, interval tables), so a reviewer agent can verify them against code.
+
+## Lessons from the second pass (2026-10, writing for acceptance; model paper: Khan et al., 2025, ESWA 261, 125524)
+- **Compare against each baseline separately** over the settings where that baseline meets the target (an invalid method is not a feasible solution), and add rank tests across settings: average ranks, Friedman test, Nemenyi critical-difference diagram and Wilcoxon signed-rank tests (Demšar, 2006). A per-setting "best baseline chosen on the test results" is an oracle; keep it only as a stricter secondary test and never in the abstract.
+- **The abstract ends with the strongest true numbers** (validity in all settings, mean reductions, significant counts, ranks), not with ties or losses.
+- **Remove self-defeating text, keep every fact.** Delete speculation ("a plausible reason, which we have not verified"), unreleased pilot results, "we did not run X", "where the method does not help" headings and repeated caveats. Keep all numbers, the exact theorem and guarantee wording, and all setup facts (grids, splits, subset rules); released data lets reviewers check them. `eswa_style_check.py` flags common self-defeating phrases.
+- **Discussion = theoretical implications + practical implications + threats to validity** (3–5 threats, each with its mitigation), as in published ESWA papers. Weak regimes become "operating regimes" with a configuration table.
+- **Translate percentages into workload** for a real pool (e.g. annotations saved on 154,787 products), labelled clearly as a projection under the sampling assumption.
+- **Cite ESWA papers that did similar work** (e.g. LLMs as annotators) in related work and the cover letter; it answers scope doubts directly.
