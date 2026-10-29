@@ -174,6 +174,7 @@ Portal: https://www.editorialmanager.com/eswa/ — sign in with "Continue with E
 - No local TeX: create a separate private Overleaf project for the journal version (never overwrite the earlier journal's project), push via git, set the main document, compile through the editor (or its compile endpoint) and read `output.log` for undefined references and overfull boxes before viewing the PDF.
 - The plain-text abstract pasted into the portal counts more words than the LaTeX source (symbols such as 1 − δ become several tokens); keep the source at ≤246 words.
 - Do not reuse a declarations-tool file from another journal (it names that journal); generate a new one.
+- Figures must appear near their first mention, as in published ESWA articles. A tall figure placed with `[t]` only (no `p`) is deferred to the end of the document, and every later figure queues behind it, so all figures end up after the references. Use `[!tbp]`, put Figure 1 where it is first cited, and read the page numbers of the `fig:` labels in `output.aux` after compiling.
 
 ## Before approving the submission
 - [ ] Guide re-read if this file is older than six months; tags updated.

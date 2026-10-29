@@ -256,6 +256,13 @@ def main():
         if re.search(r"\\section|\\appendix", after):
             report("ERROR", "AI declaration must be the last section before the reference list")
 
+    # Floats restricted to [t]/[h] without "p" are deferred to the end of the document
+    # when they are taller than the top-float limit, and every later figure queues behind them.
+    for env, spec in re.findall(r"\\begin\{(figure\*?|table\*?)\}\[([^\]]*)\]", tex):
+        if "p" not in spec:
+            report("WARN", f"{env}[{spec}] cannot go on a float page; use [!tbp] and check in the .aux "
+                           "that every figure lands near its first mention, not after the references")
+
     labels = set(re.findall(r"\\label\{([^}]*)\}", tex))
     for r in sorted(set(re.findall(r"\\(?:eq)?ref\{([^}]*)\}", tex)) - labels):
         report("ERROR", f"reference to undefined label: {r}")

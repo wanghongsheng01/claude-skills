@@ -66,6 +66,7 @@ Typical size: ~10k words of body text (7.3k–19.1k), 6 figures (3–14), 9 tabl
 - A forest plot of paired differences with CIs is a compact way to show significance across many settings.
 - Tables: booktabs, no vertical rules or shading; caption on top states what the numbers are, the number of runs, what bold and symbols mean; notes below the table.
 - Captions are self-contained (2–4 sentences): what is shown, how to read it, what to notice.
+- Place each figure and table near its first citation (published ESWA articles and most submitted preprints do; figures collected at the end are a legacy option, not a requirement). In LaTeX use `[!tbp]` so a tall figure can take a float page instead of drifting to the end.
 
 ## 7. References and citation practice
 - APA 7 author–year. `\citet{key}` for "Huang et al. (2025) propose …", `\citep{a,b}` for parenthetical groups; never "Huang et al. \cite{x}".
