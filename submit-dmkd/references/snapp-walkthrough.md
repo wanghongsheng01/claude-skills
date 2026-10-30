@@ -2,17 +2,17 @@
 
 Entry: https://submission.springernature.com/new-submission/10618/3 (log in with a Springer Nature account, Google or ORCID). The author clicks every button; Claude prepares the values. Values to paste are in English; the explanations for the author are in Chinese.
 
-Generic steps from the Snapp help pages [SN]; DMKD-specific screens are [UNKNOWN] until the author has seen them. Record what the portal actually shows in this file after each submission.
+The screens below are what DMKD's Snapp actually showed on 2026-10-30 (Regular/Research submission, LaTeX zip). Snapp has five tabs: Files → Details → Authors → Declarations → Review. Ask the author for a full-page screenshot of each tab and check it before they click Next.
 
-1. **Article type** — 选 "Regular Paper"（或按稿件类型选 Survey Paper）。不要选任何 ECML PKDD collection。
-2. **Upload files** — 上传 LaTeX zip（扁平结构，含 `main.tex`、`sn-jnl.cls`、图、参考文献），再上传编译好的 PDF 和 cover letter。Snapp 会自动编译 zip 生成审稿 PDF；编译失败会退回，需要检查 log 并重传。
-3. **Confirm extracted details** — 系统自动提取标题、摘要、作者；逐项与 `main.tex` 对照（标题大小写、摘要全文、作者顺序、单位）。
-4. **Additional information** — 作者与单位、通讯作者、ORCID、资助信息（Funding，按稿件 Statements and Declarations 原文填写）、作者贡献（Author contributions）、利益冲突（Competing interests；期刊只发表门户里填写的版本，必须与稿件一致）。
-5. **Declarations / policies** — 双重投稿、第三方材料、预印本（如有 arXiv，填 DOI 与许可）、数据可用性；同意政策。开放获取在录用后才选择。
-6. **Reviewers (if shown)** — 建议审稿人需独立、来自不同国家和机构，提供机构邮箱和 ORCID/Scopus ID；回避审稿人通常不超过两人/两个课题组。
-7. **Review and submit** — 是否在 Research Square 预印（In Review）为可选项，由作者决定；最后由作者本人点击 "Submit Manuscript"。
+1. **Files** — "Upload manuscript" 上传扁平 LaTeX zip（`main.tex`、`sn-jnl.cls`、图；正文自带 thebibliography 时不需要 .bst/.bib）。没有单独上传编译 PDF 的位置。Figures and tables、Supplementary material、Related files 均为可选，补充材料已在 Zenodo 时不传。
+2. **Details** — Collection 留空（不要选 ECML PKDD）。Title、Abstract 由系统从 zip 自动抽取：**抽取的摘要会保留 LaTeX 转义**（实测出现 `et al.\repository`、`30\%`），必须清空后粘贴纯文本摘要。Cover letter 在此页上传（`Upload cover letter`）。
+3. **Authors** — 先在 "Affiliated institutions" 逐个添加稿件中的每个单位（名称、国家、城市、可选的院系），再给每位作者选 Primary/Other affiliation（每人最多两个）。系统只自动建了第一个单位，并把它默认给所有作者，需逐人核对。通讯作者下拉框与稿件一致，不要多勾。Author Contributions Statement 用姓名缩写（"H.W.: …"），该文本取代稿件里的版本。
+4. **Declarations** — Publishing policy 勾选；**Competing interests 默认可能停在 "No"**，稿件有申报时必须改选 Yes 并粘贴原文（期刊只发表门户版本）；Dual publication、Authorship 确认、Third party material、Data availability（选 Yes 后出现文本框）、Acknowledgements（取代稿件版本）、Research funding（选 Yes 后按作者填资助机构）。
+5. **Review** — 汇总页，可点 Edit 回到各页修改。**没有建议审稿人字段**：推荐审稿人（姓名、单位、机构邮箱、一句理由，必要时披露远关系）应写进 cover letter。Research Square "In Review" 预印为可选，作者未发预印本时选 No。先点 "Download generated PDF for review" 下载 Snapp 用 pdflatex 生成的审稿 PDF 并核对，再由作者勾选条款并点 "Submit manuscript"。
+6. **After submission** — 状态页显示 "Technical check"，并给出 Submission ID 与编辑部邮箱；保存截图和生成 PDF。
 
 ## Consistency checks before clicking Submit
-- 门户标题、摘要、关键词与 `main.tex` 完全一致（摘要 150-250 词，关键词 4-6 个）。
-- Funding、Competing interests、Author contributions 三处门户文字与稿件原文逐字一致。
-- Snapp 生成的审稿 PDF 打开检查：无 `??`、参考文献完整、图清晰、页数与本地编译一致。
+- 门户标题、摘要、关键词与 `main.tex` 完全一致（摘要 150-250 词，关键词 4-6 个），摘要中无 `\`、`~`、`--` 等 LaTeX 残留。
+- 每位作者的单位与稿件 `\affil` 一一对应。
+- Funding、Competing interests、Author contributions、Acknowledgements 的门户文字与稿件原文一致。
+- Snapp 生成的审稿 PDF：与本地定稿逐字比对（忽略断行）、无 `??`、参考文献完整、所有表格竖排、无超出版心的行、页数一致。

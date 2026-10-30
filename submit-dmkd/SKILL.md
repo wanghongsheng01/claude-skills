@@ -30,7 +30,7 @@ Re-read the submission guidelines when this file is more than six months old and
    - sn-jnl pitfalls seen in practice: `\resizebox` around a tabular with `\footnotemark` breaks compilation; keep every table upright (portrait) so that reviewers never rotate the page: drop or merge columns, move counts to the supplement, use `\scriptsize` with `tabular*` and `\extracolsep\fill`; avoid `sidewaystable` even though the template mentions it (authors have rejected rotated tables). `\scriptsize` is 9 pt and the text width is 31 pc. Put `\raggedright` inside `thebibliography` and wrap long commit hashes in `\seqsplit{}`. Load `bookmark` to silence bookmark-level warnings from `\bmhead`. One "Underfull \vbox while \output is active" per page comes from the class itself (Springer's sample shows it too).
 6. **Build the upload package**: `python3 scripts/build_snapp_package.py <folder> --main main.tex --out <upload_dir>`; it writes a flat LaTeX zip, a manifest with SHA-256 hashes and a list of the files Snapp needs.
 7. **Run the `review-dmkd` skill** (independent reviewer and action-editor pass) before the portal step.
-8. **Portal pass** with the author using `references/snapp-walkthrough.md`. Never click Submit, accept policies, pick open access or pay on the author's behalf.
+8. **Portal pass** with the author using `references/snapp-walkthrough.md` (screens recorded from a real DMKD submission: cleaned abstract, per-author affiliations, competing-interests default, reviewers go in the cover letter). Never click Submit, accept policies, pick open access or pay on the author's behalf.
 
 ## Article types [VERIFIED]
 Select the type in the portal. Each type has its own criteria:
