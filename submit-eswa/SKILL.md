@@ -167,6 +167,14 @@ Not needed for basic grammar/spelling/reference checkers or accessibility tools;
 - Permission obtained for any copyrighted material (including from the web).
 - For open access: all authors know the APC is payable on acceptance.
 
+## Mandatory requirements shown in the portal, not in the guide [EM]
+The Attach Files step of Editorial Manager shows a box "Mandatory Submission Requirements for RESEARCH ARTICLES" (seen 2026-10-30; read the whole box in the portal, it may be longer than this list):
+1. **An institutional e-mail address for every contributing author**, in the system and on the title page; otherwise state the reasons in the cover letter.
+2. **A cover letter for every manuscript**; for research articles it must contain details of the **novel contribution the paper makes to the current published literature**. Write this as an explicit paragraph that names the closest published work.
+3. **The editorial decision is final**: the journal cannot consider manuscripts it rejected earlier (the box continues with an exception; read it).
+
+Also on that step: "Please provide a single file containing your manuscript now" (data in it may prefill later steps), and the Declaration of Interests form link.
+
 ## Editorial Manager walkthrough [EM]/[CHECK]
 Portal: https://www.editorialmanager.com/eswa/ — sign in with "Continue with Elsevier" (Elsevier account). A first-time author passes the journal's **Registration Page** (seen 2026-10): Personal Information (Title*, Given Name*, Middle Name, Family Name*, Degree, Telephone with country code, E-mail*, ORCID with Fetch/Register), Institution Related Information (Position, Institution with autocomplete, Department, Street Address lines, then city, state/province, postal code, country), then areas of interest. Prefill these from the corresponding-author block of the title page (same institution, address and e-mail as the manuscript); title, degree, telephone, ORCID and the password are the author's to enter. Typical Elsevier EM sequence [CHECK each label]:
 1. **Select Article Type** (full-length article / review / special-issue types).
@@ -206,7 +214,8 @@ Portal: https://www.editorialmanager.com/eswa/ — sign in with "Continue with E
 - [ ] Datasets cited in the reference list with `[dataset]`; AI statement covers every AI use, including figures or code if applicable.
 - [ ] Option C data statement; repository link on the title page/portal (or anonymized mirror).
 - [ ] AI declaration last before references; funding sentence; declarations-tool .docx attached.
-- [ ] Cover letter states scope fit, novelty and that the paper is not under consideration elsewhere.
+- [ ] Cover letter states scope fit, an explicit novel-contribution paragraph (mandatory in the portal) and that the paper is not under consideration elsewhere.
+- [ ] Institutional e-mail for every author on the title page and in the portal.
 - [ ] The author, not the assistant, approves and submits.
 
 ## Files
