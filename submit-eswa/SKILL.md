@@ -177,15 +177,31 @@ Also on that step: "Please provide a single file containing your manuscript now"
 
 **Item types on the Attach Files step (seen 2026-10-30).** Required for a research article: Cover Letter, Title Page (Author and affiliations details), Manuscript without author details, Highlights, Declaration of Interest Statement, ORCID Information. So Highlights are required in the portal although the guide only encourages them, and **ORCID Information is a required file the guide does not describe**: collect every author's iD before starting. Its expected format is not documented; a list of author names and iDs is what an unofficial checklist describes. Optional types include Figure(s), Table(Editable Version), Supplementary Material, Credit Author Statement and Research Data. **There is no LaTeX item type.** The portal says PDFs are not supported for the manuscript, table and title page "at revision stage", so a PDF manuscript is accepted at first submission and the editable source goes in at revision. The dropdown defaults to the manuscript type: change it before each upload.
 
-## Editorial Manager walkthrough [EM]/[CHECK]
+## Editorial Manager walkthrough [EM]
 Portal: https://www.editorialmanager.com/eswa/ — sign in with "Continue with Elsevier" (Elsevier account). A first-time author passes the journal's **Registration Page** (seen 2026-10): Personal Information (Title*, Given Name*, Middle Name, Family Name*, Degree, Telephone with country code, E-mail*, ORCID with Fetch/Register), Institution Related Information (Position, Institution with autocomplete, Department, Street Address lines, then city, state/province, postal code, country), then areas of interest. Prefill these from the corresponding-author block of the title page (same institution, address and e-mail as the manuscript); title, degree, telephone, ORCID and the password are the author's to enter. Typical Elsevier EM sequence [CHECK each label]:
-1. **Select Article Type** (full-length article / review / special-issue types).
-2. **Attach Files**: choose item type per file — the labels listed under "Item types on the Attach Files step" above, with one Figure(s) upload per figure. EM builds a review PDF; download and inspect it for identity leaks before approving.
-3. **Review Preferences**: suggested/opposed reviewers if asked (real, independent experts; no co-authors or colleagues from the last few years).
-4. **Additional Information**: questionnaire (prior submissions/related papers, data availability, generative-AI use, SSRN preprint choice, funding).
-5. **Comments**: short note to the editor (optional).
-6. **Manuscript Data**: full title, abstract (paste plain text), keywords, authors in order, funding, classifications/sections if offered.
-7. **Build PDF for approval** → View Submission → **Approve Submission** (the author does this). Unapproved submissions stay in "Submissions Waiting for Author's Approval".
+Steps below were seen in a real submission on 2026-10-30 [EM].
+1. **Article Type Selection**: "Full length article".
+2. **Attach Files**: use the labels under "Item types on the Attach Files step" above. Upload the figures in numerical order or reorder them: the appended figure pages carry no numbers and follow the upload order. Green marks on the left only mean each required type has a file.
+3. **General Information**:
+   - Section/Category (one): 1.1 AI / ML model and method; 1.2 AI in biology and medicine; 1.3 Computer vision and pattern recognition; 2.1 Data driven optimization; 2.2 Soft Computing; 2.3 Swarm and evolutionary computation; 3.1 Blockchain; 3.2 Data analytics and mining; 3.3 Data Security; 4.1 AI in industrial; 4.2 Industrial control and robotics; 4.3 Internet of things; 5.1 NLP / Large language model; 5.2 Recommender system; 5.3 Sentiment analysis; 6.1 Business intelligence and supply chain; 6.2 Decision support system; 6.3 Mathematical programming; 7. Others.
+   - Classifications: the same tree, select 1 to 2, then Add and Submit.
+4. **Additional Information** (questionnaire):
+   - funders named in the Acknowledgements (one confirm option);
+   - open access with APC or subscription model (the author's choice);
+   - three title-page confirmations; the first says the title page sits "between manuscript title and the paper abstract", which does not fit a separate title page, so state the actual arrangement in Comments and never add authors to the anonymized file;
+   - Highlights provided; reference list confirmed;
+   - SSRN free preprint service (keep "No" for double-anonymized review);
+   - data availability dropdown has no "publicly shared" option, so choose "Other" and explain in **at most 200 characters** (published verbatim);
+   - whether the manuscript was deposited in a preprint repository before submission;
+   - previous publication as a conference proceeding;
+   - only one corresponding author.
+5. **Comments**: free text for the publication office; it does not appear in the submission PDF.
+6. **Manuscript Data**: Title, Abstract, Keywords, Authors, Funding Information. These may be prefilled, so replace them from the prepared text and re-read keywords letter by letter. The author dialog has **one Institution field**: give the main institution and mention a second affiliation in Comments. Funding has "Funding information is not available." when there is no funder.
+7. **Build PDF for Approval**, then **View Submission** under "Submissions Waiting for Approval by Author". Corrections go through **Edit Submission**, which requires a new build. Tick "I accept" (Publishing Ethics and Copyright) and approve (the author does this). **Remove Submission** deletes it permanently. The author-view PDF includes the cover letter, title page, declaration and ORCID pages; it does not show what reviewers receive.
+
+**Declarations tool** (declarations.elsevier.com): four pages, namely Reported Work, Other Support (last 3 years), Intellectual Property, Other Activities. Tick a support type on page 1 when its switch is on; otherwise the file reads "reports was provided by". Non-financial types: Administrative support, Article publishing charges, Equipment/drugs/supplies, Statistical analysis, Travel, Writing assistance. The generated text declares no interests for "other authors", so ask co-authors first, and keep the title-page statement consistent with the file.
+
+**Before submitting**: check the public code repository and its archive for an earlier manuscript. A `paper/` folder with author names is a public version: answer the preprint question accordingly and tell the editor. Zenodo versions cannot be withdrawn, so keep manuscripts out of a repository that will be cited in a double-anonymized submission.
 
 ## Desk-reject prevention (ESWA-specific)
 - Lead with the intelligent-system application in title, abstract, highlights and the first paragraph; name the users and the decision the system supports.
