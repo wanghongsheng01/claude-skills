@@ -234,3 +234,38 @@ review-dmkd/
 ```
 
 Order of use for a DMKD paper: `write-dmkd` while writing, `review-dmkd` before submission, `submit-dmkd` to build and check the package and at the portal. Language convention: English for everything reviewers, editors or the portal see; Chinese for reports to the author.
+
+## submit-dse
+Submission guide (投稿 DSE 指南) for the Springer journal *Data Science and Engineering* (CCF B). Double-blind anonymization of the manuscript and supplements, separate title page, sn-jnl with numeric citations (39/39 published articles), declarations, LLM disclosure, Online Resource files, Editorial Manager portal, APC.
+
+```
+submit-dse/
+  SKILL.md                         workflow, scope test, blinding checklist, format table, files, fees, checklist
+  scripts/check_dse_submission.py  checks template, blinding, abstract, keywords, figures, references, leftovers
+  scripts/build_em_package.py      flat LaTeX zip + SHA-256 manifest
+  references/                      guide digest, verification log, portal notes
+  assets/title_page_template.md
+```
+
+## write-dse
+Writing guide (Write-DSE 写作指南) built from 39 published DSE articles: titles, abstracts, structure, experiments, limitations, references, repositioning an audit paper.
+
+```
+write-dse/
+  SKILL.md
+  scripts/dse_structure_check.py   compares a manuscript with DSE medians and counts hedging phrases
+  references/dse_paper_survey.csv  one row per article
+  references/observed-papers.md    closest models with DOIs
+```
+
+## review-dse
+Simulated DSE review (Review-DSE 审稿指南): desk screen, independent reviewer personas, seven criteria, associate-editor letter, fix list. No public DSE reports exist, so inference is labelled.
+
+```
+review-dse/
+  SKILL.md
+  assets/review_form.md, assets/desk_screen.md
+  references/evidence-notes.md
+```
+
+Order of use for a DSE paper: `write-dse` while writing, `review-dse` before submission, `submit-dse` to build and check the package and at the portal. Language convention: English for submitted material, Chinese for reports to the author.
