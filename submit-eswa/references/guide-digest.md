@@ -1,4 +1,4 @@
-# ESWA Guide for Authors — digest with quotes (read 2026-10-29)
+# ESWA Guide for Authors — digest with quotes (read 2026-10-29, re-read 2026-10-30)
 
 Source: https://www.sciencedirect.com/journal/expert-systems-with-applications/publish/guide-for-authors, read in full (about 58,000 characters) through Claude in Chrome on 2026-10-29. Short quotes only; the full text lives on ScienceDirect.
 
@@ -8,7 +8,7 @@ Source: https://www.sciencedirect.com/journal/expert-systems-with-applications/p
 | Metaphor algorithms | Repurposing concepts through natural/technical/social metaphors is "discouraged"; must "convincingly demonstrate their contribution"; "formal, mathematically grounded explanations" of differences; "standard optimization terminology". |
 | Software Publication | Open-source software can become an additional paper in *Software Impacts*. |
 | Article types | Same list as scope: original papers in expert and intelligent systems technology and application. |
-| Peer review | "double anonymized"; editors screen; "minimum of two reviewers"; editors decide; one appeal. Editors recuse for own, family, colleague or interest papers. Special issues: guest editor may recommend; journal editor decides. |
+| Peer review | "Your submission will initially be assessed by our editors. If your submission is deemed suitable, it will typically be sent to be reviewed by a minimum of two reviewers for an independent expert assessment of the scientific quality." "double anonymized"; editors screen; "minimum of two reviewers"; editors decide; one appeal. Editors recuse for own, family, colleague or interest papers. Special issues: guest editor may recommend; journal editor decides. |
 | Submission declaration | Unpublished (preprint/abstract/lecture/thesis/registered report excepted), not under consideration elsewhere, approved by all authors and institutions; screening tools may be used. |
 | Authorship | ICMJE-like three criteria; single corresponding author; group authorship rules. |
 | Changes to authorship | Only before acceptance, Authorship Change Request form, editor approval; none after acceptance; review may pause. |
@@ -19,15 +19,15 @@ Source: https://www.sciencedirect.com/journal/expert-systems-with-applications/p
 | Inclusive language / SAGER / image manipulation / maps / affiliations | Elsevier-wide rules; no AI on primary research images; image screening possible. |
 | File format | .doc/.docx or .tex; "A PDF is not an acceptable source file"; Word single column; double column only for LaTeX; remove strikethrough/underline. |
 | LaTeX | Template encouraged; editable source files at submission or revision. |
-| Title page | Concise title, avoid abbreviations/formulae; names in portal order; lowercase superscript affiliations with full postal address and country; corresponding author e-mail on title page (published); present address footnotes. |
-| Double anonymized | Title page and anonymized manuscript as separate files; title page also holds acknowledgements (only there), competing-interest declaration (if no separate file), corresponding author full address + e-mail; manuscript and supplements free of identifying information. |
+| Title page | Concise title, avoid abbreviations/formulae; names in portal order (own-script name may follow in parentheses); institutions by full standard name or standard abbreviation (jurisdictional-claims section); lowercase superscript affiliations with full postal address and country; corresponding author e-mail on title page (published); present address footnotes. |
+| Double anonymized | Title page and anonymized manuscript as separate files; title page also holds acknowledgements (only there; include help "with language, writing, or proofreading"), competing-interest declaration (if no separate file), corresponding author full address + e-mail; manuscript and supplements free of identifying information. |
 | Abstract | ≤250 words; purpose, procedures, main findings "their statistical significance, where applicable", conclusions; new aspects; stand-alone; avoid references (author and year if essential); define abbreviations. |
 | Keywords | 1–7, English, avoid "and"/"of" multi-word keywords, established abbreviations only. |
 | Highlights | Encouraged; separate editable file with "highlights" in its name; 3–5 bullets ≤85 characters including spaces. |
 | Math | Editable; inline simple formulae; solidus; italic variables; exp; consecutive numbering. |
 | Tables | Editable; next to text or at end; cite all; consecutive numbers; captions; notes below; no vertical rules or shading; sparingly; no duplication. |
 | Artwork | Separate files, logical names (Figure_1...); text graphics may be embedded in LaTeX; captions = brief title + description; formats: vector EPS/PDF with embedded fonts, photos ≥300 dpi (single column ≥1063 px, full page ≥2244 px), bitmap line art ≥1000 dpi (≥3543/7480 px), charts XLS/XLSX, annotated PPT; no low resolution, tiny text, or unrelated multi-image files; accessible colour. |
-| GenAI and figures | Allowed for schematics and reproducible data plots; never for primary observational data; disclose in caption and statement. |
+| GenAI and figures | Allowed for schematics and for data visualizations "directly derived from underlying data using reproducible analytical, computational, or statistical methods"; never for primary observed/experimental images (no AI brightness/contrast edits either); AI in research methods is not restricted; "If you used generative AI tools to create images in your manuscript, disclose this in each image caption as well as in the general generative AI disclosure statement." |
 | Supplementary | Cite each; submit with manuscript; caption each; replace only at revision; published as received. |
 | Video | Recommended formats; ≤150 MB per file, 1 GB total; stills; descriptive text. |
 | Research data | Option C: deposit, cite and link; else explain; data statement at submission (published); data linking `Database: ID`; Data in Brief / MethodsX co-submission. |

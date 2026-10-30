@@ -8,7 +8,7 @@ description: "Submission guide and checklist for the Elsevier journal Expert Sys
 Use this skill whenever a manuscript is prepared for, or moved to, **Expert Systems with Applications** (Elsevier). Companion skills: `write-eswa` (how ESWA papers are written) and `review-eswa` (how ESWA screens and reviews). Order of use: `write-eswa` while writing → `review-eswa` for the pre-submission review → `submit-eswa` to build and check the package.
 
 Status tags:
-- **[GUIDE]** read in full from the ESWA Guide for Authors on ScienceDirect on **2026-10-29** through Claude in Chrome (`references/guide-digest.md` holds the digest with quotes);
+- **[GUIDE]** read in full from the ESWA Guide for Authors on ScienceDirect on **2026-10-29** and again on **2026-10-30** (no rule changes; details added) through Claude in Chrome (`references/guide-digest.md` holds the digest with quotes);
 - **[SD]** read from the journal's other ScienceDirect pages (open access, insights, editorial board) on 2026-10-29;
 - **[EM]** read from the Editorial Manager landing page (https://www.editorialmanager.com/eswa/) on 2026-10-29;
 - **[CHECK]** typical Elsevier/Editorial Manager behaviour not yet seen for ESWA itself; confirm in the portal and update this file.
@@ -55,14 +55,19 @@ Answer in writing before submitting:
 A method paper fits when it is framed as a component of an intelligent system with a clear application and practical guidance. Pure NLP or statistics framing, with no system or deployment angle, invites "out of scope" (in 2026 a sister Elsevier journal desk-rejected an LLM-annotation method paper as out of scope and pointed it to ESWA).
 
 ## Peer review [GUIDE]
-- **Double anonymized.** Editors screen first; suitable papers go to **at least two reviewers**; editors decide. One appeal per submission (Elsevier Appeal Policy).
+> "This journal follows a double anonymized review process. Your submission will initially be assessed by our editors. If your submission is deemed suitable, it will typically be sent to be reviewed by a minimum of two reviewers for an independent expert assessment of the scientific quality. Our editors decide whether to accept or reject your article."
+
+- **Double anonymized**: authors and reviewers do not know each other, so every uploaded file except the title page, cover letter and declarations must be free of identity.
+- **Editor screening first** (desk decision, about 5 days [SD]): scope fit, novelty and presentation decide whether the paper reaches reviewers at all; see "Desk-reject prevention".
+- **At least two reviewers** assess scientific quality independently; write for an expert who checks the method, the statistics and the reproducibility.
+- **Editors decide**; one formal appeal per submission (Elsevier Appeal Policy), and its outcome is final.
 - Editors do not handle papers by themselves, family or colleagues, or about products in which they have an interest.
 - Special issues follow the same process; a guest editor may recommend, the journal editor decides.
 - Reviewers and editors may not upload the manuscript into generative-AI tools.
 
 ## Double-anonymized review [GUIDE]
 Submit **two separate files**:
-- **Title page (with author details)**: title; given and family names in portal order; affiliations with lowercase superscript letters and full postal address including country; corresponding author marked, with full postal address and e-mail (published); present address as numbered footnotes; **acknowledgements** (only here, never in the manuscript); **declaration of competing interests** when no separate declaration file is submitted.
+- **Title page (with author details)**: title; given and family names in portal order (a name in the author's own script may follow in parentheses); institutions by their full standard name or standard abbreviation; affiliations with lowercase superscript letters and full postal address including country; corresponding author marked, with full postal address and e-mail (published); present address as numbered footnotes; **acknowledgements** (only here, never in the manuscript; name everyone who helped, including with language, writing or proofreading); **declaration of competing interests** when no separate declaration file is submitted.
 - **Anonymized manuscript**: main body, references and tables, **no** author names, affiliations, acknowledgements or other identifying information; the same applies to supplementary material.
 
 Practical anonymization (our rules):
@@ -103,9 +108,11 @@ The guide lists original papers on expert and intelligent systems technology and
 - **Abstract**: ≤**250 words**; purpose, basic procedures, main findings **with their statistical significance where applicable**, principal conclusions; emphasise what is new; stand-alone; avoid references (if essential, author and year in full); define non-standard abbreviations at first use.
 - **Keywords**: **1–7**, English, avoid multi-word keywords built with "and"/"of"; abbreviations only if firmly established.
 - **Sections**: numbered 1, 1.1, 1.1.1; cross-refer by number; abstract unnumbered. Optional "Theory and calculation" style sections.
+- **File format**: editable source; remove strikethrough and underline formatting unless scientifically relevant.
 - **Math**: editable; inline when simple; solidus for small fractions; italic variables; `exp` for powers of e; displayed equations numbered consecutively.
-- **Tables**: editable; cited in order; caption with the table; notes below; no vertical rules or shading; no duplication of results shown elsewhere.
-- **Artwork**: every figure cited and numbered in order; caption = brief title (not inside the image) + description; explain every symbol/abbreviation; colour accessible to colour-blind readers; no AI-generated or AI-altered primary data images; disclose AI-made images in the caption and the AI statement.
+- **Tables**: editable; cited in order; caption with the table; notes below; no vertical rules or shading; used sparingly, without duplicating results shown elsewhere (a figure that plots a subset of a table as trends is fine; say what each adds).
+- **Artwork**: every figure cited and numbered in order; caption = brief title (not inside the image) + description; explain every symbol/abbreviation; colour accessible to colour-blind readers (do not rely on red/green alone; vary markers and line styles). Vector PDF/EPS with embedded fonts for plots and diagrams (the guide lists XLS/XLSX as the recommended type for charts; vector PDF is accepted as a vector drawing). Do not submit text that is "disproportionately small"; our rule: draw each figure at its final printed width (elsarticle `preprint`: text width 384 pt = 5.33 in) with no text below 7 pt, and include it at scale ≈1. One file per figure; panels in one file only when they are meant to be compared.
+- **Generative AI and figures**: AI tools may help with schematics and with data visualizations "directly derived from underlying data using reproducible analytical, computational, or statistical methods"; never for primary observational images. If a generative-AI tool created an image, disclose it **in each caption** and in the AI statement. If an AI assistant wrote the plotting code, decide with the author whether the AI statement should say so (safest: name it).
 - **Footnotes**: sparingly, consecutive.
 - **Appendices**: A, B, ...; Eq. (A.1), Table A.1, Fig. A.1.
 - **Language**: American or British English, not mixed; inclusive language (avoid "he/she"; plural neutral forms).
@@ -117,7 +124,7 @@ The guide lists original papers on expert and intelligent systems technology and
 - Every reference must be real, complete and correct; include DOIs where available; references in the abstract given in full; avoid personal communications/unpublished results in the list; "in press" means accepted.
 - Journal example: `Van der Geer, J., Handgraaf, T., & Lupton, R. A. (2020). The art of writing a scientific article. Journal of Scientific Communications, 163, 51–59. https://doi.org/...`
 - Article number: `..., Heliyon, 19, Article e00205. https://doi.org/...`
-- **Dataset**: prefix `[dataset]`; author(s), title, repository, version, year, persistent identifier.
+- **Dataset**: author(s), title, repository, version, year, persistent identifier, marked `[dataset]`; the guide's example puts it after the title: `Oguro, M., ... (2015). Mortality data for ... [dataset]. Mendeley Data, v1. https://doi.org/10.17632/xwj98nb39r.1.` Cite every public corpus you use this way in addition to its paper (BibTeX: `@misc` with `title = {Name [dataset]}`, `howpublished = {Repository, vN}`, `doi` or `url` + `note = {Accessed Month D, YYYY}`). Verify creators, year and version on DataCite / the repository API.
 - **Software**: creators, title, venue/repository with PID, date, identifier (DOI preferred), version, `[Computer software]`; cite a describing article in addition, not instead.
 - **Preprints**: mark "preprint" or the server name and give the preprint DOI (arXiv: `10.48550/arXiv.<id>`); cite the formal version once it exists.
 - **Web**: full URL and last access date.
@@ -152,6 +159,14 @@ Not needed for basic grammar/spelling/reference checkers or accessibility tools;
 - Journal metrics shown on 2026-10-29 [SD]: CiteScore 17.0, Impact Factor 9.4; timeline: **5 days** submission → first decision, **62 days** to decision after review, **147 days** to acceptance, **7 days** acceptance → online.
 - Editor-in-Chief on 2026-10-29 [SD]: Prof. Ling Wang (Tsinghua University). 156 editors in 32 countries; associate editors with NLP/crowdsourcing/human-centred AI expertise exist, so name the application area clearly to reach them.
 
+## Submission checklist [GUIDE]
+- One corresponding author with full, current contact details (their affiliation decides publishing-agreement eligibility).
+- All files uploaded: artwork, tables, footnotes, captions, supplementary material.
+- Spelling and grammar checked.
+- Every reference cited in the text is in the list and vice versa.
+- Permission obtained for any copyrighted material (including from the web).
+- For open access: all authors know the APC is payable on acceptance.
+
 ## Editorial Manager walkthrough [EM]/[CHECK]
 Portal: https://www.editorialmanager.com/eswa/ — sign in with "Continue with Elsevier" (Elsevier account). A first-time author passes the journal's **Registration Page** (seen 2026-10): Personal Information (Title*, Given Name*, Middle Name, Family Name*, Degree, Telephone with country code, E-mail*, ORCID with Fetch/Register), Institution Related Information (Position, Institution with autocomplete, Department, Street Address lines, then city, state/province, postal code, country), then areas of interest. Prefill these from the corresponding-author block of the title page (same institution, address and e-mail as the manuscript); title, degree, telephone, ORCID and the password are the author's to enter. Typical Elsevier EM sequence [CHECK each label]:
 1. **Select Article Type** (full-length article / review / special-issue types).
@@ -176,6 +191,8 @@ Portal: https://www.editorialmanager.com/eswa/ — sign in with "Continue with E
 - The plain-text abstract pasted into the portal counts more words than the LaTeX source (symbols such as 1 − δ become several tokens); keep the source at ≤246 words.
 - Do not reuse a declarations-tool file from another journal (it names that journal); generate a new one.
 - Figures must appear near their first mention, as in published ESWA articles. A tall figure placed with `[t]` only (no `p`) is deferred to the end of the document, and every later figure queues behind it, so all figures end up after the references. Use `[!tbp]`, put Figure 1 where it is first cited, and read the page numbers of the `fig:` labels in `output.aux` after compiling.
+- Figures drawn wider than the text width and scaled down shrink their text below 7 pt (here 6.2–6.6 pt). `check_eswa_submission.py` now reads each figure's width and warns when the inclusion scale is below 0.95; redraw at 5.33 in (preprint) with fonts ≥7 pt and use explicit, sparse tick labels so they do not collide.
+- Corpora were cited only through their papers; the guide asks for `[dataset]` references too. The checker warns when the list has none.
 - A package script that names figure files one by one drops a figure added later (here Figure_5 was missing from both the upload folder and the source zip). Copy with a glob (`figures/Figure_[0-9]*.pdf`) and run the checker with `--package`, which compares every `\includegraphics` file with the upload folder and the source zip.
 
 ## Before approving the submission
@@ -185,14 +202,15 @@ Portal: https://www.editorialmanager.com/eswa/ — sign in with "Continue with E
 - [ ] Manuscript anonymized in text, figures, file names, PDF metadata, supplements and source comments.
 - [ ] APA author-year citations; alphabetical list; DOIs; preprints marked.
 - [ ] Abstract ≤250 words with significance stated; 1–7 keywords; 3–5 highlights ≤85 characters.
-- [ ] Figures as separate Figure_N files, vector, fonts embedded; tables editable without vertical rules.
+- [ ] Figures as separate Figure_N files, vector, fonts embedded, drawn at final width with no text below 7 pt; tables editable without vertical rules.
+- [ ] Datasets cited in the reference list with `[dataset]`; AI statement covers every AI use, including figures or code if applicable.
 - [ ] Option C data statement; repository link on the title page/portal (or anonymized mirror).
 - [ ] AI declaration last before references; funding sentence; declarations-tool .docx attached.
 - [ ] Cover letter states scope fit, novelty and that the paper is not under consideration elsewhere.
 - [ ] The author, not the assistant, approves and submits.
 
 ## Files
-- `scripts/check_eswa_submission.py` — LaTeX folder checker (journal line, author-year setup, bare `\cite`, abstract, keywords, scope words, anonymity, identity regex over all source files, declarations, labels, figure names, highlights, title page).
+- `scripts/check_eswa_submission.py` — LaTeX folder checker (journal line, author-year setup, bare `\cite`, `[dataset]` references, abstract, keywords, scope words, anonymity, identity regex over all source files, declarations, labels, figure names and inclusion scale, underline/strikethrough, he/she wording, highlights, title page, `--package` completeness).
 - `scripts/verify_eswa_pdf.py` — PDF metadata/text identity scan, `??`, placeholders, Type 3 and non-embedded fonts, expected/forbidden text, stale-build check (needs `pypdf`).
 - `scripts/make_docx.py` — Markdown-lite → .docx (python-docx or macOS textutil).
 - `assets/manuscript_skeleton.tex`, `assets/title_page_template.md`, `assets/model5-names.bst`.
@@ -200,7 +218,7 @@ Portal: https://www.editorialmanager.com/eswa/ — sign in with "Continue with E
 - `references/verification-log.md` — what was read when, and how to refresh.
 
 ## Sources
-- Guide for Authors: https://www.sciencedirect.com/journal/expert-systems-with-applications/publish/guide-for-authors (read 2026-10-29)
+- Guide for Authors: https://www.sciencedirect.com/journal/expert-systems-with-applications/publish/guide-for-authors (read 2026-10-29 and 2026-10-30)
 - Open access options: https://www.sciencedirect.com/journal/expert-systems-with-applications/publish/open-access-options
 - Journal insights: https://www.sciencedirect.com/journal/expert-systems-with-applications/about/insights
 - Editorial board: https://www.sciencedirect.com/journal/expert-systems-with-applications/about/editorial-board

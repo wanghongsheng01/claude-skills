@@ -8,6 +8,8 @@
 | 2026-10-29 | Editorial board | Claude in Chrome | EiC Prof. Ling Wang (Tsinghua); 156 editors, 32 countries; founding editor Jay Liebowitz |
 | 2026-10-29 | Editorial Manager landing page | Claude in Chrome (not logged in) | https://www.editorialmanager.com/eswa/ ; "Continue with Elsevier" sign-in; the in-portal steps were not visible without logging in → tagged [CHECK] |
 | 2026-10-29 | LaTeX bibliography style | GitHub (Ravby/eswa-template, community, MIT) | `elsarticle` + `\biboptions{authoryear}` + `model5-names.bst` (Elsevier, LPPL) for APA-style lists |
+| 2026-10-30 | ESWA Guide for Authors (re-read) | Claude in Chrome, `get_page_text` (50k chars) + `javascript_tool` for the tail in ~950-character slices (longer returns are truncated or blocked when they contain URLs) | No rule changes since 2026-10-29; added own-script names, standard institution names, language-help acknowledgements, GenAI-and-figures details, `[dataset]` placement, submission checklist |
+| 2026-10-30 | Editorial Manager registration page | Screenshot from the author | Field list recorded in the walkthrough |
 
 ## How to refresh
 1. Open the guide in Claude in Chrome; if `get_page_text` returns nothing, wait and retry.

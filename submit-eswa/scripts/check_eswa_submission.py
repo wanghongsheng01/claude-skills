@@ -125,6 +125,10 @@ def check_citations(tex, folder, bib_arg):
     if arx:
         report("WARN", f"{len(arx)} cited arXiv/preprint entries: mark them 'preprint', give the preprint DOI "
                        "(10.48550/arXiv.<id>) and replace with the formal version where one exists: " + ", ".join(sorted(arx)))
+    data = [k for k in cited & set(entries) if "[dataset]" in entries[k]]
+    report("OK" if data else "WARN",
+           f"{len(data)} [dataset] references" + ("" if data else ": the guide asks to cite the datasets used in the "
+           "reference list with '[dataset]' (title [dataset]. Repository, version. DOI)"))
     n = len(cited)
     report("OK" if n >= 40 else "WARN", f"{n} distinct references cited "
            + ("" if n >= 40 else "(published ESWA research articles usually cite far more; check related-work coverage)"))
@@ -181,6 +185,16 @@ def check_title_page(path, identity):
                        ("acknowledgements", r"[Aa]cknowledg"),
                        ("competing interests", r"[Cc]ompeting interest|[Dd]eclaration of interest")]:
         report("OK" if re.search(pat, t) else "WARN", f"title page: {label} {'found' if re.search(pat, t) else 'missing'}")
+
+
+def pdf_width_in(path):
+    """Width of the first page of a figure PDF in inches, read from /MediaBox without extra packages."""
+    try:
+        raw = path.read_bytes()
+    except OSError:
+        return None
+    m = re.search(rb"/MediaBox\s*\[\s*([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)\s+([-\d.]+)", raw)
+    return (float(m.group(3)) - float(m.group(1))) / 72 if m else None
 
 
 def check_package(pkg, graphics):
@@ -290,6 +304,19 @@ def main():
         for lab in re.findall(r"\\begin\{" + env + r"\*?\}.*?\\label\{([^}]*)\}.*?\\end\{" + env, tex, re.S):
             if not re.search(r"\\ref\{" + re.escape(lab) + r"\}", tex):
                 report("WARN", f"{env} {lab} is never cited in the text (guide: cite all tables and figures)")
+    if re.search(r"\\(underline|uline|sout|st|xout)\{", tex):
+        report("WARN", "underline/strikethrough formatting: the guide asks to remove it unless scientifically relevant")
+    if re.search(r"\b(he/she|s/he|he or she|his or her)\b", tex, re.I):
+        report("WARN", "'he/she'-type wording: the guide asks for inclusive, plural neutral forms")
+    for w, g in re.findall(r"\\includegraphics\[[^\]]*?width=([0-9.]*)\\(?:text|column|line)width[^\]]*\]\{([^}]*)\}", tex):
+        f = folder / (g if g.endswith(".pdf") else g + ".pdf")
+        mb = pdf_width_in(f)
+        tw = 384 / 72 if re.search(r"\\documentclass\[[^\]]*preprint", tex) else None
+        if mb and tw:
+            sc = float(w or 1) * tw / mb
+            if sc < 0.95:
+                report("WARN", f"{pathlib.Path(g).name} is drawn {mb:.2f} in wide and scaled to {sc:.2f}: text drawn at 7 pt "
+                               f"prints at {7 * sc:.1f} pt; draw it at the final width so no text is below 7 pt")
     if re.search(r"\\begin\{tabular\}\{[^}]*\|", tex):
         report("WARN", "vertical rules in a table (guide: avoid vertical rules and shading)")
     for g in re.findall(r"\\includegraphics(?:\[[^\]]*\])?\{([^}]*)\}", tex):
