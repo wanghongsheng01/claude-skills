@@ -269,3 +269,41 @@ review-dse/
 ```
 
 Order of use for a DSE paper: `write-dse` while writing, `review-dse` before submission, `submit-dse` to build and check the package and at the portal. Language convention: English for submitted material, Chinese for reports to the author.
+
+## submit-ipm
+Submission guide (投稿 IPM 指南) for *Information Processing & Management*: scope test, double anonymization, the no-preprint rule, exact declaration wording, required CRediT, `[dataset]` placement, the new submission service, fees and timelines. Portal details not yet seen are tagged [CHECK].
+
+```
+submit-ipm/
+  SKILL.md                          rules with source tags, workflow, checklist
+  scripts/check_ipm_submission.py   LaTeX folder checker
+  scripts/verify_ipm_pdf.py         PDF anonymity and font checker
+  scripts/make_docx.py              Markdown-lite to .docx
+  assets/                           manuscript skeleton, title page template, model5-names.bst
+  references/guide-digest.md        every rule with URL and tag, full [CHECK] list
+  references/verification-log.md    what was read when
+```
+
+## write-ipm
+Writing guide (Write-IPM 写作指南) from counts over 1,497 IPM articles and 9 full texts: framing, method versus evaluation conventions, abstracts, two-level measurement, implications, limitations, references.
+
+```
+write-ipm/
+  SKILL.md                          rules with counts
+  scripts/ipm_style_check.py        compares a manuscript with the observed shape
+  references/observed-papers.md     observations with DOIs and evidence tiers
+  references/ipm_paper_survey.csv   one row per surveyed paper
+```
+
+## review-ipm
+Simulated IPM review (Review-IPM 审稿指南): editor desk screen, reviewer personas, likely questions, decision letter and fix plan, an integrity pass, and responses to reviewers. No public IPM reviewer form exists, so this is an assembled checklist.
+
+```
+review-ipm/
+  SKILL.md                         procedure and questions
+  scripts/review_packet.py         builds a numbered reviewer packet from .tex
+  references/evidence.md           sources and tags
+  references/response_template.md  response skeleton
+```
+
+Order of use for an IPM paper: `write-ipm` while writing, `review-ipm` before submission, `submit-ipm` to build and check the package.

@@ -1,0 +1,66 @@
+%% Anonymized manuscript skeleton for Information Processing \& Management (double-anonymized review).
+%% Author details, acknowledgements and CRediT go on the separate title page (title_page_template.md).
+\documentclass[preprint,12pt,authoryear]{elsarticle}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{lineno}          % line numbers help reviewers
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}   % never set pdfauthor
+
+\journal{Information Processing \& Management}
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Concise informative title without uncommon abbreviations}
+%% no \author, \ead, \affiliation here
+
+\begin{abstract}
+Purpose. Basic procedures. Main findings with their statistical significance.
+Principal conclusions and the practical value for those who rely on the information.
+(At most 250 words, no citations.)
+\end{abstract}
+
+\begin{keyword}
+keyword one \sep keyword two \sep keyword three   % 1 to 7
+\end{keyword}
+\end{frontmatter}
+
+\linenumbers
+
+\section{Introduction}\label{sec:intro}
+Application context and the decision the system supports; gap; contributions;
+\citet{key} for narrative and \citep{key} for parenthetical citations.
+The remainder of this paper is organized as follows. Section~\ref{sec:related} ...
+
+\section{Related work}\label{sec:related}
+\section{Problem formulation}\label{sec:problem}
+\section{Proposed method}\label{sec:method}
+\section{Experimental setup}\label{sec:setup}
+\section{Results and discussion}\label{sec:results}
+\section{Practical implications and limitations}\label{sec:implications}
+\section{Conclusions and future work}\label{sec:conclusion}
+
+\section*{Data availability}
+Code and data are deposited in a public repository; the DOI is given on the title page and
+in the submission system to preserve anonymity during review.
+
+\section*{Funding}
+This research did not receive any specific grant from funding agencies in the public,
+commercial, or not-for-profit sectors.
+
+\appendix
+\section{Proofs}\label{app:proofs}
+
+%% Must be the last section before the references.
+\section*{Declaration of generative AI and AI-assisted technologies in the manuscript preparation process}
+During the preparation of this work the author(s) used [NAME OF TOOL/SERVICE] to [REASON].
+After using this tool/service, the author(s) reviewed and edited the content as needed and
+take(s) full responsibility for the content of the published article.
+
+\bibliographystyle{model5-names}
+\bibliography{references}
+
+\end{document}
