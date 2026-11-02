@@ -307,3 +307,5 @@ review-ipm/
 ```
 
 Order of use for an IPM paper: `write-ipm` while writing, `review-ipm` before submission, `submit-ipm` to build and check the package.
+## submit-ml
+Submission guide for the Springer journal Machine Learning: Contribution Information Sheet, sn-jnl port, reference, figure and declaration rules.

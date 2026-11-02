@@ -204,6 +204,7 @@ Steps below were seen in a real submission on 2026-10-30 [EM].
 **Before submitting**: check the public code repository and its archive for an earlier manuscript. A `paper/` folder with author names is a public version: answer the preprint question accordingly and tell the editor. Zenodo versions cannot be withdrawn, so keep manuscripts out of a repository that will be cited in a double-anonymized submission.
 
 ## Desk-reject prevention (ESWA-specific)
+- A real case on 2026-10-31: a manuscript on certified acceptance of LLM labels, rewritten around an annotation system with practical guidelines, was rejected within a day as outside the scope. Rewriting the framing did not make a method paper fit. If the contribution is a learning method with a statistical guarantee, consider a method journal first.
 - Lead with the intelligent-system application in title, abstract, highlights and the first paragraph; name the users and the decision the system supports.
 - Report statistical significance of the main claims in the abstract (the guide asks for it) and in tables.
 - Give practical guidelines (when to use which variant, defaults, costs) in a dedicated subsection.
