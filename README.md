@@ -312,3 +312,31 @@ Submission guide for the Springer journal Machine Learning: Contribution Informa
 
 ## submit-kbs
 Submission guide for the Elsevier journal Knowledge-Based Systems: guide-for-authors rules, elsarticle traps and the seven steps of Elsevier's new submission service, recorded on a real submission. The steps cover the 5-keyword limit, the competing-interest declaration tool and the data link.
+
+## ICDE skills (IEEE ICDE research track, CCF A)
+Six skills that cover one complete ICDE submission, built for ICDE 2027 Round 2 from the official CFP, all 1058 research papers of ICDE 2024–2027 R1, and 21 deep-read accepted papers. Use them in this order:
+
+| Skill | Stage | Contents |
+|---|---|---|
+| `submit-icde` | guideline check and submission package | CFP rules (rounds, 12 pages without appendix, single-blind, CMT conflicts, AI disclosure, artifacts, scope), `scripts/check_icde_submission.py`, AI-disclosure and scope-statement templates |
+| `survey-icde` | direction survey | classified list of 1058 accepted papers, topic shares 2024–2027R1, scripts to repeat the survey |
+| `read-icde` | deep reading | note template, 21 notes, 4 group syntheses, cross-group rules on problems, methods, experiments, writing, acceptance |
+| `experiment-icde` | idea and real experiments | gap → hypothesis → pilot → experiment matrix; label-once/replay-many design; key-free cached LLM client; full example code |
+| `write-icde` | writing | paragraph-level guide, `scripts/icde_structure_check.py` |
+| `review-icde` | independent review and revision | desk screen, review form, meta-review, adversarial checks |
+
+```
+submit-icde/      SKILL.md  scripts/check_icde_submission.py  assets/{ai_disclosure_template.tex,scope_statement_template.md}
+survey-icde/      SKILL.md  scripts/{parse_accepted,fetch_openalex,match,classify,llm}.py  references/{findings.md,icde_2024_2027r1_classified.csv,figs/}
+read-icde/        SKILL.md  assets/reading_note_template.md  references/{cross_group_rules.md,group_*_synthesis.md,notes/}
+experiment-icde/  SKILL.md  scripts/llm.py  scripts/example_ladder/
+write-icde/       SKILL.md  scripts/icde_structure_check.py  references/observed-structure.md
+review-icde/      SKILL.md  assets/{review_form.md,desk_screen.md}  references/reviewer-lens.md
+```
+
+Install:
+```bash
+git clone https://github.com/wanghongsheng01/claude-skills.git
+mkdir -p ~/.claude/skills && cp -r claude-skills/{submit,survey,read,experiment,write,review}-icde ~/.claude/skills/
+```
+Use: ask Claude to "check the ICDE submission with submit-icde", "survey ICDE directions", or invoke a skill by name. Scripts that call LLMs read keys from a file named by `LLM_KEYS_JSON`, outside the repository.
