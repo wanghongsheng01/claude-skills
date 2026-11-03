@@ -32,7 +32,7 @@ Incomplete or uninformative sheets are returned without review. Reviewers expect
 
 ## Figures
 - Lettering about 2-3 mm (8-12 pt), Helvetica or Arial, consistent size. Lines at least 0.3 pt. Fonts embedded.
-- Name files `Fig1`, and so on. Figures go inside the text. Captions start with "Fig." (the class adds this). Size to the column width.
+- Name files `Fig1`, and so on. Figures go inside the text. Captions start with "Fig." (the class adds this) and have no punctuation at the end. Size to the column width.
 - Use patterns as well as colors, with lettering contrast of at least 4.5:1.
 
 ## Declarations (before the references)
@@ -45,3 +45,19 @@ Incomplete or uninformative sheets are returned without review. Reviewers expect
 - Compile once with pdflatex (Overleaf: New Project, Upload Project) and read every page. Check `tab:` widths at 372 pt.
 - Reviewers may be suggested. Give independent people with institutional e-mail addresses.
 - The journal also runs calls such as the ECML PKDD journal track; read the call for its schedule and conference obligations first.
+
+## sn-jnl compile notes
+- The class typesets abstract math in bold. Wrap inline math there as `{\unboldmath$...$}`.
+- `\newtheorem{proposition}[theorem]{...}` shares the counter, so a lone proposition after a theorem reads as "Proposition 2". Use its own counter.
+- Matplotlib math falls back to DejaVu Serif unless `mathtext.fontset` is set to custom Arial.
+
+## Facts confirmed on 2026-11-02 (official guide)
+- Submission system: Editorial Manager. Editable source files are mandatory at every submission; missing sources mean no review.
+- "Do not include titles or captions within your illustrations": move explanatory sentences from figures into the caption.
+- Tables in the main text and in each appendix must be first cited in numerical order; sn-jnl numbers appendix tables A1, B1, ...
+- No submission or publication fee; open access is chosen after acceptance.
+
+## Lessons from the pre-submission review
+- Fact-check every competitor description against the full text; a referee who knows the paper will notice.
+- If the target is a pooled ratio, report per-level error too; a pooled bound can hide a fine level at 2x the target.
+- Check that the released loaders reproduce the sample before claiming reproducibility.

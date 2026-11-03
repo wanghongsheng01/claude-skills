@@ -309,3 +309,6 @@ review-ipm/
 Order of use for an IPM paper: `write-ipm` while writing, `review-ipm` before submission, `submit-ipm` to build and check the package.
 ## submit-ml
 Submission guide for the Springer journal Machine Learning: Contribution Information Sheet, sn-jnl port, reference, figure and declaration rules.
+
+## submit-kbs
+Submission guide for the Elsevier journal Knowledge-Based Systems: guide-for-authors rules, elsarticle traps and the seven steps of Elsevier's new submission service, recorded on a real submission. The steps cover the 5-keyword limit, the competing-interest declaration tool and the data link.
