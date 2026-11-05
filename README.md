@@ -28,6 +28,25 @@ python3 academic-latex-polish/scripts/fix_tt_quotes.py sections/*.tex
 python3 academic-latex-polish/scripts/style_stats.py refpapers/* paper/
 ```
 
+## manuscript-proofcheck
+Reviews and corrects the typesetting, rendering, bibliography and mechanical writing of any LaTeX paper before submission, for any venue. It lints the source, checks the compiled PDF (wrong glyphs, unresolved references, leftover TODO or red text, dashes for repeated authors, title breaks, fonts, body pages) and renders every page for a visual pass. It also verifies every bib entry online and fixes the source with minimal edits. Its defect catalog grows with every paper. It does not change claims or numbers; use the venue's review skill for content.
+
+```
+manuscript-proofcheck/
+  SKILL.md                     workflow, per-page visual checklist, reporting rules
+  references/defect-catalog.md cause, detection and fix of each defect class (T* source rules, P* PDF rules)
+  scripts/tex_lint.py          source lint: \mathbb 1 glyph, amsthm under IEEEtran, IEEEtran dash for repeated names,
+                               title line breaks, TODO, spacing hacks, tall inline math, bib year/author/key problems
+  scripts/pdf_check.py         compiled-PDF checks (needs PyMuPDF) and page PNGs for the visual pass
+```
+
+### Use
+```bash
+python3 manuscript-proofcheck/scripts/tex_lint.py paper/
+python3 manuscript-proofcheck/scripts/pdf_check.py paper.pdf --out /tmp/proof --body-limit 12
+```
+Then inspect every page PNG, verify the bibliography online, fix, and re-run. Install like the other skills (`cp -r manuscript-proofcheck ~/.claude/skills/`).
+
 ## amp-figure-design
 AMP (antimicrobial peptide) / protein-generative-model paper figure design conventions. Use when creating or revising figures for AMP papers submitted to Briefings in Bioinformatics, Nature Biomedical Engineering, Nature Communications, Cell, Science, or Nature Methods. Grounded in 13+ published papers (Das 2021, Wan 2024, HydrAMP, Diff-AMP, AMPSphere, ESMFold, DOME).
 
