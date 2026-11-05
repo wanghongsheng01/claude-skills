@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Source lint for LaTeX submissions: rules T01-T17 of references/defect-catalog.md.
+"""Source lint for LaTeX submissions: rules T01-T24 of references/defect-catalog.md.
 
 Usage: python3 tex_lint.py PAPER_DIR [--class IEEEtran|acmart|llncs|elsarticle] [--year 2026]
 Prints one line per finding: RULE  file:line  message. Exit code 1 if any ERROR-level finding.
@@ -33,6 +33,69 @@ def tall(x):
     return any(z in x for z in (r"\sum", r"\prod", r"\frac", "/"))
 
 
+def entry_body(txt, em):
+    """Body of a bib entry whose opening brace is in em.group(0), brace-matched (one-line entries included)."""
+    k = em.start() + em.group(0).index("{") + 1
+    depth, j = 1, k
+    while j < len(txt) and depth:
+        depth += {"{": 1, "}": -1}.get(txt[j], 0); j += 1
+    return txt[em.end():j - 1]
+
+
+def fields(body):
+    """Field name -> raw value (outer braces or quotes removed), brace-matched."""
+    out_, i = {}, 0
+    while True:
+        m = re.compile(r"\s*,?\s*(\w+)\s*=\s*").match(body, i)
+        if not m or m.end() >= len(body):
+            return out_
+        j = m.end()
+        if body[j] == "{":
+            depth, k = 1, j + 1
+            while k < len(body) and depth:
+                depth += {"{": 1, "}": -1}.get(body[k], 0); k += 1
+            out_[m.group(1).lower()] = body[j + 1:k - 1].strip(); i = k
+        elif body[j] == '"':
+            k = body.index('"', j + 1); out_[m.group(1).lower()] = body[j + 1:k].strip(); i = k + 1
+        else:
+            k = j
+            while k < len(body) and body[k] not in ",\n}":
+                k += 1
+            out_[m.group(1).lower()] = body[j:k].strip(); i = k
+
+
+def strip_braced(s):
+    """Drop {...} groups (already protected from case changes)."""
+    prev = None
+    while prev != s:
+        prev, s = s, re.sub(r"\{[^{}]*\}", "", s)
+    return s
+
+
+def document_files(root):
+    """The main file (the root-level .tex with \\documentclass), every file it \\input/\\include-s, and the .bib files
+    named by \\bibliography. Stale copies elsewhere in the folder (e.g. an exported overleaf/ directory) are ignored."""
+    mains = [p for p in sorted(glob.glob(os.path.join(root, "*.tex")))
+             if re.search(r"^\s*\\documentclass", "\n".join(lines_of(p)), re.M)]
+    if not mains:
+        return (sorted(glob.glob(os.path.join(root, "**", "*.tex"), recursive=True)),
+                sorted(glob.glob(os.path.join(root, "**", "*.bib"), recursive=True)))
+    seen, todo, bibs = [], [mains[0]], []
+    while todo:
+        f = todo.pop()
+        if f in seen or not os.path.exists(f):
+            continue
+        seen.append(f)
+        txt = strip_comments("\n".join(lines_of(f)))
+        for n in re.findall(r"\\(?:input|include|subfile)\{([^}]*)\}", txt):
+            todo.append(os.path.join(root, n if n.endswith(".tex") else n + ".tex"))
+        for group in re.findall(r"\\(?:bibliography|addbibresource)\{([^}]*)\}", txt):
+            for n in group.split(","):
+                n = n.strip()
+                bibs.append(os.path.join(root, n if n.endswith(".bib") else n + ".bib"))
+    return seen, [b for b in dict.fromkeys(bibs) if os.path.exists(b)]
+
+
 def lines_of(path):
     with open(path, encoding="utf-8", errors="replace") as fh:
         return fh.read().split("\n")
@@ -45,8 +108,7 @@ def main():
     ap.add_argument("--year", type=int, default=datetime.date.today().year)
     a = ap.parse_args()
     root = a.paper_dir
-    texs = sorted(glob.glob(os.path.join(root, "**", "*.tex"), recursive=True))
-    bibs = sorted(glob.glob(os.path.join(root, "**", "*.bib"), recursive=True))
+    texs, bibs = document_files(root)
     src = {p: lines_of(p) for p in texs}
     alltex = "\n".join(strip_comments("\n".join(v)) for v in src.values())
     m = re.search(r"\\documentclass(\[[^\]]*\])?\{([^}]*)\}", alltex)
@@ -87,10 +149,40 @@ def main():
             for w in re.finditer(r"\b(\w+)\s+\1\b", s):
                 if w.group(1).lower() in {"the", "a", "an", "of", "to", "in", "is", "and", "that", "we", "for", "on", "with"}:
                     add(WARN, "T17", rp, i, f"repeated word '{w.group(0)}'")
+            if re.search(r"(?i)names? withheld|withheld in this draft|to be completed|ANONYMI[SZ]ED|anonymous author|author names? here|affiliation to be", s) and not re.search(r"^\s*%", raw):
+                add(ERR, "T23", rp, i, "placeholder author block, affiliation or link left in the text")
             for lab in re.findall(r"\\label\{([^}]*)\}", s):
                 labels[lab] = (rp, i)
             for r_ in re.findall(r"\\(?:ref|eqref|autoref|cref|Cref)\{([^}]*)\}", s):
                 refs.update(x.strip() for x in r_.split(","))
+
+    # ---------------- floats and theorem layout
+    for p, L in src.items():
+        rp = os.path.relpath(p, root)
+        body = "\n".join(strip_comments(x) for x in L)
+        for fm in re.finditer(r"\\begin\{table\}(.*?)\\end\{table\}", body, re.S):
+            ln = body[:fm.start()].count("\n") + 1
+            fl = fm.group(1)
+            ang = [x for x in re.findall(r"\\rotatebox(?:\[[^\]]*\])?\{(\d+)\}", fl) if x != "90"]
+            if ang:
+                add(WARN, "T18", rp, ln, f"rotated headers at {ang[0]} degrees in a single-column table extend past the last column; use 90 degrees or table*")
+            spec = re.search(r"\\begin\{tabular\*?\}(?:\{[^}]*\})?\{((?:[^{}]|\{[^{}]*\})*)\}", fl)
+            if spec:
+                ncol = len(re.findall(r"[lcrpmbX](?:\{[^}]*\})?", re.sub(r">\{[^}]*\}|<\{[^}]*\}|@\{[^}]*\}|\|", "", spec.group(1))))
+                tab = re.search(r"\\begin\{tabular\*?\}.*?\n(.*?)\\end\{tabular", fl, re.S)
+                cells = [re.sub(r"\\[a-zA-Z]+\*?(\[[^\]]*\])?|[{}$~]", "", c).strip()
+                         for row in re.split(r"\\\\", tab.group(1) if tab else "") for c in row.split("&")]
+                longest = max((len(c) for c in cells), default=0)
+                if ncol >= 5 and longest > 28 and "resizebox" not in fl:
+                    add(WARN, "T18", rp, ln, f"single-column table with {ncol} columns and cells up to {longest} chars; check it fits \\columnwidth (or use table*)")
+                narrow = [w for w in re.findall(r"(?<![>}])p\{([\d.]+)cm\}", spec.group(1)) if float(w) < 2.5]
+                if narrow:
+                    add(INFO, "T24", rp, ln, "narrow justified p{} columns spread words; use >{\\raggedright\\arraybackslash}p{...} (array package)")
+        for tm in re.finditer(r"\\end\{(theorem|proposition|lemma|corollary|claim)\}(.*?)\\begin\{(proof|IEEEproof)\}", body, re.S):
+            gap = tm.group(2).strip()
+            if gap and "\\begin{" not in gap and len(gap) < 2000:
+                ln = body[:tm.start()].count("\n") + 1
+                add(WARN, "T19", rp, ln, f"text between \\end{{{tm.group(1)}}} and its proof separates the statement from the proof: '{gap[:60]}...'")
 
     # ---------------- document-level rules
     t = re.search(r"\\title(\[[^\]]*\])?\{(.*?)\}\s*\n", alltex, re.S)
@@ -117,18 +209,20 @@ def main():
 
     # ---------------- bibliography
     keys = {}
+    case_bst = bst.lower().startswith(("ieeetran", "plain", "abbrv", "unsrt", "alpha", "ieee"))
     for b in bibs:
         rb = os.path.relpath(b, root)
         txt = "\n".join(lines_of(b))
-        for em in re.finditer(r"@(\w+)\s*\{\s*([^,\s]+)\s*,(.*?)\n\}", txt, re.S):
-            typ, key, body = em.group(1).lower(), em.group(2), em.group(3)
+        for em in re.finditer(r"@(\w+)\s*\{\s*([^,\s]+)\s*,", txt):
+            typ, key = em.group(1).lower(), em.group(2)
+            body = entry_body(txt, em)
             line = txt[:em.start()].count("\n") + 1
             if typ == "ieeetranbstctl":
                 continue
             if key in keys:
                 add(ERR, "T06", rb, line, f"duplicate bib key {key}")
             keys[key] = line
-            f = {k.lower(): v.strip() for k, v in re.findall(r"(\w+)\s*=\s*[{\"](.*?)[}\"]\s*,?\s*(?=\n\s*\w+\s*=|\Z)", body, re.S)}
+            f = fields(body)
             if re.search(r"\band\s+others\b|et al", f.get("author", "")):
                 add(WARN, "T04", rb, line, f"{key}: author list truncated ('and others'/'et al.'); give every author (self-citations especially)")
             y = re.search(r"\d{4}", f.get("year", ""))
@@ -140,6 +234,22 @@ def main():
                 add(INFO, "T05", rb, line, f"{key}: recent {typ} ({y.group()}); verify venue, pages and DOI online")
             if typ == "article" and "pages" not in f:
                 add(INFO, "T06", rb, line, f"{key}: journal article without pages")
+            title = f.get("title", "")
+            if case_bst and not title.startswith("{"):
+                unprot = [w for w in re.findall(r"(?<![{\\\w])([A-Za-z]*[A-Z][a-z]*[A-Z]\w*)", strip_braced(title))]
+                if unprot:
+                    add(WARN, "T20", rb, line, f"{key}: {bst} lower-cases titles; protect {', '.join(sorted(set(unprot))[:5])} with braces")
+            for nm in re.split(r"\s+and\s+", f.get("author", "")):
+                first = nm.split(",")[1].strip() if "," in nm else nm.strip()
+                if first and ord(first[0]) > 127:
+                    add(WARN, "T21", rb, line, f"{key}: name '{nm.strip()[:30]}' starts with a non-ASCII letter; BibTeX mangles it when abbreviating (write e.g. {{\\DJ}}or{{\\dj}}e)")
+            if typ == "inbook" and "booktitle" in f and bst.lower().startswith("ieeetran"):
+                add(WARN, "T22", rb, line, f"{key}: @inbook with booktitle (Crossref chapter record); use @inproceedings or @incollection")
+            for noisy in ("series", "collection"):
+                if noisy in f and re.search(r"SIGMOD/PODS|’|'\d\d|\d\d$", f[noisy]):
+                    add(INFO, "T22", rb, line, f"{key}: Crossref '{noisy}' field ('{f[noisy][:20]}') prints as 'ser. ...'; drop it")
+            if "url" in f and "doi.org" in f["url"] and "doi" in f:
+                add(INFO, "T22", rb, line, f"{key}: url only repeats the DOI; drop it (long URLs stretch reference lines)")
     cited = set()
     for c in re.findall(r"\\(?:no)?cite[tp]?\*?(?:\[[^\]]*\])?\{([^}]*)\}", alltex):
         cited.update(x.strip() for x in c.split(","))

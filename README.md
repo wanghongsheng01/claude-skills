@@ -29,7 +29,7 @@ python3 academic-latex-polish/scripts/style_stats.py refpapers/* paper/
 ```
 
 ## manuscript-proofcheck
-Reviews and corrects the typesetting, rendering, bibliography and mechanical writing of any LaTeX paper before submission, for any venue. It lints the source, checks the compiled PDF (wrong glyphs, unresolved references, leftover TODO or red text, dashes for repeated authors, title breaks, fonts, body pages) and renders every page for a visual pass. It also verifies every bib entry online and fixes the source with minimal edits. Its defect catalog grows with every paper. It does not change claims or numbers; use the venue's review skill for content.
+Reviews and corrects the typesetting, rendering, bibliography and mechanical writing of any LaTeX paper before submission, for any venue. It lints the source, checks the compiled PDF (wrong glyphs, unresolved references, leftover TODO or red text, placeholder author blocks, dashes for repeated authors, title breaks, tables or text past the margin, fonts, body pages) and renders every page for a visual pass. A writing-mechanics pass checks that names, counts, symbols and generated numbers are consistent across text, tables and figures. It also verifies every bib entry online and fixes the source with minimal edits. Its defect catalog grows with every paper. It does not change claims or numbers; use the venue's review skill for content.
 
 ```
 manuscript-proofcheck/

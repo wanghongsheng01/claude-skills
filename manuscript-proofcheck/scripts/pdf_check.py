@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compiled-PDF checks for submissions: rules P01-P17 of references/defect-catalog.md. Needs PyMuPDF (pip install pymupdf).
+"""Compiled-PDF checks for submissions: rules P01-P19 of references/defect-catalog.md. Needs PyMuPDF (pip install pymupdf).
 
 Usage: python3 pdf_check.py PAPER.pdf --out DIR [--body-limit 12] [--dpi 110]
 Writes DIR/page-NN.png for the visual pass and DIR/text.txt, and prints the findings.
@@ -36,6 +36,15 @@ def main():
             if re.match(r"\s*(\[\d+\]\s*)?(——|---|—{2,}|_{3,})\s*,", ln): find.append(("WARN", "P03", i, f"dash for repeated author names: {ln.strip()[:90]}"))
         if ref_page is None and re.search(r"^\s*(R\s*EFERENCES|References|REFERENCES|Bibliography)\s*$", t, re.M):
             ref_page = i
+        # text beyond the right margin (overfull floats, rotated headers, long lines)
+        W = p.rect.width
+        for b in p.get_text("dict")["blocks"]:
+            for l in b.get("lines", []):
+                for s in l["spans"]:
+                    if s["text"].strip() and s["bbox"][2] > W - 36:
+                        find.append(("ERROR", "P19", i, f"text past the right margin (x={s['bbox'][2]:.0f} of {W:.0f}pt): {s['text'].strip()[:60]}"))
+        if re.search(r"(?i)names? withheld|withheld in this draft|to be completed|ANONYMI[SZ]ED|Affiliation to be", t):
+            find.append(("ERROR", "P09", i, "placeholder author block, affiliation or link in the PDF"))
         # coloured text spans (draft markers are often red)
         for b in p.get_text("dict")["blocks"]:
             for l in b.get("lines", []):

@@ -126,3 +126,79 @@ a real compiled submission.
 ### P17 Type 3 or non-embedded fonts
 - Usually from matplotlib (set `pdf.fonttype = 42`) or old figures. IEEE PDF eXpress and some
   publishers reject non-embedded fonts.
+
+### P18 Stretched reference entry from a long unbreakable URL
+- Seen: a reference whose words are spread far apart across the column (e.g. "X. Zhang, J. Zhao,
+  and Y. LeCun"), followed by a long hash-like URL. Cause: the URL has few break points, so the
+  justified lines above it absorb the slack.
+- Detection: visual pass over the reference pages; source check for `url =` fields over ~60
+  characters in `.bib`.
+- Fix: drop the URL when the entry is fully identified by venue, volume and year (proceedings
+  papers), or load `\usepackage[hyphens]{url}` / `xurl` so the URL can break.
+
+## Floats and layout (observed in an ICDE 2027 EAB submission, Agent-RLS)
+
+### T18 / P19 Table wider than its column (*observed*)
+- Seen: the last columns of a single-column table run into the right margin and are cut off
+  ("Policy in p", rotated headers "latency / $" and "public schemas" past the page edge).
+- Cause: a `table` (one column, about 8.9 cm in IEEEtran) holding many columns or long cell text;
+  headers rotated by 45-70 degrees occupy more horizontal space than their column, so the rightmost
+  headers overhang even when the body fits.
+- Detect: source: `\rotatebox{θ}` with θ ≠ 90 inside `table`, or a single-column `tabular` with 5 or
+  more columns and cells longer than ~28 characters (T18, a warning to check). PDF: any text span whose
+  right edge lies within 36 pt of the page edge (P19, an error).
+- Fix: rotate headers by 90 degrees and shorten them; shorten cell text (put long notes in a
+  footnote line under the table); or make the float `table*`. Do not shrink with `\resizebox` below
+  the caption font size, and never change margins.
+
+### T24 Rivers in narrow justified table columns (*observed*)
+- Seen: "acctbal, phone, address" or "region / global revenue, orders per year" spread over a narrow
+  cell with large gaps between words.
+- Cause: `p{w}` columns are justified; with `w` below ~2.5 cm there are too few break points.
+- Detect: `p{...cm}` narrower than 2.5 cm in a `tabular` spec.
+- Fix: `\usepackage{array}` and `>{\raggedright\arraybackslash}p{w}`.
+
+### T19 Text placed between a theorem and its proof (*observed*)
+- Seen: "Proposition 2 ... ." then an unrelated sentence, then "Proof sketch." The proof reads as if it
+  belonged to the sentence.
+- Cause: a remark inserted during revision directly after `\end{proposition}`.
+- Detect: non-environment text between `\end{theorem|proposition|lemma|corollary|claim}` and the next
+  `\begin{proof|IEEEproof}`.
+- Fix: move the remark after the proof.
+
+## Bibliography generated from Crossref or arXiv metadata (observed, Agent-RLS)
+
+### T20 Acronyms lower-cased in titles (*observed*)
+- Seen: "Auditing sql queries", "Duckdb", "Mcptox", "Rls side channels", "Securesql".
+- Cause: IEEEtran.bst (and plain, abbrv, unsrt) convert titles of articles and proceedings papers to
+  sentence case; only text in braces keeps its case.
+- Detect: an unbraced word with two or more capitals in `title` under a case-changing style.
+- Fix: brace the acronyms (`{SQL}`, `{DuckDB}`), or the whole title (`title = {{...}}`) to keep the
+  published capitalisation. Apply the same rule to every entry so the list looks uniform.
+
+### T21 Non-ASCII first letter of a name mangled (*observed*)
+- Seen: "ore Klisura" for "Đorđe Klisura".
+- Cause: BibTeX abbreviates given names byte-wise; a UTF-8 first letter outside its alphabet is lost.
+- Detect: a given name whose first character is non-ASCII.
+- Fix: write the name with TeX accents or commands: `{\DJ}or{\dj}e`, `{\'E}mile`, `{\v{S}}tefan`.
+
+### T22 Crossref records copied verbatim (*observed*)
+- Seen: "ser. SIGMOD/PODS04", "Springer Berlin Heidelberg" with no proceedings title, long
+  `http://dx.doi.org/...` URLs under every entry.
+- Cause: Crossref's BibTeX transform emits `@inbook` for proceedings chapters (IEEEtran then ignores
+  `booktitle`), `series`/`collection` fields with internal labels, and a `url` that repeats the DOI.
+- Detect: `@inbook` with `booktitle`; `series`/`collection` with such labels; `url` containing
+  `doi.org` next to a `doi` field.
+- Fix: use `@inproceedings` (or `@incollection` for edited books), drop `series`, `collection`,
+  `url`, `ISSN`, `ISBN`, `editor` (journal editors), and keep the DOI. Normalise in the script that
+  generates the `.bib`, so a regeneration does not bring the defects back.
+- Also: one-line entries (`@article{key, title={...}, ...}`) are valid BibTeX. The linter reads
+  entries by brace matching, so they are no longer reported as missing.
+
+### T23 Placeholder author block or link (*observed*)
+- Seen: "Author names withheld in this draft", "Affiliation to be completed",
+  `https://github.com/ANONYMIZED/...` in a single-blind submission.
+- Detect: source and PDF text patterns (`names withheld`, `to be completed`, `ANONYMIZED`).
+- Fix: fill the real block from the submission system data (names, affiliations, e-mails, ORCID in
+  the system), and the real artifact link, unless the venue is double-blind.
+

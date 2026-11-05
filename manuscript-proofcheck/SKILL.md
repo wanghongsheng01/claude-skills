@@ -1,6 +1,6 @@
 ---
 name: manuscript-proofcheck
-description: Review and correct the typesetting, rendering, bibliography and mechanical writing of a LaTeX paper before ANY submission (conference or journal, first submission, revision or camera-ready). Use whenever a manuscript is being finalised, a compiled PDF of a submission is shared, the user reports a visual defect in a compiled paper (odd glyph, dash in references, stray box, broken title, overfull line), or before packaging an Overleaf/zip upload. Runs a source linter and a PDF checker, inspects every rendered page, verifies the bibliography online, fixes the source with minimal edits and reports causes.
+description: Review and correct the typesetting, rendering, bibliography and mechanical writing of a LaTeX paper before ANY submission (conference or journal, first submission, revision or camera-ready). Use whenever a manuscript is being finalised, a compiled PDF of a submission is shared, the user reports a visual defect in a compiled paper (odd glyph, dash in references, stray box, broken title, overfull line, table past the margin, lower-cased acronyms or mangled names in references, inconsistent names or numbers), or before packaging an Overleaf/zip upload. Runs a source linter and a PDF checker, inspects every rendered page, verifies the bibliography online, fixes the source with minimal edits and reports causes.
 ---
 
 # Manuscript proofcheck
@@ -22,7 +22,9 @@ the venue's review skill (e.g. `review-icde`).
 ## Workflow
 
 1. **Source lint.** Run
-   `python3 scripts/tex_lint.py <paper_dir> [--class IEEEtran|acmart|llncs|elsarticle]`.
+   `python3 scripts/tex_lint.py <paper_dir> [--class IEEEtran|acmart|llncs|elsarticle]`. It follows the
+   main file's `\input`/`\include` chain and the `.bib` files named by `\bibliography`, so stale copies
+   in the folder (such as an exported `overleaf/` directory) do not add noise.
    Every finding has a rule id that points to `references/defect-catalog.md`, which gives the cause and
    the standard fix.
 2. **PDF check.** Run `python3 scripts/pdf_check.py <paper.pdf> --out <scratch_dir> [--body-limit N]`
@@ -48,6 +50,23 @@ the venue's review skill (e.g. `review-icde`).
    instructions require. For each defect give: where (page/line or file:line), what the reader sees, the
    root cause and the fix applied. Separate it from any submission material.
 
+## Writing-mechanics pass (source and PDF, every submission)
+
+These are mechanical consistency checks, not claims review. Fix them before the visual pass.
+
+- One name per thing: a dataset, configuration, model or method has the same name in the title,
+  text, table headers, captions and figure legends (not "Enterprise" in a table and "production
+  policy model" in the text; not three spellings of one model).
+- Counts stated in words match the enumerations ("two grant styles" lists two; "six placements"
+  matches the table). Captions spell small numbers as words ("three models", not "3 models").
+- Every symbol is defined before use and no symbol is reused for two things (e.g. `E` as both an
+  enforcement point and an identity matrix).
+- Numbers in the text come from the same generated source as the tables (macros or a generated
+  `numbers.tex`), and every macro used is defined; no hand-typed copy of a table value.
+- Statements stay next to their proofs; remarks go after the proof (T19).
+- The author block, artifact link and acknowledgements are final (T23) and match the submission
+  system.
+
 ## Visual checklist (each page)
 
 - Title: no hand-made line break, no orphan word on the last title line, at most three lines.
@@ -60,14 +79,16 @@ the venue's review skill (e.g. `review-icde`).
   columns.
 - Theorem-like environments and proofs follow the class style. For example, IEEEtran uses `IEEEproof`
   and its own QED mark, and amsthm's open box looks foreign there.
-- Floats: captions readable, tables not overfull, no float far from its first reference, no column
+- Floats: captions readable, tables not overfull (no header or column past the margin, T18/P19), narrow
+  cells without word rivers (T24), no float far from its first reference, no column
   that is mostly white, no algorithm or figure placed before the section that introduces it if that
   makes reading hard.
 - Text: no overfull lines in the margin, no widow or orphan line at a column top, consistent
   spelling variety (labelling/labeling, -ise/-ize), consistent capitalisation of method names.
 - References: no dash for repeated names (unless the venue's style wants it), no "et al." in self
-  citations, consistent venue abbreviations, no raw URL breaking the column, no future-dated or
-  unverifiable entries.
+  citations, acronyms keep their capitals (T20), names with non-ASCII initials intact (T21), no
+  "ser. ..." labels or chapter records without proceedings titles (T22), consistent venue
+  abbreviations, no raw URL breaking the column, no future-dated or unverifiable entries.
 - Last pages: body ends within the page limit as counted by the venue (check whether references,
   appendices and acknowledgments count).
 
