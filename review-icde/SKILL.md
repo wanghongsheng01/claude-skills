@@ -1,6 +1,6 @@
 ---
 name: "review-icde"
-description: "Simulated IEEE ICDE program-committee review of a manuscript before submission: desk-reject screen (format, scope, COI, AI disclosure), three independent reviewer reports on an ICDE-style form (novelty, technical depth and soundness, experiments, presentation, reproducibility, relevance), a senior-PC meta-review with Accept/Reject (ICDE has no revision), an adversarial check of numbers, proofs and references, and a revision table. Built from the ICDE 2027 CFP and the strengths/weaknesses of 21 deep-read accepted papers. Use for 模拟审稿 / 独立审阅 / 预审 of an ICDE paper or rebuttal preparation."
+description: "Simulated IEEE ICDE program-committee review of a manuscript before submission: desk-reject screen (format, scope, COI, AI disclosure), three independent reviewer reports on an ICDE-style form (novelty, technical depth and soundness, experiments, presentation, reproducibility, relevance), reviewers may request added/supplemented/re-run/removed experiments that the authors then run, a limitations-presentation lens (contradiction vs self-negation), discussion, rebuttal and re-scoring, a senior-PC meta-review with Accept/Reject (ICDE 2027 has a rebuttal but no revision), an adversarial check of numbers, proofs and references, and a revision table. Built from the ICDE 2027 CFP and the strengths/weaknesses of 21 deep-read accepted papers. Use for 模拟审稿 / 独立审阅 / 预审 of an ICDE paper or rebuttal preparation."
 ---
 
 # Simulated ICDE review (模拟 ICDE 审稿)

@@ -1,6 +1,6 @@
 ---
 name: "submit-icde"
-description: "Pre-submission checklist and checker for the IEEE International Conference on Data Engineering (ICDE, CCF A) research track, built from the ICDE 2027 call for research papers (read 2026-11-03): two rounds, 12-page IEEE limit without appendix, single-blind, CMT conflicts, AI-content disclosure, artifacts, scope/desk-reject rules, EAB category. Use when preparing, formatting or packaging a paper for ICDE (投 ICDE / ICDE 投稿 / 投稿前检查), or when deciding Round 1 vs Round 2. Includes a LaTeX/PDF checker."
+description: "Pre-submission checklist and checker for the IEEE International Conference on Data Engineering (ICDE, CCF A) research track, built from the ICDE 2027 call for research papers (read 2026-11-03, re-checked 2026-11-06): two rounds, 12-page IEEE limit without appendix (only references and AI acknowledgment excluded), single-blind, stricter COI reading and CMT order of operations, AI-content disclosure, artifacts, scope/desk-reject rules, EAB category, rebuttal (new in 2027) and camera-ready (IEEE CPS, PDF eXpress). Use when preparing, formatting or packaging a paper for ICDE (投 ICDE / ICDE 投稿 / 投稿前检查), or when deciding Round 1 vs Round 2. Includes a LaTeX/PDF checker."
 ---
 
 # Submitting to ICDE (投稿 ICDE 前须知)
