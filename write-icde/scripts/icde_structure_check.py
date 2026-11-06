@@ -26,6 +26,7 @@ def words(s):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("folder"); ap.add_argument("--main", default="main.tex")
+    ap.add_argument("--eab", action="store_true", help="EAB rules (also switched on by 'Benchmark' in the title)")
     a = ap.parse_args(); root = pathlib.Path(a.folder); s = expand(root, a.main)
     w = lambda m: print("WARN ", m)
     o = lambda m: print("OBS  ", m)
@@ -36,12 +37,14 @@ def main():
 
     ab = re.search(r"\\begin\{abstract\}(.*?)\\end\{abstract\}", s, re.S); na = words(ab.group(1)) if ab else 0
     o(f"abstract {na} words (median 203)");
-    if ab and not re.search(r"\d", ab.group(1)): w("abstract states no number (accepted abstracts give 1-2 headline numbers)")
+    defs = dict(re.findall(r"\\newcommand\{?\\([A-Za-z]+)\}?(?:\[\d\])?\{(.*?)\}\s*$", s, re.M))  # numbers kept in macros
+    num = ab and (re.search(r"\d", ab.group(1)) or any(re.search(r"\d", defs.get(m, "")) for m in re.findall(r"\\([A-Za-z]+)", ab.group(1))))
+    if ab and not num: w("abstract states no number (accepted abstracts give 1-2 headline numbers)")
 
     secs = re.findall(r"\\section\{([^}]*)\}", s); o("sections: " + " | ".join(secs))
     low = [x.lower() for x in secs]
     if not low or "intro" not in low[0]: w("first section is not the Introduction")
-    if not any(re.search(r"experiment|evaluation", x) for x in low): w("no Experiments/Evaluation section")
+    if not any(re.search(r"experiment|evaluation|results", x) for x in low): w("no Experiments/Evaluation section")
     if not any("related" in x for x in low): w("no Related Work section (needed to position against ICDE/VLDB/SIGMOD)")
     if not any(re.search(r"problem|prelim", x) for x in low): w("no Preliminaries/Problem section (accepted papers state the problem formally)")
 
@@ -55,12 +58,12 @@ def main():
     if not re.search(r"\\ref\{fig:", intro): w("introduction cites no figure (Figure 1 showing the gap is near-universal)")
     if not re.search(r"C1|Challenge", intro): w("no numbered challenges in the introduction (3 challenges <-> 3 components is the common frame)")
 
-    exp = next((v for k, v in body.items() if re.search(r"experiment|evaluation", k)), "")
+    exp = next((v for k, v in body.items() if re.search(r"experiment|evaluation|results", k)), "")
     tot = words(s); o(f"body words ~{tot}; experiments {100 * words(exp) / max(tot, 1):.0f}% of words (25-55% seen)")
     cnt = {k: len(re.findall(r"\\begin\{" + k, s)) for k in ["theorem", "lemma", "definition", "figure", "table"]}
     o("theorems %(theorem)d, lemmas %(lemma)d, definitions %(definition)d" % cnt)
     o("figures %(figure)d, tables %(table)d (5-24 figures, 2-10 tables seen)" % cnt)
-    if not re.search(r"Takeaway|\\textbf\{(Finding|Observation|Lesson|Summary)", exp): w("experiments have no takeaway sentences (common in 2026-2027 papers)")
+    if not re.search(r"Takeaway|\\takeaway|\\textbf\{(Finding|Observation|Lesson|Summary)", exp): w("experiments have no takeaway sentences (common in 2026-2027 papers)")
 
     bib = "".join(p.read_text(errors="ignore") for p in root.glob("*.bib"))
     nb = len(re.findall(r"^@\w+\{", bib, re.M)); core = len(re.findall(r"VLDB|SIGMOD|Manag\.? Data|ICDE|Data Engineering", bib))
@@ -82,10 +85,29 @@ def main():
         if hits:
             w(f"self-negating wording in the {name}: {hits[:6]} - state scope as a qualifier of the positive claim, "
               "keep losses in the experiment that measures them (limitations-writing.md R1-R3, R11)")
+    eab = a.eab or bool(re.search(r"Experiment, Analysis|Benchmark", title))
     for h in re.findall(r"\\textbf\{([^}]*)\}|\\(?:sub)*section\{([^}]*)\}", s):
         h = " ".join(h)
         if re.search(r"not help|fail|limitation|weakness|drawback|does not", h, re.I):
-            w(f"heading or run-in label announces a failure: '{h.strip()}' - use a regime/trade-off title such as 'When does X pay off?'")
+            (o if eab else w)(("(EAB: fine if it names an evaluated method, not your benchmark) " if eab else "") + f"heading or run-in label announces a failure: '{h.strip()}' - use a regime/trade-off title such as 'When does X pay off?'")
+    # EAB papers (references/limitations-writing-eab.md): negatives about the EVALUATED methods are the contribution and
+    # may appear anywhere; the benchmark's own limits never go in the abstract or conclusion, never use deficit words,
+    # and a threats section, if any, has about four one-sentence items with counter-evidence.
+    if eab:
+        OWN = re.compile(r"\b(elementary|incomplete|indicative|pointless|unfortunately|insufficient|flaws?|bugs?|re-?ran|"
+                         r"mistakes?|weakness(es)?|we could not|we did not|small sample|found in review|is a limitation|"
+                         r"needs? a user study)\b", re.I)
+        for i, ln in enumerate(s.split("\n"), 1):
+            for m in OWN.finditer(strip(ln)):
+                w(f"EAB self-deprecating wording '{m.group(0)}' (line {i} of the expanded source): describe your own choices "
+                  "with scope/design wording or a lower-bound argument (limitations-writing-eab.md E2, E9)")
+        thr = next((v for k, v in body.items() if re.search(r"threat|limitation", k)), "")
+        if thr:
+            ni, nw = len(re.findall(r"\\textit\{[^}]+\.\}|\\item|\\textbf\{[^}]+\.\}", thr)), words(thr)
+            o(f"threats section: {ni} items, ~{nw} words (accepted EAB: 1/5 have one; about 4 items, ~110 words)")
+            if ni > 5 or nw > 180:
+                w("threats section reads like a list of admissions; keep about four one-sentence items, each answered by a "
+                  "result already in the paper, and move the rest to where they apply (limitations-writing-eab.md E6)")
     allneg = neg(s)
     o(f"self-negating phrases in the whole paper: {len(allneg)} (accepted papers: each negative result once, 1-4 sentences)")
     if len(allneg) > 8:

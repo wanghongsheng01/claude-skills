@@ -1,6 +1,6 @@
 ---
 name: "write-icde"
-description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers read for how they state limitations, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格). Includes a structure checker."
+description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers and nine accepted ICDE benchmark papers read for how they state limitations, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格). Includes a structure checker."
 ---
 
 # Writing for ICDE (Write-ICDE 写作指南)
@@ -72,6 +72,27 @@ Rules:
 
 Integrity: never delete measured numbers, never hide the strongest competitor, never write a sentence
 that the tables contradict. That contradiction is a top rejection reason.
+
+
+### 9b. EAB papers: two registers (`references/limitations-writing-eab.md`)
+Nine accepted ICDE benchmark papers (DCO, RLESI, XRAG, SQLMorph, TS-Fault; HCT-QA, CITBench, RDL-Bench,
+Text2VectorSQL; read in full) keep two registers apart:
+- **Negatives about the evaluated methods are the contribution.** State them with numbers in the abstract
+  (4/5), the findings, the takeaways and the conclusion (3/5). "fail" about evaluated methods: 5/5.
+- **Limits of your own benchmark** never appear in the abstract or conclusion (0/5). The word "limitation"
+  is never used for them (0/5), nor "bug", "rerun", "mistake", "flaw" or "unfortunately" (0/5). Each limit
+  is stated once, where it applies, with a one-clause technical reason and a mitigation or counter-evidence (5/5).
+- A threats section is optional (1/9). If present: about four one-sentence items, each answered by a result
+  already in the paper (TS-Fault, about 110 words).
+- Apply your own Table I criteria to yourself: reviewers turn a criticism of prior evaluations against a
+  setup that does not meet it.
+- Prefer an incremental experiment over an admission: turning a validity threat into an RQ, metric, control
+  experiment or finding is the most common device (7/9) and turns "may be an artifact" into a result.
+- Process problems in your own harness that were fixed and rerun need no narrative in the paper; record
+  them in the artifact's changelog. Keep every validity fact a reviewer needs (runs, models, synthetic data,
+  judges) once in the setup.
+`scripts/icde_structure_check.py` switches to EAB rules when the title contains "Benchmark" (or `--eab`):
+it flags self-deprecating wording about the benchmark and threats sections longer than about five items.
 
 ## 10. Readability and layout (with `manuscript-writing-review`)
 - **Math**: put conditions, case distinctions (`cases`), set-builder definitions, sums and chains of

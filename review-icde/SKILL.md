@@ -83,6 +83,12 @@ Flag two opposite defects:
    submission, because there is no revision. Fix it now (section 3a); the rebuttal cannot.
 
 ## 3d. Extra questions for EAB papers
+- Limitations lens for EAB (`write-icde/references/limitations-writing-eab.md`): negatives about the
+  evaluated methods are the contribution and are not self-negation. Flag limits of the benchmark itself
+  that appear in the abstract or conclusion, are repeated, use deficit words ("incomplete", "elementary",
+  "indicative", "found in review"), or sit in a threats list longer than about four items. Check whether
+  the paper meets its own Table I criteria; a reviewer will turn any gap it charges prior work with
+  against it. Ask for the control experiment or second metric that would turn an admission into a result.
 - Does the paper give a fundamentally new insight, or a new way to evaluate?
 - Are all artifacts public, with no exceptions?
 - Are the benchmark choices justified and reproducible?
