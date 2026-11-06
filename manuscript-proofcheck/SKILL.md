@@ -78,7 +78,9 @@ These are mechanical consistency checks, not claims review. Fix them before the 
   floats far right; equation numbers that collide with the formula; overfull displays in narrow
   columns.
 - Theorem-like environments and proofs follow the class style. For example, IEEEtran uses `IEEEproof`
-  and its own QED mark, and amsthm's open box looks foreign there.
+  rather than amsthm. Authors have flagged both end-of-proof boxes (amsthm's open one and IEEEtran's
+  closed one) as garbled glyphs, so remove the mark with `\renewcommand{\IEEEQED}{}` unless the
+  template requires it (see T07).
 - Floats: captions readable, tables not overfull (no header or column past the margin, T18/P19), narrow
   cells without word rivers (T24), no float far from its first reference, no column
   that is mostly white, no algorithm or figure placed before the section that introduces it if that

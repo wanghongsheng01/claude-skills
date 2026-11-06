@@ -128,7 +128,7 @@ def main():
             if re.search(r"[×–—’‘“”≤≥±→←∈∑√∞≈]", s) and not re.search(r"\\usepackage(\[[^\]]*\])?\{(inputenc|newunicodechar)\}", alltex):
                 add(WARN, "T02", rp, i, "Unicode math/punctuation typed directly; prefer LaTeX commands under pdfLaTeX")
             if re.search(r"\\begin\{proof\}", s) and ieee:
-                add(ERR, "T07", rp, i, "amsthm proof under IEEEtran gives a foreign open QED box; use \\begin{IEEEproof}[...]")
+                add(ERR, "T07", rp, i, "amsthm proof under IEEEtran gives a foreign open QED box; use \\begin{IEEEproof}[...] and \\renewcommand{\\IEEEQED}{} (authors read both boxes as garbled glyphs)")
             if re.search(r"\\qedhere", s) and ieee:
                 add(WARN, "T07", rp, i, "\\qedhere is amsthm-only; use \\IEEEQEDhere inside IEEEproof")
             if re.search(r"\\todo\b|\bTODO\b|\bXXX\b|\\textcolor\{red\}|\[citation needed\]", s) and not re.search(r"\\newcommand\{\\todo\}", s):

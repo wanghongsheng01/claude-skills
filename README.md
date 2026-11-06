@@ -359,3 +359,42 @@ git clone https://github.com/wanghongsheng01/claude-skills.git
 mkdir -p ~/.claude/skills && cp -r claude-skills/{submit,survey,read,experiment,write,review}-icde ~/.claude/skills/
 ```
 Use: ask Claude to "check the ICDE submission with submit-icde", "survey ICDE directions", or invoke a skill by name. Scripts that call LLMs read keys from a file named by `LLM_KEYS_JSON`, outside the repository.
+
+## manuscript-writing-review
+A mandatory gate between "the paper is written" and "the author gets the package". It compiles the
+paper and checks every figure and every page. It looks for readability and layout defects that source
+lints miss:
+- heavy inline math that should be displayed;
+- legends cut off at the canvas edge or drawn over bars;
+- annotations over data labels;
+- single-column tables running into the other column or past the margin;
+- justified table cells with word gaps;
+- wrapped algorithm comments;
+- end-of-proof boxes read as garbled glyphs;
+- internal remarks in bib notes.
+
+It fixes causes in the generating scripts, then recompiles and re-checks until clean. It never hands
+over an uncompiled package. Every rule comes from a defect that reached an author (see the defect
+catalog).
+
+```
+manuscript-writing-review/
+  SKILL.md                     hard rules, compile-check-fix loop, per-page checklist, reporting rules
+  references/defect-catalog.md what the reader saw, cause, detection, fix (R*, F*, L* rules)
+  scripts/review_lint.py       source: heavy inline math, broken formulas, QED policy, p{} columns, algorithm
+                               comments, unreferenced equation numbers, wide one-column tables, bib notes,
+                               legend placement in figure scripts
+  scripts/fig_check.py         figure PDFs: text cut off at the canvas, text over text, text over bars
+  scripts/layout_check.py      compiled PDF: text into the other column / past the margin, text over text,
+                               figure text over bars or cut off, end-of-proof boxes, missing glyphs; page PNGs
+```
+
+### Use
+```bash
+python3 manuscript-writing-review/scripts/review_lint.py paper/ --figscripts code/make_figs.py
+python3 manuscript-writing-review/scripts/fig_check.py paper/figs/*.pdf --png /tmp/figs
+pdflatex main && bibtex main && pdflatex main && pdflatex main
+python3 manuscript-writing-review/scripts/layout_check.py paper/main.pdf --out /tmp/pages   # then open every page
+```
+The PDF scripts need PyMuPDF (`pip install pymupdf`). Install as for the other skills: copy the folder into
+`~/.claude/skills/`.

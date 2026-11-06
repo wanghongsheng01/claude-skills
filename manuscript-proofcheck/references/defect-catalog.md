@@ -63,6 +63,10 @@ a real compiled submission.
 - Fix: drop `amsthm`. Keep `\newtheorem{theorem}{Theorem}` (IEEEtran formats it), and replace
   `\begin{proof}[Proof sketch]…\end{proof}` with `\begin{IEEEproof}[Proof sketch]…\end{IEEEproof}`.
   Remove `\qedhere`; IEEEtran places the mark itself (`\IEEEQEDhere` if needed).
+- Update (2026-11-06, observed): after this fix, IEEEtran's default *closed* box ■ was flagged as a
+  garbled glyph too. Also add `\renewcommand{\IEEEQED}{}` after the packages, so that no end-of-proof
+  mark is printed, unless the venue template mandates one. `manuscript-writing-review` checks this
+  in the source (R04) and in the PDF (L05).
 - Other classes: acmart and llncs already load their own proof environments, so do not load amsthm on
   top of them.
 
