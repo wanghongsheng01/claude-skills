@@ -109,15 +109,28 @@ def lint_bib(path, out):
             out.append(("ERROR", "R10", f"{path}:{ln}", f"bib note reads like an internal remark: '{v}'"))
 
 
+def call_args(text, start):
+    """Text of the call whose opening parenthesis is at text[start], across lines."""
+    depth = 0
+    for j in range(start, len(text)):
+        depth += {"(": 1, ")": -1}.get(text[j], 0)
+        if depth == 0:
+            return text[start:j + 1]
+    return text[start:]
+
+
 def lint_figscript(path, out):
-    for i, ln in enumerate(open(path, encoding="utf-8"), 1):
-        if "legend(" in ln and "bbox_to_anchor" not in ln and re.search(r"loc\s*=\s*['\"](upper|lower|center|best|right|left)", ln):
+    text = open(path, encoding="utf-8").read()
+    for m in re.finditer(r"legend\(", text):  # a legend call may span several lines
+        args, i = call_args(text, m.end() - 1), text[:m.start()].count("\n") + 1
+        if "bbox_to_anchor" not in args and re.search(r"loc\s*=\s*['\"](upper|lower|center|best|right|left)", args):
             out.append(("WARN", "R11", f"{path}:{i}", "legend placed inside the axes can cover bars or labels; put it above the axes "
                         "(loc='lower center', bbox_to_anchor=(0.5, 1.0)) or check with fig_check.py"))
+        if re.search(r"ncol\s*=\s*([5-9])", args) and "bbox_to_anchor" not in args:
+            out.append(("WARN", "R12", f"{path}:{i}", "legend with many columns in a one-column figure can run past the canvas and be cut off"))
+    for i, ln in enumerate(text.splitlines(), 1):
         if re.search(r"\.text\([^)]*transform\s*=\s*ax\.transAxes", ln):
             out.append(("WARN", "R11", f"{path}:{i}", "free text placed in axes coordinates may overlap data labels; move it to the caption"))
-        if re.search(r"ncol\s*=\s*([5-9])", ln) and "bbox_to_anchor" not in ln:
-            out.append(("WARN", "R12", f"{path}:{i}", "legend with many columns in a one-column figure can run past the canvas and be cut off"))
 
 
 def main():

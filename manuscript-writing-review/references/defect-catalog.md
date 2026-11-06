@@ -66,6 +66,8 @@ Each entry gives what the reader sees, the cause, how it is detected and the fix
   - PDF: IEEEtran draws the mark as a small filled square (≈5.8 pt), and layout_check L05 finds it.
 - **Fix.** Use IEEEproof and drop amsthm, then add `\renewcommand{\IEEEQED}{}` after the packages.
   Keep a mark only if the venue template mandates one.
+- **Follow-up.** Without a mark, the end of a proof is shown only by the next paragraph's indent. Leave a
+  blank line after `\end{IEEEproof}`; otherwise a remark that follows reads as part of the proof.
 
 ## Figures
 
@@ -91,10 +93,27 @@ Each entry gives what the reader sees, the cause, how it is detected and the fix
   right.
 - **Fix.** Place the legend above the axes; never rely on `loc="best"` for bar charts.
 
+### F04 Scatter markers on top of each other (*observed*, Agent-RLS, ICDE 2027, 2026-11-06)
+- **Seen.** In a one-column trade-off scatter of nine configurations, three clusters of markers overlapped
+  (E3T/E4/E4M, E0/E2/E6, E7/E8). The author could not tell which point was which, and a 9-entry
+  legend row under the plot made the lookup harder.
+- **Cause.** Most points sit within a few percent of each other (accuracy 92–96%, refusals 0–3%), while
+  one outlier (63%, 28%) stretches the axis, so the cluster gets a few points of width.
+- **Detect.** fig_check F04: small filled shapes whose boxes overlap by more than 25%.
+- **Fix.**
+  - Give the clusters room: a broken x-axis (outlier in a narrow part), a zoomed inset, or a
+    two-column `figure*`.
+  - Label every point directly next to its marker; keep a legend only for the colour families.
+  - Check each label with F03 (label over a marker).
+  - Write a caption that says what is plotted, which direction is better, what the colours mean, that
+    the axes are broken, and where the intervals are.
+
 ### R11 / R12 Figure-script risks
 - **Detect.**
   - R11: a legend inside the axes without `bbox_to_anchor`; free text in axes coordinates.
   - R12: a legend with five or more columns.
+  - Both rules read the whole call, so `bbox_to_anchor` on the next line counts.
+    An earlier version read one line only and warned about correct legends.
 - **Fix.** As in F01–F03. Verify with fig_check.
 
 ## Tables
@@ -107,7 +126,9 @@ Each entry gives what the reader sees, the cause, how it is detected and the fix
   (only "Overfull \hbox" in the log).
 - **Detect.**
   - R09: seven or more columns at `\small`, or eight or more at `\footnotesize`.
-  - L01: a word enters the gutter while the other column has text on the same line.
+  - L01: a word enters the gutter while the other column has text on the same line. "Other column" means a
+    different text line: the full-width caption of a `table*` was once reported because one of its own words
+    starts at the gutter.
   - L03: text over text.
 - **Fix.** In the generating script, shorten the header (move "L/C" to the caption), use one
   decimal for values ≥ 10, use `L/C` without spaces, and reduce `\tabcolsep`. Otherwise use

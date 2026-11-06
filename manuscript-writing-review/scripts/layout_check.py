@@ -76,7 +76,10 @@ def main():
                 if starts[(w[5], w[6])] > L / 2:  # line does not start in the left column (title, full-width text)
                     continue
                 if (w[0] < L - 1 and w[2] > L + 2) or (L + 1 < w[0] < R - 2):
-                    if any(abs(v[0] - R) < 1.5 and abs(v[3] - w[3]) < 4 for v in words):
+                    # the other column must hold a different line: a full-width caption of a table*/figure* that
+                    # merely has a word starting at the gutter is one line, not a collision
+                    if any(abs(v[0] - R) < 1.5 and abs(v[3] - w[3]) < 4 and (v[5], v[6]) != (w[5], w[6])
+                           for v in words):
                         F.append(("ERROR", "L01", i, f"text runs into the other column (x {w[0]:.0f}-{w[2]:.0f}, column ends at {L}): '{w[4]}' - overfull table/figure"))
         # L02: past the margin
         for w in words:

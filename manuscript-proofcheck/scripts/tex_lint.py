@@ -194,6 +194,11 @@ def main():
         add(WARN, "T03", "bib", 0, "IEEEtran.bst prints a dash for repeated author names; add an IEEEtranBSTCTL entry with CTLdash_repeated_names = \"no\" and \\bstctlcite")
     if "IEEEtranBSTCTL" in "".join("\n".join(lines_of(b)) for b in bibs) and "\\bstctlcite" not in alltex:
         add(ERR, "T03", "main", 0, "BST control entry exists but \\bstctlcite{...} is not called after \\begin{document}")
+    bibtext = "".join("\n".join(lines_of(b)) for b in bibs)
+    if re.search(r"\\(DJ|dj|NG|ng|TH|th|DH|dh)\b", bibtext + alltex) and not re.search(
+            r"\\usepackage\[[^\]]*\bT1\b[^\]]*\]\{fontenc\}", alltex):
+        add(ERR, "T25", "preamble", 0, "\\DJ/\\dj (and \\NG, \\TH, \\DH) exist only in the T1 font encoding: compiling stops with "
+            "'Command \\DJ unavailable in encoding OT1'; add \\usepackage[T1]{fontenc}")
     if ieee and "\\thanks" in alltex and "\\IEEEoverridecommandlockouts" not in alltex:
         add(WARN, "T10", "preamble", 0, "\\thanks in IEEEtran conference mode needs \\IEEEoverridecommandlockouts")
     for lab, (rp, i) in labels.items():

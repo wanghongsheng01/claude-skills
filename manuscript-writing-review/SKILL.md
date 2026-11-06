@@ -87,7 +87,10 @@ Scripts live in `scripts/` of this skill. They need Python 3; the PDF scripts ne
   - legend fully visible and not over data;
   - no label over another label;
   - axis labels and tick labels inside the canvas;
-  - fonts readable at print size (≥ 6 pt).
+  - fonts readable at print size (≥ 6 pt);
+  - no markers on top of each other (F04): break or zoom the axis and label points directly;
+  - the caption says what is plotted, which direction is better, what colours and markers mean, and
+    where the intervals are.
 - **Tables**:
   - inside their column, nothing in the gutter, nothing over body text;
   - text cells left-aligned (`>{\raggedright\arraybackslash}p{}`), so there are no stretched word

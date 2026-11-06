@@ -186,6 +186,14 @@ a real compiled submission.
 - Detect: a given name whose first character is non-ASCII.
 - Fix: write the name with TeX accents or commands: `{\DJ}or{\dj}e`, `{\'E}mile`, `{\v{S}}tefan`.
 
+### T25 Text command missing in the default font encoding (*observed*, after an uncompiled T21 fix)
+- Seen: `! LaTeX Error: Command \DJ unavailable in encoding OT1`. Overleaf still produced a PDF and the
+  reference showed a wrong or missing letter, so the author saw no error.
+- Cause: `\DJ`, `\dj`, `\NG`, `\TH`, `\DH` are defined only in T1; IEEEtran and many templates stay in OT1.
+- Detect: tex_lint T25 (one of these commands in the source or bib and no `\usepackage[T1]{fontenc}`); the
+  compile log.
+- Fix: `\usepackage[T1]{fontenc}` in the preamble. Lesson: a fix to a bib entry is not done until compiled.
+
 ### T22 Crossref records copied verbatim (*observed*)
 - Seen: "ser. SIGMOD/PODS04", "Springer Berlin Heidelberg" with no proceedings title, long
   `http://dx.doi.org/...` URLs under every entry.

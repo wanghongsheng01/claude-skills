@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Check vector figure files (PDF, as produced by matplotlib and similar) before they go into the paper:
-rules F01-F03 of references/defect-catalog.md. Needs PyMuPDF (pip install pymupdf).
+rules F01-F04 of references/defect-catalog.md. Needs PyMuPDF (pip install pymupdf).
 
 Usage: python3 fig_check.py figs/*.pdf [--png DIR]
   F01 text cut off at the canvas edge (legend or label placed outside the saved area)
   F02 text drawn over other text (annotation over a bar label, legend over tick labels)
   F03 text drawn over a coloured shape (legend or label over bars, lines or markers)
+  F04 scatter markers drawn on top of each other (clustered points that the reader cannot tell apart)
 With --png, each figure is rendered for the visual check. Exit code 1 if any problem is found.
 """
 import argparse, os, sys
@@ -59,6 +60,14 @@ def check(path, png=None):
         for w in words:
             if area(fitz.Rect(w[:4]) & r) > 2:
                 out.append(("F03", f"text over a coloured shape: '{w[4]}'"))
+    # F04: small filled shapes (scatter markers) that cover each other; legend handles never overlap one another
+    marks = [x["rect"] for x in dr if min(x["fill"]) <= 0.97 and 1 < x["rect"].width < 12 and 1 < x["rect"].height < 12]
+    for j in range(len(marks)):
+        for k in range(j + 1, len(marks)):
+            if area(marks[j] & marks[k]) > 0.25 * min(area(marks[j]), area(marks[k])):
+                c = marks[j]
+                out.append(("F04", f"markers overlap at ({c.x0:.0f}, {c.y0:.0f}) pt: separate them (broken or zoomed axis, "
+                                   "larger figure, direct labels) instead of a legend lookup"))
     return sorted(set(out))
 
 
