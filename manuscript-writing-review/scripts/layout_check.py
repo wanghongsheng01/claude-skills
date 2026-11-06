@@ -10,6 +10,7 @@ Usage: python3 layout_check.py PAPER.pdf [--out DIR] [--dpi 120]
   L05 end-of-proof glyphs (filled or open boxes) that authors read as garbled characters
   L06 replacement / missing glyphs, '??', '[?]'
   L07 text clipped at the edge of an embedded figure (word cut off by the figure's bounding box)
+  L08 last page holds only a few lines (e.g. the tail of one reference): looks careless
 With --out, every page is rendered to DIR/page-NN.png for the mandatory visual pass.
 Exit code 1 if any ERROR is found.
 """
@@ -132,6 +133,9 @@ def main():
                 for s in l["spans"]:
                     if s["text"].strip() and s["bbox"][2] > W + 1:
                         F.append(("ERROR", "L07", i, f"text drawn outside the page (clipped): {s['text'][:40]}"))
+    last = [w for w in d[-1].get_text("words") if w[4].strip()] if len(d) else []
+    if last and len({round(w[3]) for w in last}) <= 4:
+        F.append(("WARN", "L08", len(d), f"last page holds only {len({round(w[3]) for w in last})} lines; trim the references or text so it disappears"))
     seen, out = set(), []
     for f in F:
         if f not in seen:

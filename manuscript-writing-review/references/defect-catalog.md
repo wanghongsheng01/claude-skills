@@ -144,3 +144,11 @@ Each entry gives what the reader sees, the cause, how it is detected and the fix
 - **Seen.** "accepted to ICDE 2027 (according to the arXiv comments)" printed in the references.
 - **Fix.** Use a neutral note ("To appear in ICDE 2027") or none. Use the published version once it
   exists.
+
+## Page flow
+
+### L08 Last page with only a few lines (*observed*)
+- **Seen.** After the math was set as displays, the paper ran to 13 pages, and page 13 held only the
+  last two lines of reference [60].
+- **Fix.** Remove redundant bib fields (for example, `publisher = {Springer}` in LNCS entries whose
+  series already identifies the publisher) or trim text. Never shrink the spacing.

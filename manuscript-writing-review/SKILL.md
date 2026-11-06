@@ -50,6 +50,11 @@ Scripts live in `scripts/` of this skill. They need Python 3; the PDF scripts ne
      columns in a one-column figure. Notes such as "labels in ms" go in the caption.
 3. **Compile** with the venue's engine (pdfLaTeX for IEEE/ACM unless stated). Run
    `pdflatex, bibtex, pdflatex, pdflatex`.
+   - TinyTeX setup that worked (macOS, no root): unpack `TinyTeX-1-darwin-*.tar.xz` from the
+     rstudio/tinytex-releases GitHub release into a scratch folder, then run `tlmgr update --self`.
+     For IEEEtran papers install `ieeetran algorithm2e ifoddpage relsize cite courier times helvetic
+     psnfss symbol zapfding`.
+   - For any other missing file, look up its package with `tlmgr search --global --file /<file>`.
    - Read the log for `Overfull \hbox` larger than 1pt, undefined references and missing
      characters.
 4. **Layout check.** `python3 scripts/layout_check.py main.pdf --out <dir>`:
@@ -95,6 +100,8 @@ Scripts live in `scripts/` of this skill. They need Python 3; the PDF scripts ne
 - **Text**: no overfull lines, no stray characters, no editing remnants, no internal remarks.
 - **References**: no notes such as "according to …", "TODO", "?"; no dash for repeated authors.
 - **Length**: body within the venue limit after all fixes (displays add height: re-count pages).
+- **Last page**: not just the tail of one reference (L08). Trim redundant bib fields (e.g. the publisher
+  of LNCS volumes) or text instead of using spacing hacks.
 
 ## Reporting rules
 
