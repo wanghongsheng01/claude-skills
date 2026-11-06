@@ -49,7 +49,7 @@ Extracted from the 'why accepted' sections of 21 reading notes (read-icde/refere
 
 ## CYANSQL: Unlock the Power of NL2SQL via Clustering-based Test-Time Scaling (ICDE 2026, Regular)
 - 无法基于原文判断。仅从元数据看：(1) 16 页、70 篇参考文献，体量为完整 ICDE regular 论文；(2) 产学合作（复旦 + 腾讯云），通常意味着有工业场景/系统部署叙事；(3) 该组前作 PURPLE（ICDE'24）与 CycleSQL（ICDE'25）连续三年在 ICDE 发表 NL2SQL 工作，说明该组熟悉 ICDE 审稿偏好（DB 技术 + LLM）。
-- **建议**：若作者可通过机构订阅从 IEEE Xplore 下载 PDF，放到 `/Users/loctek/Desktop/ICDE2027/03_deep_reading/pdfs/B/` 后可补读本篇。由于它是本组与"多候选选择"最直接相关的一篇（与本项目研究方向最接近），**强烈建议补读**，重点核查：聚类依据（执行结果 / SQL 结构 / embedding）、簇内与簇间如何选择、是否组合多个 LLM、是否报告 token 成本、是否有选择正确率的统计保证。
+- **建议**：若作者可通过机构订阅从 IEEE Xplore 下载 PDF，放到项目的 `pdfs/` 目录后可补读本篇。由于它是本组与"多候选选择"最直接相关的一篇（与本项目研究方向最接近），**强烈建议补读**，重点核查：聚类依据（执行结果 / SQL 结构 / embedding）、簇内与簇间如何选择、是否组合多个 LLM、是否报告 token 成本、是否有选择正确率的统计保证。
 - 本组中用于补位、已全文精读的替代论文见：`B_cyclesql_substitute.md`（同组 ICDE'25，候选验证）与 `B_hexgenflow_substitute.md`（ICDE'26，Text-to-SQL 多 LLM 调用的推理调度与成本）。
 
 ## Grounding Natural Language to SQL Translation with Data-Based Self-Explanations（CycleSQL）(ICDE 2025, Regular)

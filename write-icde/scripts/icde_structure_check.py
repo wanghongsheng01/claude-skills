@@ -26,7 +26,7 @@ def words(s):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("folder"); ap.add_argument("--main", default="main.tex")
-    ap.add_argument("--eab", action="store_true", help="EAB rules (also switched on by 'Benchmark' in the title)")
+    ap.add_argument("--eab", action="store_true", help="EAB rules, references/eab.md (also switched on by 'Benchmark' in the title)")
     a = ap.parse_args(); root = pathlib.Path(a.folder); s = expand(root, a.main)
     w = lambda m: print("WARN ", m)
     o = lambda m: print("OBS  ", m)
@@ -104,6 +104,30 @@ def main():
             for m in OWN.finditer(strip(ln)):
                 w(f"EAB self-deprecating wording '{m.group(0)}' (line {i} of the expanded source): describe your own choices "
                   "with scope/design wording or a lower-bound argument (limitations-writing-eab.md E2, E9)")
+        # EAB reporting and framing (references/eab.md sections 4, 5 and 8; 16 accepted EAB/benchmark papers)
+        SELFLIM = re.compile(r"may not generali[sz]e|might not generali[sz]e|only a snapshot|merely a snapshot|limitations? of (our|this) "
+                             r"(study|benchmark|work)|our (study|benchmark) (is|has) (limited|several limitations)|threats? to (the )?validity", re.I)
+        for name, txt in (("abstract", ab.group(1) if ab else ""), ("conclusion", concl)):
+            hits = [m.group(0) for m in SELFLIM.finditer(txt)] + [m.group(0) for m in OWN.finditer(txt)]
+            if hits:
+                w(f"EAB: a limit of your own study in the {name} {hits[:4]} - 15/16 accepted EAB papers keep the abstract and "
+                  "conclusion for findings about the evaluated methods; fold scope into the claim (eab.md 8.1-8.2)")
+        nfind = len(re.findall(r"\\(begin\{(takeaway|finding|insight|tcolorbox|mdframed)|takeaway|finding)\b|\\textbf\{(Finding|Takeaway|Insight|Lesson|Observation)", s, re.I))
+        o(f"EAB findings/takeaway boxes or labels: {nfind} (accepted: 5-12, one per experiment or RQ)")
+        if not re.search(r"\bRQ\s*\d|research questions?", intro, re.I):
+            w("EAB: no research questions in the introduction (RQ-first framing in 5/16 accepted EAB papers; eab.md section 4)")
+        if not re.search(r"recommend|lessons?|guideline|decision (tree|table|guide)|practitioners?", s, re.I):
+            w("EAB: no recommendations/lessons for practitioners (the 'usefulness' a reviewer scores; eab.md section 4)")
+        rep_facts = [("runs/repetitions", r"\b(runs?|repetitions?|repeated|trials?)\b"),
+                     ("dispersion (std/IQR/CI/error bars)", r"standard deviation|\\pm|IQR|interquartile|confidence interval|error bars?|\bstd\b"),
+                     ("seeds", r"\bseeds?\b"),
+                     ("a claim rule or statistical test", r"significan|p\s*[<=]|Wilcoxon|Mann|bootstrap|t-test|\\sigma|3\s*std")]
+        if re.search(r"\b(LLMs?|GPT|Claude|Gemini|Llama|Qwen|DeepSeek)\b", s):
+            rep_facts += [("LLM temperature/decoding", r"temperature|greedy|top-?p"),
+                          ("LLM cost in dollars or tokens", r"\\\$|USD|dollars?|tokens?")]
+        for name, rx in rep_facts:
+            if not re.search(rx, exp + s, re.I):
+                w(f"EAB reporting: {name} not stated (eab.md section 5; accepted papers often omit it, reviewers ask for it)")
         thr = next((v for k, v in body.items() if re.search(r"threat|limitation", k)), "")
         if thr:
             ni, nw = len(re.findall(r"\\textit\{[^}]+\.\}|\\item|\\textbf\{[^}]+\.\}", thr)), words(thr)

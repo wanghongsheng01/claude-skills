@@ -1,6 +1,6 @@
 ---
 name: "write-icde"
-description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers, nine accepted ICDE benchmark papers and twelve accepted AQP/sampling/LLM-query-with-guarantees papers (ICDE 2022-2027, PVLDB) read for how they state limitations, asymptotic guarantees, LLM oracles and proprietary data, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格). Includes a structure checker."
+description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers, nine accepted ICDE benchmark papers and twelve accepted AQP/sampling/LLM-query-with-guarantees papers (ICDE 2022-2027, PVLDB) read for how they state limitations, asymptotic guarantees, LLM oracles and proprietary data, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Has a dedicated Experiment, Analysis and Benchmark (EAB) guide (references/eab.md) built from 16 accepted EAB/benchmark papers (ICDE 2024-2027R1 and PVLDB EA&B: CDC chunking, WPBench, entity-matching re-evaluation, SemBench, UDA-Bench, NL2SQL360, learned-optimizer ML perspective, plus the nine in limitations-writing-eab.md): title and abstract patterns, gap tables, RQs/findings/lessons, repetitions/statistics/cost/LLM-version reporting, figures, references, and ten patterns for stating limits and threats to validity without self-negation. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格 / 写 EAB 论文 / benchmark paper / experimental survey / threats to validity / 局限性怎么写). Includes a structure checker with an EAB mode."
 ---
 
 # Writing for ICDE (Write-ICDE 写作指南)
@@ -74,6 +74,28 @@ Integrity: never delete measured numbers, never hide the strongest competitor, n
 that the tables contradict. That contradiction is a top rejection reason.
 
 
+### 9a. EAB papers: the full guide (`references/eab.md`)
+Start an EAB paper from `references/eab.md`. It is built from 16 accepted papers: ICDE 2024–2027R1 and
+PVLDB EA&B.
+- **Title**: one of five patterns, with the ICDE tag as a prefix.
+- **Abstract**: scale numbers; 2–3 numeric findings about the evaluated methods; one recommendation;
+  the artifact URL; no limits of the study itself (15/16 of the accepted papers follow this).
+- **Gap**: a Figure 1 measurement or a criteria table with an "Ours" row that your own setup meets.
+- **Findings**: RQs in the introduction, a boxed finding per experiment, and a lessons section with a
+  decision table or figure.
+- **Reporting**, beyond the accepted norm (the norm is often missing it):
+  - runs plus dispersion and a claim rule or test;
+  - seeds;
+  - pinned model versions and temperature;
+  - $ and tokens with price dates;
+  - timeouts;
+  - ground-truth agreement.
+- **Limits**: 2/16 have a labelled block (about 110 words); 0/16 concede limits in the conclusion;
+  12/16 answer a threat with a measurement. Use the ten patterns in section 8.2: design choice with a
+  reason, domain of validity, "we do not claim X", inclusion criteria, concede-then-neutralise,
+  reimplementation caveat, versioned snapshot, not a universal ranking, threat → measurement, scale →
+  headroom. ICDE has no revision round, so add one scope paragraph of 80–150 words in advance.
+
 ### 9b. EAB papers: two registers (`references/limitations-writing-eab.md`)
 Nine accepted ICDE benchmark papers (DCO, RLESI, XRAG, SQLMorph, TS-Fault; HCT-QA, CITBench, RDL-Bench,
 Text2VectorSQL; read in full) keep two registers apart:
@@ -93,6 +115,11 @@ Text2VectorSQL; read in full) keep two registers apart:
   judges) once in the setup.
 `scripts/icde_structure_check.py` switches to EAB rules when the title contains "Benchmark" (or `--eab`):
 it flags self-deprecating wording about the benchmark and threats sections longer than about five items.
+It also flags:
+- limits of your own study in the abstract or conclusion;
+- missing RQs or lessons;
+- missing reporting facts: runs, dispersion, seeds, a claim rule, and for LLM papers temperature and cost.
+It counts the finding boxes.
 
 ### 9c. AQP, sampling and LLM-query papers with guarantees (`references/limitations-writing-aqp.md`)
 Twelve accepted papers (KG-AQP, ExSample, JanusAQP, BATCHER, ZenDB, spatial-join sampling, CactusDB,
@@ -138,3 +165,5 @@ was not shown. Then the unnumbered **AI-Generated Content Acknowledgment** (syst
 - [ ] Cost reported in dollars/tokens; negative regions reported once, as regimes with a mechanism (no failure heading, nothing negative in the abstract or conclusion).
 - [ ] Compiled and checked with `manuscript-writing-review` (0 layout errors, every page seen).
 - [ ] 12 body pages, no appendix; AI acknowledgment present.
+- [ ] EAB: the checklist in `references/eab.md` section 10 is done, and `icde_structure_check.py --eab`
+      gives no self-limit in the abstract or conclusion.

@@ -775,4 +775,4 @@ Reading notes on the counts:
 - None of the four is about LLM security or access control. No in-scope paper on that topic had a public full text in the three lists.
 - Counts refer to the arXiv versions read, which may differ from the camera-ready versions.
 - Sentence counts are approximate and were made by reading, not by an automatic tool.
-- Downloaded PDFs and extracted text are in /private/tmp/claude-501/-Users-loctek-Desktop-ICDE2027/0578ebb1-8b07-4af4-9a06-2987c25cf67d/scratchpad/eab_new/. That folder also holds the rejected FusionSQL text, 2603.07841.
+- The full texts were read from the public arXiv versions listed in B.0 (the rejected FusionSQL candidate is arXiv 2603.07841).

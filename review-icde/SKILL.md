@@ -1,6 +1,6 @@
 ---
 name: "review-icde"
-description: "Simulated IEEE ICDE program-committee review of a manuscript before submission: desk-reject screen (format, scope, COI, AI disclosure), three independent reviewer reports on an ICDE-style form (novelty, technical depth and soundness, experiments, presentation, reproducibility, relevance), reviewers may request added/supplemented/re-run/removed experiments that the authors then run, a limitations-presentation lens (contradiction vs self-negation), discussion, rebuttal and re-scoring, a senior-PC meta-review with Accept/Reject (ICDE 2027 has a rebuttal but no revision), an adversarial check of numbers, proofs and references, and a revision table. Built from the ICDE 2027 CFP and the strengths/weaknesses of 21 deep-read accepted papers. Use for 模拟审稿 / 独立审阅 / 预审 of an ICDE paper or rebuttal preparation."
+description: "Simulated IEEE ICDE program-committee review of a manuscript before submission: desk-reject screen (format, scope, COI, AI disclosure), three independent reviewer reports on an ICDE-style form (novelty, technical depth and soundness, experiments, presentation, reproducibility, relevance), reviewers may request added/supplemented/re-run/removed experiments that the authors then run, a limitations-presentation lens (contradiction vs self-negation), discussion, rebuttal and re-scoring, a senior-PC meta-review with Accept/Reject (ICDE 2027 has a rebuttal but no revision), an adversarial check of numbers, proofs and references, and a revision table. Built from the ICDE 2027 CFP and the strengths/weaknesses of 21 deep-read accepted papers. Has an Experiment, Analysis and Benchmark (EAB) mode (references/eab.md): an EAB review form (novelty of insights, soundness of methodology, coverage, reproducibility as a hard requirement, usefulness), a 40-item EAB checklist from the ICDE/PVLDB/SIGMOD calls, the PVLDB reproducibility criteria, DB fair-benchmarking pitfalls and benchmarking crimes, 15 common rejection reasons for benchmark papers, a three-column limitations lens (acceptable scope vs self-negation vs hiding), and add/supplement/re-run/remove experiment requests that the authors run before submission. Use for 模拟审稿 / 独立审阅 / 预审 of an ICDE paper (including EAB / benchmark / experimental-survey papers) or rebuttal preparation."
 ---
 
 # Simulated ICDE review (模拟 ICDE 审稿)
@@ -97,6 +97,19 @@ under-covers); prefer that to an admission in the text.
    submission, because there is no revision. Fix it now (section 3a); the rebuttal cannot.
 
 ## 3d. Extra questions for EAB papers
+**For an EAB paper, use `references/eab.md`.** It contains:
+- §1, an EAB review form with seven scored criteria: novelty of insights, soundness, coverage,
+  reproducibility (a hard requirement), usefulness, presentation, relevance;
+- §2, a checklist (A contribution … I positioning). Each fail becomes a weakness or a requested
+  experiment;
+- §3, common rejection reasons for benchmark papers, labelled by evidence type;
+- §4, the limitations lens with three columns: an acceptable scope statement, self-negation (a
+  presentation weakness) and hiding (a soundness weakness). Negatives about the evaluated methods are
+  not classified; they are the contribution;
+- §5, add / supplement / re-run / remove requests with EAB examples. The authors run them before the
+  Round 2 deadline, because ICDE has no revision.
+
+Summary questions:
 - Limitations lens for EAB (`write-icde/references/limitations-writing-eab.md`): negatives about the
   evaluated methods are the contribution and are not self-negation. Flag limits of the benchmark itself
   that appear in the abstract or conclusion, are repeated, use deficit words ("incomplete", "elementary",

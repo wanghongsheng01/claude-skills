@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Pre-submission checks for an IEEE ICDE research-track LaTeX manuscript (rules of the ICDE 2027 CFP).
 
-Usage: python3 check_icde_submission.py FOLDER [--main main.tex] [--pdf main.pdf] [--eab] [--scope scope.txt]
+Usage: python3 check_icde_submission.py FOLDER [--main main.tex] [--pdf main.pdf] [--eab] [--camera-ready]
+       [--artifact ARTIFACT_DIR] [--scope scope.txt]
+EAB rules: references/eab.md (EAB mode also switches on when the title starts with the ICDE tag).
 Prints ERROR / WARN / OK lines and exits 1 on any ERROR. Reads files only.
 Page counting needs pypdf (pip install pypdf); without it the PDF checks are skipped with a WARN.
 """
@@ -38,9 +40,15 @@ def main():
     ap.add_argument("--pdf", default=None)
     ap.add_argument("--eab", action="store_true", help="Experiment, Analysis and Benchmark paper")
     ap.add_argument("--scope", default=None, help="text file with the out-of-scope justification (<=1000 chars)")
+    ap.add_argument("--camera-ready", action="store_true", help="camera-ready version: the EAB tag must be removed")
+    ap.add_argument("--artifact", default=None, help="local clone of the artifact repository (EAB: all artifacts mandatory)")
     a = ap.parse_args()
     root = pathlib.Path(a.folder)
     s = expand(root, a.main)
+    title0 = re.search(r"\\title\{(.+?)\}\s*\n", s, re.S)
+    if title0 and re.match(r"\s*\[Experiment", title0.group(1)) and not a.eab:
+        a.eab = True
+        report("OK", "EAB mode switched on: the title starts with an Experiment/Analysis/Benchmark tag")
 
     report("OK" if re.search(r"\\documentclass\[[^\]]*conference[^\]]*\]\{IEEEtran\}", s) else "ERROR",
            "IEEEtran conference class (CFP: IEEE format)")
@@ -59,9 +67,19 @@ def main():
     title = re.search(r"\\title\{(.+?)\}\s*\n", s, re.S)
     t = title.group(1) if title else ""
     report("WARN" if re.search(r"\$|\\footnote", t) else "OK", "no math or footnote in the title (IEEE Xplore metadata)")
-    if a.eab:
-        report("OK" if t.strip().startswith("[Experiment, Analysis, and Benchmark]") else "ERROR",
-               "EAB title starts with [Experiment, Analysis, and Benchmark]")
+    TAG = "[Experiment, Analysis, and Benchmark]"
+    if a.eab and not a.camera_ready:
+        tt = t.strip()
+        report("OK" if tt.startswith(TAG) else "ERROR",
+               "EAB title starts with " + TAG + " (CFP; prefix, exact spelling)")
+        if not tt.startswith(TAG):
+            v = re.search(r"\[(Experiments?\s*(,|&)?\s*Analysis[^\]]*)\]", tt)
+            if v:
+                report("ERROR", f"tag variant '[{v.group(1)}]' found: PVLDB uses the suffix [Experiment, Analysis & Benchmark], "
+                       "SIGMOD the suffix [Experiments & Analysis]; ICDE needs the prefix " + TAG)
+    if a.camera_ready:
+        report("ERROR" if re.search(r"\[Experiments?,? Analysis", t) else "OK",
+               "camera-ready title has no EAB tag (CFP: the tag is removed in the camera-ready version)")
     report("WARN" if re.search(r"Author Name|Anonymous|Affiliation", s) else "OK",
            "author block filled in (ICDE is single-blind: real names and affiliations)")
 
@@ -72,6 +90,10 @@ def main():
     ack_txt = re.sub(r"\\([A-Za-z]+)", lambda m: macros.get(m.group(1), m.group(0)), ack_txt)
     report("OK" if re.search(r"\b(AI|LLM|GPT|language model|Claude|DeepSeek|ChatGPT)\b", ack_txt) else "ERROR",
            "AI-generated content disclosure in the acknowledgments (system, sections, level of use)")
+    named = sorted(set(m.group(1) for m in re.finditer(r"\b(GPT-?[\w.]*|Claude|Gemini|Llama|Qwen|DeepSeek|Mistral)\b", s.split("\\bibliography")[0])))
+    if named and ack_txt and not re.search(r"experiment|evaluat|judge|label|annotat|generat", ack_txt, re.I):
+        report("WARN", f"the body names LLMs {named[:5]} but the AI acknowledgment does not say they were used to run, judge or "
+               "label experiments (CFP: disclose tools used for data processing and for facilitating or running experiments)")
 
     abst = re.search(r"\\begin\{abstract\}(.*?)\\end\{abstract\}", s, re.S)
     n = len(re.sub(r"\\[a-zA-Z]+|[{}$]", " ", abst.group(1)).split()) if abst else 0
@@ -96,14 +118,77 @@ def main():
     report("WARN" if re.search(r"TODO|XXX", s) or undefined else "OK",
            "no TODO/XXX or undefined number macro left" + (f" (undefined: {undefined})" if undefined else ""))
 
-    link = re.search(r"https?://(github\.com|anonymous\.4open\.science|zenodo\.org|figshare)[^\s}]*", s)
+    link = re.search(r"https?://(github\.com|gitlab\.com|anonymous\.4open\.science|zenodo\.org|figshare|doi\.org|huggingface\.co|osf\.io|codeocean)[^\s}]*", s)
     report("OK" if link else "WARN", "artifact link in the paper (CFP expects code/data via a public repository; EAB: mandatory)")
     if a.eab and not link:
-        report("ERROR", "EAB papers must provide all artifacts")
+        report("ERROR", "EAB papers must provide all artifacts (CFP: no exceptions)")
+    risky = sorted(set(m.group(0) for m in re.finditer(
+        r"https?://(bit\.ly|tinyurl\.com|goo\.gl|drive\.google\.com|docs\.google\.com/forms|dropbox\.com|1drv\.ms|pan\.baidu\.com|"
+        r"sites\.google\.com|[a-z0-9-]+\.github\.io|(\d{1,3}\.){3}\d{1,3})[^\s}]*", s)))
+    if risky:
+        report("WARN", f"links that may be personal pages, trackers or non-archival sharing {risky[:4]} "
+               "(CFP: standard, openly accessible services with well-understood privacy policies; no personal webpages)")
+    if a.eab:
+        later = [m.group(0) for m in re.finditer(r"(upon|after) (paper )?acceptance|(available )?(up)?on (reasonable )?request|"
+                 r"will be (made )?(publicly )?(released|available|open[- ]sourced)|cannot be (publicly )?(released|shared)", s, re.I)]
+        report("ERROR" if later else "OK", "EAB: no deferred or withheld artifacts" +
+               (f" - found {sorted(set(x.lower() for x in later))[:5]}; EAB papers MUST provide all artifacts at submission "
+                "(release de-identified data or a generator, or drop the dataset from the EAB claims)" if later else ""))
+        priv = sorted(set(m.group(0).lower() for m in re.finditer(r"\b(proprietary|confidential|in-house|internal) (data|dataset|datasets|logs?|workloads?|traces?)\b", s, re.I)))
+        if priv:
+            report("WARN", f"EAB: {priv[:4]} - if this data carries a result, it must be released (de-identified, or as a generator); "
+                   "otherwise remove it from the EAB claims (references/eab.md section 3)")
+        body_txt = s.split("\\bibliography")[0]
+        facts = [("hardware (CPU/GPU/RAM)", r"\b(CPU|GPU|Xeon|EPYC|A100|H100|A800|RTX|RAM|cores?)\b"),
+                 ("number of runs/repetitions", r"\b(runs?|repetitions?|repeated|trials?|seeds?)\b"),
+                 ("dispersion (std/IQR/CI)", r"standard deviation|\bstd\b|\\pm|\$\\pm|IQR|interquartile|confidence interval|\bCI\b|error bars?"),
+                 ("software or model versions", r"\bv?\d+\.\d+(\.\d+)?\b|version")]
+        llm = re.search(r"\b(LLMs?|GPT-?\d|Claude|Gemini|Llama|Qwen|DeepSeek|Mistral|language models?)\b", body_txt)
+        if llm:
+            facts += [("LLM temperature/decoding settings", r"temperature|greedy decoding|top-?p"),
+                      ("LLM cost (dollars or tokens)", r"\\\$|USD|dollars?|tokens?|cost per")]
+        for name, rx in facts:
+            report("OK" if re.search(rx, body_txt, re.I) else "WARN", f"EAB reproducibility fact stated: {name}")
 
     if a.scope:
         txt = pathlib.Path(a.scope).read_text().strip()
         report("OK" if len(txt) <= 1000 else "ERROR", f"scope justification {len(txt)} characters (<= 1000)")
+
+    if a.artifact:
+        art = pathlib.Path(a.artifact)
+        if not art.is_dir():
+            report("ERROR", f"artifact folder {art} not found")
+        else:
+            files = [f for f in art.rglob("*") if f.is_file() and ".git" not in f.parts]
+            names = [f.relative_to(art).as_posix().lower() for f in files]
+            def has(rx): return any(re.search(rx, n) for n in names)
+            readme = next((f for f in files if f.parent == art and f.name.lower().startswith("readme")), None)
+            report("OK" if readme else "WARN", "artifact: README at the top level")
+            if readme:
+                rt = readme.read_text(errors="ignore")
+                report("OK" if re.search(r"(?m)^\s*(\$ |python|bash|make|docker|cargo|java|\./)", rt) or "```" in rt else "WARN",
+                       "artifact README gives run commands")
+                report("OK" if re.search(r"table|figure|fig\.", rt, re.I) else "WARN",
+                       "artifact README maps commands to the paper's tables/figures")
+            for name, rx in [("licence file", r"^(license|licence|copying)"),
+                             ("environment spec (requirements/environment/Dockerfile/pyproject/Cargo/pom)",
+                              r"(requirements.*\.txt|environment\.ya?ml|dockerfile|pyproject\.toml|setup\.py|cargo\.toml|pom\.xml|package\.json|renv\.lock)$"),
+                             ("experiment scripts", r"(script|experiment|bench|run|eval)"),
+                             ("raw results (csv/json/jsonl/parquet)", r"(result|raw|output|log).*\.(csv|jsonl?|parquet|tsv)$|\.(csv|jsonl|parquet)$"),
+                             ("table/figure generation scripts", r"(plot|fig|table|make_?fig|chart)")]:
+                report("OK" if has(rx) else "WARN", f"artifact: {name}")
+            bad = [n for n in names if re.search(r"(^|/)(\.env|id_rsa|id_ed25519)$|\.pem$|\.p12$|credentials", n)]
+            leaks = []
+            key = re.compile(r"(sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|ghp_[A-Za-z0-9]{30,}|glpat-[A-Za-z0-9_-]{20}|"
+                             r"-----BEGIN [A-Z ]*PRIVATE KEY|(api[_-]?key|secret|password|token)\s*[:=]\s*['\"][^'\"]{8,}|"
+                             r"https?://(10|172\.(1[6-9]|2\d|3[01])|192\.168)\.\d+\.\d+)", re.I)
+            for f in files:
+                if f.stat().st_size < 2_000_000 and f.suffix.lower() in {".py", ".sh", ".md", ".txt", ".json", ".yaml", ".yml",
+                                                                         ".toml", ".cfg", ".ini", ".env", ".ipynb", ".rs", ".java", ".js"}:
+                    if key.search(f.read_text(errors="ignore")):
+                        leaks.append(f.relative_to(art).as_posix())
+            report("ERROR" if bad or leaks else "OK", "artifact: no secret files, keys or private-network URLs" +
+                   (f" - check {(bad + leaks)[:6]}" if bad or leaks else ""))
 
     pdf = pathlib.Path(a.pdf) if a.pdf else root / (pathlib.Path(a.main).stem + ".pdf")
     if pdf.exists():

@@ -8,7 +8,7 @@
 | 4 | Topic matches a CFP area; related work builds on ICDE/VLDB/SIGMOD papers | |
 | 5 | Not pure ML/DM; the data-engineering challenge is explicit | |
 | 6 | AI-generated content disclosed in the acknowledgments | |
-| 7 | EAB only: title tag and all artifacts | |
+| 7 | EAB only: the title starts with exactly `[Experiment, Analysis, and Benchmark]` (not PVLDB's suffix `[Experiment, Analysis & Benchmark]` or SIGMOD's suffix `[Experiments & Analysis]`). All artifacts are public at submission, with no "upon acceptance" and no unreleasable data behind any result (CFP: "No exceptions"; `references/eab.md` section 2G) | |
 | 8 | Supplemental material URL is a neutral public host (not a personal page) | |
 | 9 | (Author side) every author has a CMT profile with conflicts; ORCIDs; <= 5 submissions per author | |
 | 10 | Only the references and the AI acknowledgment are outside the 12 pages; funding acknowledgments count; no supplementary section inside the PDF; IEEE template text removed | |

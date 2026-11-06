@@ -1,6 +1,6 @@
 ---
 name: "submit-icde"
-description: "Pre-submission checklist and checker for the IEEE International Conference on Data Engineering (ICDE, CCF A) research track, built from the ICDE 2027 call for research papers (read 2026-11-03, re-checked 2026-11-06): two rounds, 12-page IEEE limit without appendix (only references and AI acknowledgment excluded), single-blind, stricter COI reading and CMT order of operations, AI-content disclosure, artifacts, scope/desk-reject rules, EAB category, rebuttal (new in 2027) and camera-ready (IEEE CPS, PDF eXpress). Use when preparing, formatting or packaging a paper for ICDE (投 ICDE / ICDE 投稿 / 投稿前检查), or when deciding Round 1 vs Round 2. Includes a LaTeX/PDF checker."
+description: "Pre-submission checklist and checker for the IEEE International Conference on Data Engineering (ICDE, CCF A) research track, built from the ICDE 2027 call for research papers (read 2026-11-03, re-checked 2026-11-06): two rounds, 12-page IEEE limit without appendix (only references and AI acknowledgment excluded), single-blind, stricter COI reading and CMT order of operations, AI-content disclosure, artifacts, scope/desk-reject rules, EAB category, rebuttal (new in 2027) and camera-ready (IEEE CPS, PDF eXpress). Includes a dedicated Experiment, Analysis and Benchmark (EAB) guide for Round 2 (references/eab.md): the exact [Experiment, Analysis, and Benchmark] title prefix (not the PVLDB/SIGMOD suffixes), all artifacts mandatory with no exceptions, LLM-experiment disclosure, withheld/enterprise data, regular-vs-EAB choice and an EAB countdown. Use when preparing, formatting or packaging a paper for ICDE (投 ICDE / ICDE 投稿 / 投稿前检查 / 投 ICDE EAB / benchmark paper / experimental survey), or when deciding Round 1 vs Round 2 or regular vs EAB. Includes a LaTeX/PDF/artifact checker with an EAB mode."
 ---
 
 # Submitting to ICDE (投稿 ICDE 前须知)
@@ -30,11 +30,11 @@ ICDE 2027: Round 1 due 2026-06-11, Round 2 due 2026-11-11, 5:00 PM Pacific Time 
 | Quota | at most 5 research-track submissions (regular + EAB) per author per round |
 | Overlap | not under review elsewhere; cite any prior publication it overlaps with |
 | Scope | must fit a CFP topic and position itself against ICDE/VLDB/SIGMOD work; pure ML/DM without a data-engineering angle is out of scope |
-| EAB | title begins with `[Experiment, Analysis, and Benchmark]` (removed at camera-ready); all artifacts mandatory |
+| EAB | title begins with `[Experiment, Analysis, and Benchmark]` (removed at camera-ready); all artifacts mandatory, no exceptions. Full EAB rules with URLs: `references/eab.md` |
 
 ## 2a. CMT order of operations [CMT docs, CFP]
 1. Every author creates a CMT profile, adds ORCID, and enters **Domain Conflicts** as semicolon-separated
-   domains (`zju.edu.cn; loctek.com`). Do not enter institution names or public mail domains such as
+   domains (`tudelft.nl; example.com`). Do not enter institution names or public mail domains such as
    gmail.com.
 2. The corresponding author creates the paper record early. **Individual Conflicts become visible only
    after a paper has been submitted**, so every author must log in again and mark individual conflicts
@@ -85,6 +85,24 @@ Plan for the stricter version in every case.
 - One unique full registration per paper, plus a presenting author.
 - Posting: you may post the accepted, not the IEEE-final, version, with the IEEE copyright notice.
 
+## 3c. EAB papers (`references/eab.md`, rules read 2026-11-06 with URLs)
+- Tag: the prefix `[Experiment, Analysis, and Benchmark]`, spelled exactly like this. PVLDB's
+  `[Experiment, Analysis & Benchmark]` suffix and SIGMOD's `: [Experiments & Analysis]` suffix are wrong
+  for ICDE. Remove the tag at camera-ready.
+- Artifacts: every artifact needed to reproduce every result is public at submission. "Upon
+  acceptance", "on request" and withheld enterprise data are incompatible with "no exceptions". Either
+  release de-identified data or a generator, drop the dataset from the EAB claims, or submit as a regular
+  paper.
+- LLM benchmarks:
+  - release the prompts, model identifiers with access dates and parameters, and the cached raw outputs;
+  - name the evaluated LLMs, the judges and the labelling models in the AI acknowledgement as tools used
+    to run experiments.
+- Same 12 pages and no appendix. Extended tables go into the artifact, but every claim must be
+  supported inside the paper.
+- Choose regular instead of EAB when the main contribution is a new method, or when some data cannot
+  be released.
+- Countdown T−7 … T−1 and the checker's EAB mode: `references/eab.md` sections 9–10.
+
 ## 4. Workflow
 1. Decide category (regular or EAB) and round; check the author quota and the one-year rule.
 2. Build with IEEEtran; keep the body within 12 pages; move proofs or extra results to a public technical report, not an appendix.
@@ -93,7 +111,7 @@ Plan for the stricter version in every case.
 5. Compile and run the layout gate `manuscript-writing-review`: 0 layout errors, every page seen. If the
    paper lives in an Overleaf project with git access, push through its git bridge, then compare the
    Overleaf PDF with the local one.
-6. Run the checker: `python3 scripts/check_icde_submission.py paper/ --pdf paper/main.pdf [--eab] [--scope scope.txt]`.
+6. Run the checker: `python3 scripts/check_icde_submission.py paper/ --pdf paper/main.pdf [--eab] [--artifact ../artifact] [--scope scope.txt]` (`--camera-ready` after acceptance).
 7. Every author: ORCID, CMT profile, conflicts (section 2a). The corresponding author fills the subject areas and, if needed, the scope statement (`assets/scope_statement_template.md`).
 8. Submit the PDF and the supplemental link on CMT before 5:00 PM PT; keep the CMT confirmation.
 9. **Page-count answer for the author.** A 14-page PDF is normal: count body pages up to the page that
@@ -116,6 +134,16 @@ Plan for the stricter version in every case.
 - the body end, which it finds at the AI acknowledgment or the References heading (including
   IEEEtran's "R EFERENCES" extraction).
 
+EAB mode (`--eab`, or automatic when the title starts with the tag) adds:
+- an exact-prefix tag check that catches PVLDB/SIGMOD variants, and tag removal with `--camera-ready`;
+- an ERROR for deferred-artifact wording ("upon acceptance", "will be released", "on request"), and a
+  WARN for proprietary or internal data;
+- WARNs for missing reproducibility facts: hardware, runs, dispersion, versions, and for LLM papers
+  temperature and cost;
+- a WARN when LLMs named in the body are missing from the AI acknowledgement;
+- with `--artifact DIR`, a repository audit: README with commands mapped to tables, licence,
+  environment, scripts, raw results, plotting scripts, and no secrets or private-network URLs.
+
 It also checks: IEEEtran conference class; no negative `\vspace`, geometry changes or appendix; author block filled; EAB title tag; AI disclosure in the acknowledgments; abstract length and no citations; citation keys resolved in the `.bib`; number of VLDB/SIGMOD/ICDE references; leftover TODO or placeholder macros; artifact link; scope text length; and, if a PDF exists, page count before the references and US Letter size. It reads files only.
 
 ## 6. Final checklist
@@ -125,6 +153,9 @@ It also checks: IEEEtran conference class; no negative `\vspace`, geometry chang
 - [ ] AI disclosure acknowledgment written.
 - [ ] Related work positions the paper against ICDE/VLDB/SIGMOD papers.
 - [ ] Public artifact repository with code, data and run instructions.
+- [ ] EAB only: exact title prefix; every artifact public now (no "upon acceptance"); no unreleasable
+      data behind any claim; LLMs used in experiments named in the AI acknowledgement; `--eab --artifact`
+      run gives 0 ERROR.
 - [ ] CMT profiles and conflicts for every author.
 - [ ] Checker passes with no ERROR; `manuscript-writing-review` shows 0 layout errors.
 - [ ] CMT abstract identical to the PDF abstract; author list final (frozen at camera-ready).

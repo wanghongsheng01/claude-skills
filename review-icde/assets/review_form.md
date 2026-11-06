@@ -2,6 +2,10 @@
 
 Paper: <title>            Reviewer lens: <method/theory | systems/experiments | generalist>
 
+EAB / benchmark paper? Use the EAB form, checklist and limitations lens in `references/eab.md` (sections 1-5).
+It replaces the score row below with: novelty of insights, soundness, coverage, reproducibility (hard
+requirement), usefulness, presentation and relevance.
+
 1. **Summary** (3-5 sentences, in your own words: problem, approach, evidence).
 2. **Strengths**
    - S1

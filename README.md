@@ -337,20 +337,20 @@ Six skills that cover one complete ICDE submission, built for ICDE 2027 Round 2 
 
 | Skill | Stage | Contents |
 |---|---|---|
-| `submit-icde` | guideline check, submission, rebuttal, camera-ready | CFP rules re-checked 2026-11-06 (rounds, 12 pages without appendix with only references and AI acknowledgment excluded, single-blind, stricter COI reading, CMT order of operations, AI disclosure, artifacts, scope), rebuttal (new in 2027) and camera-ready (IEEE CPS, PDF eXpress, eCF). `scripts/check_icde_submission.py` adds spacing-hack, title/abstract, template-text, font and body-end checks. Templates for the AI disclosure, scope statement and rebuttal |
+| `submit-icde` | guideline check, submission, rebuttal, camera-ready | CFP rules re-checked 2026-11-06 (rounds, 12 pages without appendix with only references and AI acknowledgment excluded, single-blind, stricter COI reading, CMT order of operations, AI disclosure, artifacts, scope), rebuttal (new in 2027) and camera-ready (IEEE CPS, PDF eXpress, eCF). `scripts/check_icde_submission.py` adds spacing-hack, title/abstract, template-text, font and body-end checks. Templates for the AI disclosure, scope statement and rebuttal; EAB Round 2 guide with cited rules (`references/eab.md`) and an EAB/artifact mode in the checker |
 | `survey-icde` | direction survey | classified list of 1058 accepted papers, topic shares 2024–2027R1, scripts to repeat the survey |
 | `read-icde` | deep reading | note template, 21 notes, 4 group syntheses, cross-group rules on problems, methods, experiments, writing, acceptance |
 | `experiment-icde` | idea and real experiments | gap → hypothesis → pilot → experiment matrix; label-once/replay-many design; key-free cached LLM client; full example code |
-| `write-icde` | writing | paragraph-level guide; how to state limitations without self-negation, from 10 accepted cohesive-subgraph papers (`references/limitations-writing.md`); math, figure and table readability; `scripts/icde_structure_check.py`, which also flags self-negating wording and failure headings |
-| `review-icde` | independent review and revision | 18-row desk screen, simulated review form (ICDE publishes none), reviewers may request added, supplemented, re-run or removed experiments and authors run them, a limitations-presentation lens, discussion, rebuttal and re-scoring, EAB questions, meta-review, adversarial checks |
+| `write-icde` | writing | paragraph-level guide; how to state limitations without self-negation, from 10 accepted cohesive-subgraph papers (`references/limitations-writing.md`); math, figure and table readability; `scripts/icde_structure_check.py`, which also flags self-negating wording and failure headings; EAB writing guide from 16 accepted EAB/benchmark papers (`references/eab.md`): titles, abstracts, RQs/findings, reporting, ten limitation patterns |
+| `review-icde` | independent review and revision | 18-row desk screen, simulated review form (ICDE publishes none), reviewers may request added, supplemented, re-run or removed experiments and authors run them, a limitations-presentation lens, discussion, rebuttal and re-scoring, EAB questions, meta-review, adversarial checks; EAB review form, checklist, rejection reasons and three-column limitations lens (`references/eab.md`) |
 
 ```
-submit-icde/      SKILL.md  scripts/check_icde_submission.py  assets/{ai_disclosure_template.tex,scope_statement_template.md,rebuttal_template.md}  references/requirements-recheck-2026-11-06.md
+submit-icde/      SKILL.md  scripts/check_icde_submission.py  assets/{ai_disclosure_template.tex,scope_statement_template.md,rebuttal_template.md}  references/{requirements-recheck-2026-11-06.md,eab.md}
 survey-icde/      SKILL.md  scripts/{parse_accepted,fetch_openalex,match,classify,llm}.py  references/{findings.md,icde_2024_2027r1_classified.csv,figs/}
 read-icde/        SKILL.md  assets/reading_note_template.md  references/{cross_group_rules.md,group_*_synthesis.md,notes/}
 experiment-icde/  SKILL.md  scripts/llm.py  scripts/example_ladder/
-write-icde/       SKILL.md  scripts/icde_structure_check.py  references/{observed-structure.md,limitations-writing.md}
-review-icde/      SKILL.md  assets/{review_form.md,desk_screen.md}  references/reviewer-lens.md
+write-icde/       SKILL.md  scripts/icde_structure_check.py  references/{observed-structure.md,limitations-writing*.md,eab.md}
+review-icde/      SKILL.md  assets/{review_form.md,desk_screen.md}  references/{reviewer-lens.md,eab.md}
 ```
 
 Install:
