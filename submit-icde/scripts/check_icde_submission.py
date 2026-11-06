@@ -113,7 +113,7 @@ def main():
             # The body ends where the AI-content acknowledgment or the references start (both excluded from the
             # 12 pages). IEEEtran's small-caps heading may extract as "R EFERENCES"; a heading that opens a page
             # means the body ended on the previous page.
-            head = re.compile(r"^\s*(R\s*E\s*F\s*E\s*R\s*E\s*N\s*C\s*E\s*S|AI-G\s*ENERATED C\s*ONTENT.*|AI-Generated Content.*)\s*$", re.M | re.I)
+            head = re.compile(r"^\s*(R\s*E\s*F\s*E\s*R\s*E\s*N\s*C\s*E\s*S|AI-?\s*G\s*ENERATED\s*C\s*ONTENT.*|AI-Generated\s*Content.*)\s*$", re.M | re.I)
             body = len(pages)
             for i, ptxt in enumerate(pages):
                 m = head.search(ptxt)
