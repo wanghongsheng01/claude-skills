@@ -70,6 +70,27 @@ def main():
     hedges = len(re.findall(r"\b(might|may possibly|somewhat|arguably|it seems)\b", s, re.I))
     o(f"hedging phrases: {hedges}")
 
+    # Self-negation (references/limitations-writing.md): 0/10 accepted cohesive-subgraph papers state a loss in the
+    # abstract or conclusion, none has a "where we fail" heading, and none uses the phrases below for its own method.
+    NEG = re.compile(r"does not help|do not help|cannot help|not help\b|vanish\w*|\bfails?\b|\bonly\s+\$?\d[\d.,]*(--[\d.,]+)?\$?\s*\\?\$?\\times"
+                     r"|\bonly\s+[\d.]+(--[\d.]+)?\s*(\$\\times\$|x)|is slower than|are slower than|worse than|not (as )?(fast|good)", re.I)
+    def neg(txt):
+        return [m.group(0) for m in NEG.finditer(txt)]
+    concl = next((v for k, v in body.items() if "conclu" in k), "")
+    for name, txt in (("abstract", ab.group(1) if ab else ""), ("introduction", intro), ("conclusion", concl)):
+        hits = neg(txt)
+        if hits:
+            w(f"self-negating wording in the {name}: {hits[:6]} - state scope as a qualifier of the positive claim, "
+              "keep losses in the experiment that measures them (limitations-writing.md R1-R3, R11)")
+    for h in re.findall(r"\\textbf\{([^}]*)\}|\\(?:sub)*section\{([^}]*)\}", s):
+        h = " ".join(h)
+        if re.search(r"not help|fail|limitation|weakness|drawback|does not", h, re.I):
+            w(f"heading or run-in label announces a failure: '{h.strip()}' - use a regime/trade-off title such as 'When does X pay off?'")
+    allneg = neg(s)
+    o(f"self-negating phrases in the whole paper: {len(allneg)} (accepted papers: each negative result once, 1-4 sentences)")
+    if len(allneg) > 8:
+        w("negative results appear to be repeated across sections; state each once, where its number is shown")
+
 
 if __name__ == "__main__":
     main()

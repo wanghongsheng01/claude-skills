@@ -1,5 +1,7 @@
 # Reviewer lens: what accepted ICDE papers did well and which weaknesses were tolerated
 
+> Survivor evidence: built from accepted papers only, so it cannot show why papers were rejected.
+
 Extracted from the 'why accepted' sections of 21 reading notes (read-icde/references/notes). Chinese original.
 
 

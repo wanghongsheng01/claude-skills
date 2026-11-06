@@ -47,12 +47,18 @@ def main():
     for bad, why in [(r"\\vspace\*?\{\s*-", "negative \\vspace (CFP forbids negative spaces)"),
                      (r"\\setlength\{\\(textheight|textwidth|columnsep|topmargin|oddsidemargin)", "page geometry changed"),
                      (r"\\usepackage(\[[^\]]*\])?\{geometry\}", "geometry package"),
-                     (r"\\(small|footnotesize|scriptsize)\s*\\selectfont", "global font shrink")]:
+                     (r"\\(small|footnotesize|scriptsize)\s*\\selectfont", "global font shrink"),
+                     (r"\\linespread|\\renewcommand\{?\\baselinestretch", "changed line spacing"),
+                     (r"\\enlargethispage", "\\enlargethispage"),
+                     (r"\\setlength\{\\(abovecaptionskip|belowcaptionskip|textfloatsep|floatsep|intextsep|dbltextfloatsep)\}\{\s*-", "negative float/caption spacing"),
+                     (r"\\titlespacing", "\\titlespacing (section spacing hack)"),
+                     (r"\\addtolength\{\\(textheight|textwidth|topmargin|columnsep)", "page geometry changed with \\addtolength")]:
         report("ERROR" if re.search(bad, s) else "OK", "no " + why)
     report("ERROR" if re.search(r"\\appendix|\\section\*?\{\s*Appendix", s, re.I) else "OK", "no appendix (CFP: no appendix allowed)")
 
     title = re.search(r"\\title\{(.+?)\}\s*\n", s, re.S)
     t = title.group(1) if title else ""
+    report("WARN" if re.search(r"\$|\\footnote", t) else "OK", "no math or footnote in the title (IEEE Xplore metadata)")
     if a.eab:
         report("OK" if t.strip().startswith("[Experiment, Analysis, and Benchmark]") else "ERROR",
                "EAB title starts with [Experiment, Analysis, and Benchmark]")
@@ -61,6 +67,9 @@ def main():
 
     ack = re.search(r"\\section\*?\{\s*(Acknowledg(e)?ments?|AI-Generated Content[^}]*)\}(.*?)(\\bibliography|\\end\{document\})", s, re.S | re.I)
     ack_txt = ack.group(3) if ack else ""
+    # expand argument-free macros (e.g. \AIAck defined with \newcommand) used inside the acknowledgment
+    macros = {m.group(1): m.group(2) for m in re.finditer(r"\\newcommand\{?\\([A-Za-z]+)\}?\s*\{((?:[^{}]|\{[^{}]*\})*)\}", s)}
+    ack_txt = re.sub(r"\\([A-Za-z]+)", lambda m: macros.get(m.group(1), m.group(0)), ack_txt)
     report("OK" if re.search(r"\b(AI|LLM|GPT|language model|Claude|DeepSeek|ChatGPT)\b", ack_txt) else "ERROR",
            "AI-generated content disclosure in the acknowledgments (system, sections, level of use)")
 
@@ -68,6 +77,9 @@ def main():
     n = len(re.sub(r"\\[a-zA-Z]+|[{}$]", " ", abst.group(1)).split()) if abst else 0
     report("OK" if 150 <= n <= 260 else "WARN", f"abstract {n} words (published ICDE median ~200)")
     report("ERROR" if abst and re.search(r"\\cite", abst.group(1)) else "OK", "no citation in the abstract")
+    report("WARN" if abst and re.search(r"\\footnote", abst.group(1)) else "OK", "no footnote in the abstract")
+    report("WARN" if re.search(r"Ensure that all template text|Paper Title \(use style|Identify applicable funding", s) else "OK",
+           "IEEE template placeholder text removed")
 
     cites = set(k.strip() for m in re.findall(r"\\cite[pt]?\*?(?:\[[^\]]*\])?\{([^}]+)\}", s) for k in m.split(","))
     bibs = list(root.glob("*.bib"))
@@ -98,20 +110,43 @@ def main():
         try:
             from pypdf import PdfReader
             r = PdfReader(str(pdf)); pages = [p.extract_text() or "" for p in r.pages]
-            ref_page = next((i for i, p in enumerate(pages) if re.search(r"^\s*REFERENCES\s*$", p, re.M)), None)
-            body = (ref_page + 1) if ref_page is not None else len(pages)
-            report("OK" if body <= 12 else "ERROR", f"{len(pages)} pages, references start on page {body} (body <= 12 pages)")
+            # The body ends where the AI-content acknowledgment or the references start (both excluded from the
+            # 12 pages). IEEEtran's small-caps heading may extract as "R EFERENCES"; a heading that opens a page
+            # means the body ended on the previous page.
+            head = re.compile(r"^\s*(R\s*E\s*F\s*E\s*R\s*E\s*N\s*C\s*E\s*S|AI-G\s*ENERATED C\s*ONTENT.*|AI-Generated Content.*)\s*$", re.M | re.I)
+            body = len(pages)
+            for i, ptxt in enumerate(pages):
+                m = head.search(ptxt)
+                if m:
+                    before = ptxt[:m.start()].strip()
+                    body = i if (not before or len(before) < 40) else i + 1
+                    break
+            report("OK" if body <= 12 else "ERROR", f"{len(pages)} pages; body (before the AI acknowledgment/references) "
+                   f"ends on page {body} (limit 12; other acknowledgments such as funding count toward the 12)")
             sz = r.pages[0].mediabox
             report("OK" if abs(float(sz.width) - 612) < 2 and abs(float(sz.height) - 792) < 2 else "WARN", "US Letter page size (IEEE template)")
         except ImportError:
             report("WARN", "pypdf not installed; page count not checked")
+        try:
+            import fitz
+            d = fitz.open(str(pdf)); bad = set()
+            for pg in d:
+                for f in pg.get_fonts():
+                    if f[2] == "Type3" or not f[1]:
+                        bad.add(f"{f[3]} ({f[2]}{', not embedded' if not f[1] else ''})")
+            report("ERROR" if bad else "OK", "all fonts embedded, no Type 3 fonts (IEEE PDF eXpress)" + (f": {sorted(bad)[:6]}" if bad else ""))
+        except ImportError:
+            report("WARN", "PyMuPDF not installed; fonts not checked (pip install pymupdf, or run pdffonts)")
     else:
         report("WARN", f"no PDF at {pdf}; compile first to check the 12-page limit")
 
     print(f"\n{problems['ERROR']} errors, {problems['WARN']} warnings")
-    print("Manual: ORCID for every author; CMT profile with domain + individual conflicts for EVERY author;\n"
-          "COIs (co-authors since 2023, same institution, advisor); <=5 submissions per author per round;\n"
-          "not under review elsewhere; not rejected by ICDE within the last year.")
+    print("Manual (see SKILL.md section 2a): ORCID for every author; CMT profile with domain conflicts (a.edu; b.com) AND\n"
+          "individual conflicts for EVERY author - individual conflicts appear only after the paper record exists, so create it early;\n"
+          "COIs with PC and senior PC: co-author of any submission under review, papers since 2023, 4+ papers since 2016, same\n"
+          "institution since 2023, collaborators since 2023, thesis advisor ever, relatives/friends (also declare under the older\n"
+          "3-year/10-year wording); <=5 submissions per author per round; not under review elsewhere; 1-year rule incl. revisions;\n"
+          "CMT title/abstract/authors identical to the PDF (frozen at camera-ready). Round 2 deadline 2026-11-11 17:00 PST = 2026-11-12 09:00 Beijing.")
     sys.exit(1 if problems["ERROR"] else 0)
 
 

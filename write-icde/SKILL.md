@@ -1,6 +1,6 @@
 ---
 name: "write-icde"
-description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms) and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格). Includes a structure checker."
+description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers read for how they state limitations, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格). Includes a structure checker."
 ---
 
 # Writing for ICDE (Write-ICDE 写作指南)
@@ -46,16 +46,56 @@ Setup: datasets, baselines (include ICDE/VLDB/SIGMOD methods and your method's s
 - Published papers: 5-24 figures, 2-10 tables, 56-85 references; median 14 printed pages (12 body + references).
 - Verify every reference against Crossref/OpenAlex/arXiv/publisher; at least ~10 ICDE/VLDB/SIGMOD papers.
 
-## 9. End matter
-Conclusion: what was shown, then future work; do not end on what was not shown. Then the unnumbered **AI-Generated Content Acknowledgment** (systems, sections, level of use; LLMs used in experiments included).
+## 9. Limitations without self-negation (`references/limitations-writing.md`)
+Ten accepted papers on exact or dynamic cohesive-subgraph computation were read in full:
+- none states a loss in the abstract or the conclusion;
+- none has a "where we fail" heading;
+- all keep every losing cell in their tables;
+- each loss is said once, in 1–4 sentences, in the experiment that measures it.
 
-## 10. Checker
-`python3 scripts/icde_structure_check.py paper/` reports title/abstract length, section order, contribution count, Figure 1 and challenges in the introduction, experiment share, theorem/figure/table counts, takeaways, reference counts, AI acknowledgment and hedging.
+Rules:
+- **Abstract**: scope goes in as a qualifier of the positive claim ("under repeated deletions in a large
+  dense region", "for k ≤ 2"), never as a closing negative sentence.
+- **Introduction**: at most one scope sentence, with a section pointer. The contribution list holds
+  contributions only.
+- **Experiments**: write each loss once, in the order fact → mechanism (a measured property of the
+  instance) → regime → bound ("still", an absolute gap, a positive count such as "46 of 50 cells").
+  Title the paragraph by the regime ("When does X pay off?"), not by the failure.
+- **One-off costs** (index, warm-up): report them once with a break-even count or an amortisation
+  argument.
+- **Ablation losses**: present losses of your own basic variants as the motivation for the next
+  component.
+- **Theory scope**: state it once, as a named Assumption or Condition in the method section, with how
+  often it holds.
+- **Conclusion**: fold the scope into the main claim and add at most one sentence on the open problem.
+- **Never write** "does not help", "fails", "vanishes", or "only N×" about your own method's gains.
+
+Integrity: never delete measured numbers, never hide the strongest competitor, never write a sentence
+that the tables contradict. That contradiction is a top rejection reason.
+
+## 10. Readability and layout (with `manuscript-writing-review`)
+- **Math**: put conditions, case distinctions (`cases`), set-builder definitions, sums and chains of
+  inequalities in displays. Theorem statements should not be walls of inline symbols. Under IEEEtran,
+  use `IEEEproof` and print no end-of-proof box (`\renewcommand{\IEEEQED}{}`).
+- **Figures**: legends above the axes, never over data. Notes such as "labels in ms" go in the
+  caption.
+- **Tables**: a one-column table must fit 252 pt. Use short headers, sensible precision, and
+  `>{\raggedright\arraybackslash}p{}` for text cells.
+- **Before any handover**: compile, then run `manuscript-writing-review` (layout and figure checks, every
+  page) and `manuscript-proofcheck`.
+
+## 11. End matter
+Conclusion: what was shown, with the scope folded into the claim, then future work. Do not end on what
+was not shown. Then the unnumbered **AI-Generated Content Acknowledgment** (systems, sections, level of use; LLMs used in experiments included).
+
+## 12. Checker
+`python3 scripts/icde_structure_check.py paper/` reports title/abstract length, section order, contribution count, Figure 1 and challenges in the introduction, experiment share, theorem/figure/table counts, takeaways, reference counts, AI acknowledgment and hedging, self-negating wording (abstract, introduction, conclusion) and failure headings.
 
 ## Final checklist
 - [ ] Data-engineering framing and core-venue lineage explicit.
 - [ ] Figure 1 measures the gap.
 - [ ] C1-C3 <-> components <-> RQs.
 - [ ] Problem Definition + at least one theorem.
-- [ ] Cost reported in dollars/tokens; negative regions reported.
+- [ ] Cost reported in dollars/tokens; negative regions reported once, as regimes with a mechanism (no failure heading, nothing negative in the abstract or conclusion).
+- [ ] Compiled and checked with `manuscript-writing-review` (0 layout errors, every page seen).
 - [ ] 12 body pages, no appendix; AI acknowledgment present.
