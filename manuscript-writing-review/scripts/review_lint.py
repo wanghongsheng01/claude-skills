@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Source-level readability and layout-risk lint for a LaTeX paper: rules R01-R12 of references/defect-catalog.md.
+"""Source-level readability and layout-risk lint for a LaTeX paper: rules R01-R13 of references/defect-catalog.md.
 It follows the \\input/\\include chain of the main file and also scans figure scripts given with --figscripts.
 
 Usage: python3 review_lint.py PAPER_DIR [--main main.tex] [--figscripts code/make_paper.py ...]
@@ -55,6 +55,27 @@ def lint_tex(path, text, refs, out):
             k = sum(1 for x in INLINE.findall(sent) if OPS.search(x) and "\\times" not in x)
             if k >= 7:
                 out.append(("WARN", "R02", f"{rel}:{lineno}", f"{k} inline formulas in one sentence; split it or move the conditions into a display/cases: {sent.strip()[:70]}"))
+    # R13: theorem-like statements and proofs written as runs of inline formulas (reviewers read them as a wall of
+    # symbols): within these environments, any sentence with >= 4 formulas that contain an operator, or a single
+    # inline relation longer than 22 visible characters, must move its formulas into displays, cases or an aligned list
+    for m in re.finditer(r"\\begin\{(theorem|lemma|proposition|corollary|definition|IEEEproof|proof)\}(.*?)\\end\{\1\}", body, re.S):
+        env, inner = m.group(1), m.group(2)
+        ln0 = body[:m.start()].count("\n") + 1
+        flat = re.sub(r"\\\[.*?\\\]|\\begin\{(align|gather|multline|equation|cases)\*?\}.*?\\end\{\1\*?\}", " ", inner, flags=re.S)
+        # density over the whole statement or proof: many short formulas also form a wall of symbols
+        vis0 = lambda x: len(re.sub(r"\\[a-zA-Z]+|[{}_^\\ ]", "", x))
+        fa = [x for x in INLINE.findall(flat) if vis0(x) >= 4]  # skip single symbols such as $t$, $\\pi_j$
+        nw = len(re.sub(r"(?<!\\)\$.+?(?<!\\)\$", " ", flat, flags=re.S).split())
+        if len(fa) >= 10 and len(fa) >= 0.12 * max(nw, 1):
+            out.append(("ERROR", "R13", f"{rel}:{ln0}", f"{env}: {len(fa)} inline formulas in {nw} words; move the derivation steps into displays"))
+        for sent in re.split(r"(?<=[.;:])\s+|\\item\s*", flat):
+            f = [x for x in INLINE.findall(sent) if OPS.search(x)]
+            # visible length: what the reader sees once commands and braces are gone
+            vis = lambda x: len(re.sub(r"\\[a-zA-Z]+|[{}_^\\ ]", "", x))
+            longrel = [x for x in f if re.search(r"=|\\le|\\ge|<|>", x) and vis(x) > 22]
+            if len(f) >= 4 or longrel:
+                out.append(("ERROR", "R13", f"{rel}:{ln0}", f"{env}: {len(f)} inline formulas in one sentence{' (long relation)' if longrel else ''}; "
+                            f"set conditions, definitions and results as displays: {sent.strip()[:70]}"))
     # R03: inline math that starts with a binary operator right after a comma (broken split formula)
     for i, ln in enumerate(lines, 1):
         if re.search(r",\s*\$\s*[+\-=]\s*\\?,?", ln) and not ln.lstrip().startswith("%"):

@@ -47,6 +47,33 @@ Each entry gives what the reader sees, the cause, how it is detected and the fix
 - **Detect.** A comma followed by inline math that starts with `+`, `-` or `=`.
 - **Fix.** Join the formula, preferably as a display.
 
+### R13 Theorem or proof written as a wall of short formulas (*observed*, TopUp, ICDE 2027, 2026-11-06)
+- **Seen.** Theorem statements with conditions and results (a)–(d) in running text, and proofs that
+  chain covariances, case weights and a difference of variances inline. The author marked whole
+  theorem+proof blocks as unreadable ("密密麻麻的字符").
+- **Why R01/R02 missed it.** Every single formula was short, and no sentence had seven formulas; the
+  problem is the density of the whole statement or proof.
+- **Detect.** `review_lint.py` R13, inside theorem, lemma, proposition, corollary, definition and proof
+  environments:
+  - a sentence with four or more operator formulas;
+  - an inline relation longer than 22 visible characters;
+  - ten or more non-trivial formulas at one per eight words or denser.
+- **Fix (recipe that worked).**
+  - Put the conditioning object in a display, e.g. `\[\mathcal F_\tau=\sigma(\dots)\]`.
+  - Write assumptions as (i)–(iii) in words with short symbols.
+  - Write results as a lettered list, each result with its own display. In IEEEtran use
+    `\begin{enumerate}\renewcommand{\labelenumi}{(\alph{enumi})}`, since `enumerate[(a)]` needs a
+    package that clashes with the class.
+  - Split a long variance into a sum of per-item terms and an auxiliary symbol
+    (`\sigma_t^2`, `g_{jt}`).
+  - In proofs, display the definition used in the next step, the covariance identities (`align*`),
+    case weights (`cases`) and each difference that is computed.
+- **Budget.** The displays added about 45 lines to a 12-page paper. They were recovered by:
+  - dropping a table whose message fits one sentence;
+  - shortening generated captions in their generator scripts;
+  - condensing the conclusion, the discussion and the related work.
+  No spacing was changed.
+
 ### R08 Numbered equation never referenced
 - **Seen.** Equation numbers that nothing refers to. This is not wrong, but it is noise.
 - **Detect.** An `equation` whose label is never referenced, or an `equation` without a label.
@@ -80,6 +107,15 @@ Each entry gives what the reader sees, the cause, how it is detected and the fix
   - layout_check L07 finds words that end at the figure's outer panel.
 - **Fix.** Put the legend above the axes (`loc="lower center", bbox_to_anchor=(0.5, 1.0)`) with at
   most three columns in a one-column figure, raise the figure height, and regenerate.
+
+### L03 false positives on math (fixed 2026-11-06)
+- Superscript/subscript stacks ($\pi^{-1}_{0t}$, $\mathcal C^*_{\mathrm{day}}$), fraction numerators over
+  denominators and radicals were reported as text over text: 30 false errors on one paper.
+- L03 now skips word pairs whose heights differ by more than 15%, pairs that overlap vertically by less
+  than half a line, and scripts attached to a symbol (baseline shift of 1 pt up to 40% of the height,
+  with a small horizontal overlap).
+- Real collisions, such as a table over body text, have equal heights and full vertical overlap, so
+  they are still caught.
 
 ### F02 / L03 Annotation over a data label (*observed*)
 - **Seen.** "bar labels in ms" printed over the value label "148".
@@ -165,6 +201,15 @@ Each entry gives what the reader sees, the cause, how it is detected and the fix
 - **Seen.** "accepted to ICDE 2027 (according to the arXiv comments)" printed in the references.
 - **Fix.** Use a neutral note ("To appear in ICDE 2027") or none. Use the published version once it
   exists.
+
+## Text
+
+### L09 URL broken after its scheme (*observed*, TopUp, 2026-11-06)
+- **Seen.** "… released at https:" at a line end and "//github.com/…" on the next line.
+- **Cause.** `\url` may break after the colon of the scheme.
+- **Detect.** `layout_check.py` L09: `https:` at a line end followed by `//…`.
+- **Fix.** `\href{https://host/path}{\nolinkurl{host/path}}` shows a short URL without the scheme. Or
+  rephrase so that the URL starts a line.
 
 ## Page flow
 

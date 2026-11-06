@@ -10,6 +10,7 @@ Usage: python3 layout_check.py PAPER.pdf [--out DIR] [--dpi 120]
   L05 end-of-proof glyphs (filled or open boxes) that authors read as garbled characters
   L06 replacement / missing glyphs, '??', '[?]'
   L07 text clipped at the edge of an embedded figure (word cut off by the figure's bounding box)
+  L09 URL broken after its scheme (https: | //host...)
   L08 last page holds only a few lines (e.g. the tail of one reference): looks careless
 With --out, every page is rendered to DIR/page-NN.png for the mandatory visual pass.
 Exit code 1 if any ERROR is found.
@@ -85,7 +86,7 @@ def main():
         for w in words:
             if w[2] > W - 36 or w[0] < 30:
                 F.append(("ERROR", "L02", i, f"text past the page margin (x {w[0]:.0f}-{w[2]:.0f} of {W:.0f}): {w[4]}"))
-        # L03: overlapping words (ignores sub/superscripts: small overlap or one-character words)
+        # L03: overlapping words (ignores sub/superscripts, fraction stacks, radicals and one-character words)
         ws = sorted(words, key=lambda w: (round(w[1]), w[0]))
         for j in range(len(ws)):
             for k in range(j + 1, min(j + 40, len(ws))):
@@ -93,7 +94,17 @@ def main():
                 if (ws[j][5], ws[j][6]) == (ws[k][5], ws[k][6]) or len(ws[j][4]) < 2 or len(ws[k][4]) < 2:
                     continue
                 I = A & B
-                if not I.is_empty and area(I) > 0.1 * min(area(A), area(B)):
+                if I.is_empty:
+                    continue
+                # math stacks are not collisions: sub/superscripts are smaller than their base (height ratio), and
+                # fraction numerators/denominators or radicals touch the neighbouring line only at the bbox edge
+                hA, hB = A.height, B.height
+                if min(hA, hB) < 0.85 * max(hA, hB) or I.height < 0.5 * min(hA, hB):
+                    continue
+                # a script attached to a symbol (C^*_{day}): baselines shifted a little, overlapping only at one edge
+                if 1.0 < abs(A.y1 - B.y1) < 0.4 * min(hA, hB) and I.width < 0.5 * min(A.width, B.width):
+                    continue
+                if area(I) > 0.1 * min(area(A), area(B)):
                     F.append(("ERROR", "L03", i, f"text over text: '{ws[j][4]}' / '{ws[k][4]}' at y={ws[j][1]:.0f}"))
         # L04: text over coloured shapes inside a figure (legend or annotation over bars); shapes are clipped to the
         # smallest white panel (axes background) that contains them, since log-scale bars extend far beyond the axes
@@ -130,6 +141,10 @@ def main():
                 F.append(("ERROR", "L06", i, why))
         if re.search(r"\?\?|\[\?\]", t):
             F.append(("ERROR", "L06", i, "unresolved reference or citation"))
+        # L09: a URL broken right after its scheme ("https:" at a line end, "//host" on the next line) reads as two words
+        for mm in re.finditer(r"(https?|ftp):\s*\n\s*//\S+", t):
+            F.append(("ERROR", "L09", i, f"URL broken after the scheme: '{mm.group(0).split()[0]} {mm.group(0).split()[-1][:40]}'; "
+                      "use \\href{https://...}{\\nolinkurl{host/path}} or let the URL start a new line"))
         # L07: words clipped by an embedded figure's box
         for b in p.get_text("dict", clip=None)["blocks"]:
             for l in b.get("lines", []):

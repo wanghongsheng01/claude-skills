@@ -28,7 +28,7 @@ works together with `manuscript-proofcheck`.
 4. **No space hacks.** No negative `\vspace`, smaller fonts in body text, changed margins or
    `\resizebox` on text tables. Make tables narrower by content (shorter headers, fewer decimals, a
    footnote mark instead of a long cell, `\tabcolsep`), or move them to `table*`.
-5. **Readability over compactness for math.** Conditions, set definitions, case distinctions, sums
+5. **Readability over compactness for math** (R13 checks theorem and proof environments). Conditions, set definitions, case distinctions, sums
    and chains of inequalities go in displays (`\[ \]`, `cases`, numbered `equation` only when
    referenced). Prose keeps only short symbols ($k$, $S$, $c(v)\ge t-k$).
 
@@ -39,7 +39,7 @@ Scripts live in `scripts/` of this skill. They need Python 3; the PDF scripts ne
 
 1. **Source lint.**
    - `python3 scripts/review_lint.py <paper_dir> --figscripts <scripts that draw figures/tables>`
-     (rules R01–R12).
+     (rules R01–R13).
    - Also run `manuscript-proofcheck/scripts/tex_lint.py` if that skill is installed.
    - Fix every ERROR. Check every WARN in the compiled PDF.
 2. **Figure check before compiling.**
@@ -64,11 +64,19 @@ Scripts live in `scripts/` of this skill. They need Python 3; the PDF scripts ne
    - L04: figure text over bars;
    - L05: end-of-proof boxes;
    - L06: missing glyphs or `??`;
-   - L07: figure text cut off.
+   - L07: figure text cut off;
+   - L08: last page with only a few lines;
+   - L09: URL broken after its scheme.
    Also run `manuscript-proofcheck/scripts/pdf_check.py` if available.
 5. **Visual pass, every page**, with the checklist below. Write down page and object for each finding.
 6. **Fix, regenerate, recompile, re-run 1–5** until there are 0 errors and the visual pass is clean.
-7. **Report** to the author in the language their standing instructions require, as a document:
+7. **Sync to Overleaf** when the author has given a git URL (`git clone https://git@git.overleaf.com/<id>`):
+   - pull first and diff the repository against the version you last delivered; if the author edited
+     on Overleaf, merge their edits, never overwrite them;
+   - copy the sources, commit and push;
+   - clone the repository again into a fresh folder, compile it and compare the PDF text with the PDF
+     you checked. Only then say that Overleaf is updated.
+8. **Report** to the author in the language their standing instructions require, as a document:
    - each defect with page, what the reader sees, root cause and fix;
    - what was not checked.
    Keep submission files and the report apart.

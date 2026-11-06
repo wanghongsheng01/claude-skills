@@ -108,6 +108,7 @@ a real compiled submission.
 - Fix: remove them and cut text. Never trade layout rules for space.
 
 ### P13 Page budget
+- `pdf_check.py` ends the body at the first heading that the venue excludes from the limit: the references, or an AI-generated content acknowledgment placed before them (ICDE 2027 excludes both).
 - Count body pages the way the venue does (e.g. the main text up to the references, or everything).
   `pdf_check.py --body-limit N` compares the page holding the reference heading with N.
 
