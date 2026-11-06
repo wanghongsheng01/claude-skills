@@ -229,3 +229,20 @@ Each entry gives what the reader sees, the cause, how it is detected and the fix
   last two lines of reference [60].
 - **Fix.** Remove redundant bib fields (for example, `publisher = {Springer}` in LNCS entries whose
   series already identifies the publisher) or trim text. Never shrink the spacing.
+
+### L10 Uncaptioned `center` table stretches the column (*observed*, Ladder, 2026-11-06)
+- **Seen.** A blank band of four or five lines before a subsection heading on a full page, and the
+  small results table itself printed at the top of the next column, away from "the following table".
+- **Cause.** A `\begin{center}\begin{tabular}` block is not a float; IEEEtran's `\flushbottom` cannot
+  move it, so the column's vertical glue stretches around it.
+- **Fix.** Make it a captioned `table` float with a label and refer to it as "Table N" instead of
+  "the following table".
+
+### L11 Wide one-column table spills into the other column (*observed*, Ladder, 2026-11-06)
+- **Seen.** An 8-column ablation table in one column ran 90 pt past the column edge and printed over
+  the neighbouring table's query names ("agnews topic" over "+16%").
+- **Detect.** Overfull \hbox of tens of points in the `.log`; `layout_check.py` L03 text-over-text on
+  the table's page; `review_lint.py` R09.
+- **Fix.** Use `table*` (and widen `\tabcolsep`), or two header rows with grouped columns. Reduce
+  `\tabcolsep` only for a few points of overflow (an 8-column table that was 7 pt too wide fitted at
+  2.2 pt). Print negative numbers with `$-$`, and "0%" instead of "+0%"/"-0%".

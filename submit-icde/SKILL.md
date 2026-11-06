@@ -124,6 +124,14 @@ Plan for the stricter version in every case.
     datasets' labels/costs; make sure public datasets carry every headline claim.
 12. **Before submitting, run the self-negation pass** of `write-icde` (section 9, `icde_structure_check.py`):
     no loss in the abstract, contributions or conclusion; no "Limitations" or "where it does not" heading.
+13. **Disclosure texts agree with the paper and the artifact** (found on Ladder, ICDE 2027 R2):
+    - the AI acknowledgment and the data-availability sentence must not say "all outputs are released"
+      when enterprise outputs are withheld; say "all outputs on the public datasets";
+    - the CMT scope statement must use the paper's own claim level: if the paper calls a restated
+      classical result a Proposition, the scope text must not call it a "theorem" or a contribution;
+    - the CMT author list, ORCIDs and title must match the PDF character for character;
+    - before pushing a public artifact, regenerate the paper's tables from the artifact copy in a fresh
+      folder and diff them with the submitted tables (byte-identical is the target).
 
 ## 5. Checker
 `scripts/check_icde_submission.py` inlines `\input` files and checks:
