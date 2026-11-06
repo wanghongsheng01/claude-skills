@@ -39,7 +39,7 @@ Scripts live in `scripts/` of this skill. They need Python 3; the PDF scripts ne
 
 1. **Source lint.**
    - `python3 scripts/review_lint.py <paper_dir> --figscripts <scripts that draw figures/tables>`
-     (rules R01–R13).
+     (rules R01–R14).
    - Also run `manuscript-proofcheck/scripts/tex_lint.py` if that skill is installed.
    - Fix every ERROR. Check every WARN in the compiled PDF.
 2. **Figure check before compiling.**
@@ -103,7 +103,8 @@ Scripts live in `scripts/` of this skill. They need Python 3; the PDF scripts ne
   - inside their column, nothing in the gutter, nothing over body text;
   - text cells left-aligned (`>{\raggedright\arraybackslash}p{}`), so there are no stretched word
     gaps;
-  - headers short; numbers at sensible precision.
+  - headers short and horizontal (no rotated headers: reviewers must not turn the page); numbers at
+    sensible precision.
 - **Algorithms**:
   - comments fit on their line or are dropped;
   - long statements use the block form, not `\lIf`;

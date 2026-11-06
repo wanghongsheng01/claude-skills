@@ -176,6 +176,17 @@ Each entry gives what the reader sees, the cause, how it is detected and the fix
 - **Fix.** Use `\footnotesize`, `\tabcolsep=3pt`, and a short cell with a footnote mark ("Q&A$^\dagger$",
   with "$^\dagger$: temporal" in the caption).
 
+### R14 Rotated column headers (*observed*, Agent-RLS EAB, ICDE 2027, 2026-11-06)
+- **Seen.** A related-work comparison table (Table I) set its eight criteria as `\rotatebox{90}{...}` headers;
+  the author reported that reviewers have to turn the page 90 degrees to read them.
+- **Cause.** Eight two-word criteria plus a name column do not fit a 252 pt column with horizontal headers,
+  and rotating them was the quick way to fit.
+- **Detect.** R14: `\rotatebox{90|-90|270}`, `sideways` or `\turnbox` inside a `tabular`.
+- **Fix.** Horizontal headers only. Use two-line headers
+  (`\newcommand{\twoline}[2]{\begin{tabular}[b]{@{}c@{}}#1\\#2\end{tabular}}`); if the table then exceeds the
+  column, make it `table*` (the height saved by the rotated headers roughly pays for the width) or use short
+  headers with a legend in the caption. Recompile and check that the page count did not grow.
+
 ### R05 Justified narrow cells with word gaps (*observed*)
 - **Seen.** "two-seed region", "reused, credited" spread across the cell with big gaps.
 - **Cause.** `p{}` columns are justified.

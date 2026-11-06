@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Source-level readability and layout-risk lint for a LaTeX paper: rules R01-R13 of references/defect-catalog.md.
+"""Source-level readability and layout-risk lint for a LaTeX paper: rules R01-R14 of references/defect-catalog.md.
 It follows the \\input/\\include chain of the main file and also scans figure scripts given with --figscripts.
 
 Usage: python3 review_lint.py PAPER_DIR [--main main.tex] [--figscripts code/make_paper.py ...]
@@ -102,6 +102,14 @@ def lint_tex(path, text, refs, out):
         # R07: enumerate with an optional label but no enumitem/enumerate package
         if re.search(r"\\begin\{enumerate\}\[", s):
             out.append(("WARN", "R07", f"{rel}:{i}", "enumerate[...] needs enumitem/enumerate (and enumitem clashes with IEEEtran); inside theorems write (a)~ (b)~ inline"))
+    # R14: rotated column headers make the reader turn the page
+    for m in re.finditer(r"\\begin\{tabular\}", body):
+        seg = body[m.start():body.find("\\end{tabular}", m.start())]
+        k = len(re.findall(r"\\(?:rotatebox|rotatebox\[[^]]*\])\{(?:90|-90|270)\}|\\begin\{sideways\}|\\turnbox", seg))
+        if k:
+            ln = body[:m.start()].count("\n") + 1
+            out.append(("ERROR", "R14", f"{rel}:{ln}", f"{k} rotated column header(s): reviewers must turn the page to read them; use two-line "
+                        "horizontal headers (a nested [b]{@{}c@{}} tabular), short headers with a legend in the caption, or table*"))
     # R08: numbered equations that are never referenced
     for m in re.finditer(r"\\begin\{equation\}\s*\\label\{([^}]+)\}", body):
         if m.group(1) not in refs:
