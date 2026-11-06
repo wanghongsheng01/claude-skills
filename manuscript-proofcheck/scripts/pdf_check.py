@@ -39,8 +39,10 @@ def main():
             ref_page = i
         # sections that venues exclude from the page limit (ICDE: references and the AI-generated content
         # acknowledgment); the body ends at the first of them
-        if body_end is None and re.search(r"^\s*(AI-G\s*ENERATED\s+C\s*ONTENT|AI-Generated Content)", t, re.M | re.I):
-            body_end = i
+        m_ai = re.search(r"^\s*(AI-?\s*G\s*ENERATED\s*C\s*ONTENT|AI-Generated\s*Content)", t, re.M | re.I)
+        if body_end is None and m_ai:
+            # a heading that opens the page means the body ended on the previous page
+            body_end = i - 1 if len(t[:m_ai.start()].strip()) < 40 else i
         # text beyond the right margin (overfull floats, rotated headers, long lines)
         W = p.rect.width
         for b in p.get_text("dict")["blocks"]:
@@ -77,7 +79,7 @@ def main():
         if typ == "Type3": find.append(("WARN", "P17", 0, f"Type 3 font {name} (bitmap/figure font; set pdf.fonttype=42 in matplotlib)"))
         if ext in ("", "n/a"): find.append(("WARN", "P17", 0, f"font {name} may not be embedded"))
     n = len(d)
-    end = min(x for x in (body_end, ref_page) if x) if (body_end or ref_page) else None
+    end = body_end if body_end else ref_page
     find.append(("INFO", "P13", 0, f"{n} pages; body ends on page {end} (reference heading on page {ref_page}"
                  + (f", AI acknowledgment on page {body_end}" if body_end else "") + ")"))
     if a.body_limit and end and end > a.body_limit:
