@@ -86,9 +86,12 @@ def main():
             w(f"self-negating wording in the {name}: {hits[:6]} - state scope as a qualifier of the positive claim, "
               "keep losses in the experiment that measures them (limitations-writing.md R1-R3, R11)")
     eab = a.eab or bool(re.search(r"Experiment, Analysis|Benchmark", title))
-    for h in re.findall(r"\\textbf\{([^}]*)\}|\\(?:sub)*section\{([^}]*)\}", s):
-        h = " ".join(h)
-        if re.search(r"not help|fail|limitation|weakness|drawback|does not", h, re.I):
+    heads = [" ".join(h) for h in re.findall(r"\\textbf\{([^}]*)\}|\\(?:sub)*section\{([^}]*)\}", s)]
+    # section titles with nested braces (\texorpdfstring, \sys{}) are missed by the pattern above: take the whole line
+    heads += [m.group(1) for m in re.finditer(r"\\(?:sub)*section\*?\{(.*)\}\s*(?:\\label\{[^}]*\})?\s*$", s, re.M)
+              if "{" in m.group(1)]
+    for h in heads:
+        if re.search(r"not help|fail|limitation|weakness|drawback|does not|and when not|where it does", h, re.I):
             (o if eab else w)(("(EAB: fine if it names an evaluated method, not your benchmark) " if eab else "") + f"heading or run-in label announces a failure: '{h.strip()}' - use a regime/trade-off title such as 'When does X pay off?'")
     # EAB papers (references/limitations-writing-eab.md): negatives about the EVALUATED methods are the contribution and
     # may appear anywhere; the benchmark's own limits never go in the abstract or conclusion, never use deficit words,
@@ -108,6 +111,21 @@ def main():
             if ni > 5 or nw > 180:
                 w("threats section reads like a list of admissions; keep about four one-sentence items, each answered by a "
                   "result already in the paper, and move the rest to where they apply (limitations-writing-eab.md E6)")
+    # Regular papers (references/limitations-writing-aqp.md, TopUp 2026-11-06): self-doubt and "not done" wording that
+    # the structure check missed in a real submission; each hit is a candidate for deletion or scope wording.
+    if not eab:
+        SELF = re.compile(r"\b(are|is|were|was) not evaluated|but not evaluated|cannot separate|should not be used|"
+                          r"\bnonetheless keep|is a direct extension|we also report where|where (it|\\sys\{\}|our method) does not|"
+                          r"supported only by|holds trivially|only globally|is largest without|at most \d+\\?% on|"
+                          r"recovers most of|almost never change|unfortunately|we could not|we did not", re.I)
+        for i, ln in enumerate(s.split("\n"), 1):
+            for m in SELF.finditer(strip(ln)):
+                w(f"self-doubt or not-done wording '{m.group(0)}' (line {i} of the expanded source): state the fact once "
+                  "where it is measured, as fact-mechanism-scope-bound, or delete it (limitations-writing.md R3-R4; "
+                  "limitations-writing-aqp.md)")
+        contrib = re.search(r"Contributions?\.?\}?(.*?)(\\end\{itemize\}|\\end\{enumerate\})", intro, re.S)
+        if contrib and re.search(r"not help|does not|where .* not|at most \d|vanish", contrib.group(1), re.I):
+            w("the contribution list states a negative result; keep contributions only (limitations-writing.md R2)")
     allneg = neg(s)
     o(f"self-negating phrases in the whole paper: {len(allneg)} (accepted papers: each negative result once, 1-4 sentences)")
     if len(allneg) > 8:

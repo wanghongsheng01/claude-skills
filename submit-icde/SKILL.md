@@ -96,6 +96,16 @@ Plan for the stricter version in every case.
 6. Run the checker: `python3 scripts/check_icde_submission.py paper/ --pdf paper/main.pdf [--eab] [--scope scope.txt]`.
 7. Every author: ORCID, CMT profile, conflicts (section 2a). The corresponding author fills the subject areas and, if needed, the scope statement (`assets/scope_statement_template.md`).
 8. Submit the PDF and the supplemental link on CMT before 5:00 PM PT; keep the CMT confirmation.
+9. **Page-count answer for the author.** A 14-page PDF is normal: count body pages up to the page that
+   holds the end of the Conclusion and the AI acknowledgment (must be <= 12); references after it are
+   free. Funding acknowledgments count toward the 12. Report the split ("12 body + 2 references").
+10. **Same PDF as checked.** When the author recompiles on Overleaf, compare its text page by page with
+    the locally checked PDF (PyMuPDF `get_text`, whitespace-normalised) before calling it final.
+11. **Withheld data.** If any dataset cannot be released, write the reason (personal data, contract,
+    commercial) in the CMT supplemental-material field, and release code, generators and the public
+    datasets' labels/costs; make sure public datasets carry every headline claim.
+12. **Before submitting, run the self-negation pass** of `write-icde` (section 9, `icde_structure_check.py`):
+    no loss in the abstract, contributions or conclusion; no "Limitations" or "where it does not" heading.
 
 ## 5. Checker
 `scripts/check_icde_submission.py` inlines `\input` files and checks:
@@ -119,4 +129,6 @@ It also checks: IEEEtran conference class; no negative `\vspace`, geometry chang
 - [ ] Checker passes with no ERROR; `manuscript-writing-review` shows 0 layout errors.
 - [ ] CMT abstract identical to the PDF abstract; author list final (frozen at camera-ready).
 - [ ] Every author marked individual conflicts after the paper record was created.
+- [ ] Body ends on page <= 12 (references free); Overleaf PDF text-identical to the checked PDF.
+- [ ] Self-negation pass of write-icde: 0 warnings in abstract, contributions, conclusion.
 - [ ] Deadline in local time noted (Round 2: 2026-11-12 09:00 Beijing).

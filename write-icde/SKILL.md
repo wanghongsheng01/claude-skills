@@ -1,6 +1,6 @@
 ---
 name: "write-icde"
-description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers and nine accepted ICDE benchmark papers read for how they state limitations, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格). Includes a structure checker."
+description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers, nine accepted ICDE benchmark papers and twelve accepted AQP/sampling/LLM-query-with-guarantees papers (ICDE 2022-2027, PVLDB) read for how they state limitations, asymptotic guarantees, LLM oracles and proprietary data, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格). Includes a structure checker."
 ---
 
 # Writing for ICDE (Write-ICDE 写作指南)
@@ -93,6 +93,24 @@ Text2VectorSQL; read in full) keep two registers apart:
   judges) once in the setup.
 `scripts/icde_structure_check.py` switches to EAB rules when the title contains "Benchmark" (or `--eab`):
 it flags self-deprecating wording about the benchmark and threats sections longer than about five items.
+
+### 9c. AQP, sampling and LLM-query papers with guarantees (`references/limitations-writing-aqp.md`)
+Twelve accepted papers (KG-AQP, ExSample, JanusAQP, BATCHER, ZenDB, spatial-join sampling, CactusDB,
+OptiAQP, SemiBonsai at ICDE; SUPG, ABae, LOTUS at PVLDB), read in full:
+- **Abstract** reports gains only (10/12); a no-gain regime becomes "outperforms or matches" or a worst-case
+  bound in the body. 1/12 states a loss, paired with its gain in one clause.
+- **Asymptotic guarantees are the norm** (0/6 CLT-based papers give a finite-sample bound for the main
+  estimator). Say "asymptotic" once with its condition, in the theorem; back it with empirical coverage at
+  the smallest sample sizes used (5/6); one sentence on finite-sample bounds as a direction.
+- **Weak regimes cost efficiency, not correctness** - say so in the same sentence (SUPG, ABae, LOTUS).
+- **Model/LLM oracle**: define truth relative to it in the problem definition; add a human-truth variant or
+  agreement number; a few-hundred-row audit is above the norm.
+- **Limitations heading**: 1/12. Use one Discussion unit of 80-200 words.
+- **Proprietary data**: 0/12 rely on it; public data must carry the headline claims; the non-release reason
+  goes in the CMT form.
+- **Planner/ablation that looks useless on cost**: find the second metric where it wins (blocked queries,
+  latency, certified targets) before the reviewer concludes it is dispensable.
+- Worked before/after table from a real submission (23 statements found, 6 kept) is in the reference.
 
 ## 10. Readability and layout (with `manuscript-writing-review`)
 - **Math**: put conditions, case distinctions (`cases`), set-builder definitions, sums and chains of

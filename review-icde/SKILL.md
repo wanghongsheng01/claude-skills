@@ -69,6 +69,20 @@ Flag two opposite defects:
   conclusion, or self-negating wording. This is a presentation weakness that hands reviewers rejection
   reasons.
 
+**Area lens: AQP / sampling / LLM queries with guarantees** (`write-icde/references/limitations-writing-aqp.md`).
+Ask the questions these reviewers ask, and check the paper answers each with evidence already in it:
+- asymptotic only? -> is the condition stated once, and is coverage measured at the smallest slices and
+  out of sample (BARGAIN, SIGMOD'26, attacks "only asymptotically" guarantees)?
+- is the strongest per-query competitor (shared pilot, cache, ideal moments) in the comparison, at equal
+  targets, and are the competitors' certified targets reported (a cheaper method that certifies fewer
+  targets is not cheaper)?
+- LLM as truth? -> oracle-relative definition, human audit size and agreement with an interval.
+- real dollars and tokens at list prices?
+- does each component (planner, lazy rule, floor) win on some metric, or does one look dispensable?
+- proprietary data: do the public datasets carry the headline claims?
+A reviewer may request the incremental experiment that closes a gap (e.g., flooring a ratio interval that
+under-covers); prefer that to an admission in the text.
+
 ## 3c. Discussion, rebuttal and re-scoring (simulates the 2027 process)
 1. **Discussion.** Each reviewer reads the other reports and may change scores, with one sentence of
    reason.
