@@ -13,6 +13,7 @@ Experiment logs and reports to the author in **Chinese (中文)**; code comments
 ## 1. From gap to hypothesis
 1. Start from a gap that several accepted papers leave open, tied to sections (e.g. "no LLM-for-data paper accepts a user accuracy target with a statistical guarantee": SPARQ Eq. 1 fixed threshold, ZenDB heuristic cost model, FusionSQL interval not delivered).
 2. Search the last 12 months of arXiv/VLDB/SIGMOD for the nearest neighbours and write one line on what each assumes. The new paper should drop an assumption they all share (e.g. "one proxy, applied to every tuple").
+   **Also search ML and statistics venues** (ICLR, NeurIPS, ICML, AISTATS, arXiv stat.ML) for the same estimator or allocation idea under another name. Ladder missed MultiPPI (ICLR 2026, budget allocation across subsets of predictors) until the second simulated review. Implement the closest such method as a baseline (Ladder: an MLBLUE/MultiPPI-style allocator over subsets of the skyline labelers), not just a citation.
 3. Write the problem as input/output/constraint/objective and the hypothesis as something a measurement can refute.
 4. Prefer an idea that admits a theorem (unbiasedness, variance or complexity bound, optimality) and has known methods as special cases: reviewers accept "we contain the baseline" more easily than "we beat it".
 
@@ -23,6 +24,8 @@ Measure the phenomenon the paper rests on (here: per-labeler accuracy, cost per 
 - Call every model once per tuple, cache every raw response on disk keyed by the request hash, and log tokens; compute dollars from the vendors' list prices with the date (`label.py` PRICES). Restarting is then free.
 - Store per-tuple predictions and costs (`results/labels/<task>__<labeler>.csv`). Methods are evaluated by replaying sampling plans hundreds of times on these labels (`simulate.py`), which gives coverage, variance and paired comparisons at no extra API cost.
 - Larger populations can be built by resampling labelled tuples with replacement; state this in the paper.
+- **Adaptive top-up must extend samples.** Take every sample (oracle draws inside strata included) as a prefix of one fixed random order, so the final round contains the earlier ones and charging the final round is exact. A reviewer who reads `rng.choice` per round will call the accounting unfair.
+- **No cell may miss its target.** Give the planner a fallback so every configuration meets the user's error target: grow a stagnating stratified plan geometrically, and label the remaining tuples exactly once the oracle sample would exceed half of them. A table with † "missed the target" rows reads as a failed method; a fallback turns it into a cost number.
 - Rate limits differ by vendor: batch several tuples per call (also a cheaper "physical labeler"), lower concurrency for strict vendors, retry 429s with backoff, and use a repair mode that re-runs only failed rows.
 - Disable reasoning where a vendor allows it for cheap modes, and keep reasoning variants as separate labelers.
 - Never put keys in the repository: the client reads `LLM_KEYS_JSON` (a chmod-600 file outside the repo). Respect the author's daily spending cap; log spend per model.
@@ -33,7 +36,7 @@ Measure the phenomenon the paper rests on (here: per-labeler accuracy, cost per 
 | Setup | datasets (number, source, size), baselines incl. ICDE/VLDB/SIGMOD ones and the special cases of your method, metrics, cost unit and prices, hardware |
 | RQ1 main | quality and cost in one table, every dataset/query, best per row in bold |
 | RQ2 validity | guarantees hold (e.g. empirical coverage vs nominal, error distribution) |
-| RQ3 when it helps | sweeps over the factors your theory says matter (table size, oracle price, error target); show where the method does not help |
+| RQ3 when it helps | sweeps over the factors your theory says matter (table size, oracle price, error target); report weak regimes with their cause and a worst-case bound ("never more than X above the best plan"), not as failures |
 | RQ4 variants | other oracle or backbone, other vendors |
 | RQ5 ablation | remove each component; restricted catalogs |
 | RQ6 extension | e.g. GROUP BY / multi-query |

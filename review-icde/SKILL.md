@@ -129,6 +129,8 @@ Summary questions:
 - Every number in the abstract/introduction appears in a table or figure and matches the result files.
 - Each proof step is checked; assumptions are stated in the theorem.
 - Every reference exists with the stated venue/year (Crossref/OpenAlex/arXiv); no citation supports a claim it does not make.
+- **Closest prior work outside DB venues.** Search ICLR/NeurIPS/ICML/arXiv stat.ML for the paper's estimator or allocation idea under other names (prediction-powered inference, multi-fidelity, active evaluation). A missing direct predecessor turns "existing estimators do X" into a false claim; request the citation *and* a baseline run.
+- **Adaptive-stopping accounting.** When methods top up until a target is met, check in the code that later rounds extend earlier samples (prefixes of one random order) before accepting "we charge the final round"; also check that every cell met its target, and request a fallback experiment when some did not.
 - Figures readable at column width; captions self-contained.
 - **Compiled PDF checked** with `manuscript-writing-review`: no legend over data or cut off, no table in
   the other column, no end-of-proof boxes, theorem conditions in displays, every page looked at.

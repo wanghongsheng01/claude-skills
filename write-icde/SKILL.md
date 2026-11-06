@@ -69,6 +69,12 @@ Rules:
   often it holds.
 - **Conclusion**: fold the scope into the main claim and add at most one sentence on the open problem.
 - **Never write** "does not help", "fails", "vanishes", or "only N×" about your own method's gains.
+- **Classical building blocks** (MFMC, Neyman allocation, PPI): attribute them once where they are used
+  ("Building on X [c], we derive ... for finite relations") and once in Related Work. Do not repeat
+  "restates" or "is classical" in the abstract, introduction, method and limitations: four mentions read as
+  "no contribution" (Ladder, ICDE 2027 R2 review).
+- **Failed-target cells** (marked †): fix them in the method (fallback, larger top-up) before writing;
+  a sentence saying the method "missed the target" is read as a correctness failure.
 
 Integrity: never delete measured numbers, never hide the strongest competitor, never write a sentence
 that the tables contradict. That contradiction is a top rejection reason.
