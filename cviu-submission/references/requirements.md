@@ -1,10 +1,10 @@
-# CVIU requirements: verified 2026-11-05
+# CVIU requirements and verification status
 
-Use [the official journal guide](https://www.sciencedirect.com/journal/computer-vision-and-image-understanding/publish/guide-for-authors) as the controlling source. It was read in full in the author's ordinary browser on 2026-11-05; direct automated access returned HTTP 403. Browser-readable does not change that verifier result. Refresh before each new submission.
+Use [the official journal guide](https://www.sciencedirect.com/journal/computer-vision-and-image-understanding/publish/guide-for-authors) as the controlling source. It was read in full in the author's ordinary browser on 2026-11-05; direct automated access returned HTTP 403. Browser-readable does not change that verifier result. On 2026-11-07 the same journal URL again returned HTTP 403 through both the registered DataHub verifier and the public web reader. Therefore the journal-specific rows below remain supported by the 2026-11-05 full snapshot, not a newly read 2026-11-07 guide. Refresh before submission when accessible; preserve access failures.
 
 Legend: **Required** = explicit journal requirement; **Recommended** = journal encouragement/preference; **Unverified** = absent from current public guide or dependent on the live submission UI. A recommendation made by the agent is never a journal rule.
 
-## Verified journal rules
+## Journal-specific rules from the 2026-11-05 full snapshot
 
 | Item | Requirement and status | Official guide section |
 |---|---|---|
@@ -25,7 +25,7 @@ Legend: **Required** = explicit journal requirement; **Recommended** = journal e
 | Vitae | Guide asks editable biography ≤100 words per author plus separate passport-style photo; upload stage not explicit | Vitae |
 | References | Any consistent complete style accepted initially; target author–year, alphabetical then chronological bibliography, same-year letters. DOI where available; verify every source; published version preferred over preprint | References |
 | Declarations | All authors disclose conflicts; complete official declarations tool and upload resulting .doc/.docx; signatures unnecessary. Disclose funding and sponsors' roles | Declaration of competing interests; Funding sources |
-| AI | Substantive AI manuscript preparation requires declaration before references on first submission; identify tool/purpose/human review/responsibility. Basic grammar/spelling/reference checks exempt. AI is not an author | Declaration of generative AI use |
+| AI | Substantive AI manuscript preparation requires declaration before references on first submission; identify tool/purpose/human review/responsibility. Basic grammar/spelling/punctuation checks are exempt; substantive restructuring is disclosed. AI is not an author | Declaration of generative AI use |
 | Data | Option C: deposit research data, cite/link it; if sharing impossible, explain. Data definition includes code/models/algorithms. Do not falsely claim deposit or invent access restrictions | Research data |
 | Supplements | Optional/encouraged; cite each; submit with main manuscript; caption each; production publishes as supplied; later add/replace at revision | Supplementary material |
 | Video | Accepted/encouraged; descriptive reference in text, clear filenames, still per clip; preferred max 150MB each/1GB total | Video |
@@ -44,11 +44,11 @@ The journal now permits AI-supported explanatory images with human oversight and
 
 ## Official template and supporting sources
 
-- Journal-linked [CAS ZIP](https://assets.ctfassets.net/o78em1y1w4i4/5uFmLZJTPDMAUjFnHRpjj8/6f19a979146eb93263763d87a894ab0d/els-cas-templates.zip), verified CAS2.4, 3305507bytes, SHA256 `36d97da01c6bbd134f315bff6c3de553735e2550444a6ddd4f869ddc67a20757`. Includes cas-sc/cas-dc templates and `cas-model2-names.bst`, default natbib author–year. Refresh link/version; retain asset license; remove example content from actual manuscripts.
-- [Elsevier LaTeX instructions](https://www.elsevier.com/researcher/author/policies-and-guidelines/latex-instructions): generic guidance. Its “most journals accept PDF initially” does not override CVIU editable-source rule. EM-specific flat-file packaging only applies if the actual workflow uses it. No confirmed CVIU-specific Word-template download in this guide.
+- Journal-linked [CAS ZIP](https://assets.ctfassets.net/o78em1y1w4i4/5uFmLZJTPDMAUjFnHRpjj8/6f19a979146eb93263763d87a894ab0d/els-cas-templates.zip), verified CAS2.4, 3305507bytes, SHA256 `36d97da01c6bbd134f315bff6c3de553735e2550444a6ddd4f869ddc67a20757`. Includes cas-sc/cas-dc templates and `cas-model2-names.bst`, default natbib author–year. On 2026-11-07, the registered exact ZIP returned HTTP 200 with identical byte count and SHA256. Retain the official license/notices and remove template sample prose from the manuscript.
+- [Elsevier LaTeX instructions](https://www.elsevier.com/researcher/author/policies-and-guidelines/latex-instructions): generic guidance. Its “most journals accept PDF initially” does not override CVIU editable-source rule. On 2026-11-07 its full official text was fetched successfully. It specifically requires a single folder level for Editorial Manager (EM). If that is the target workflow, supply a flat submission variant with collision-free names and rewritten relative references, preserve the organized editable master, and verify both local rebuilding and the actual system proof. A locally compiling nested ZIP does not establish EM compatibility. Correct manuscript source files must not be designated as supplementary LaTeX merely to bypass conversion. No confirmed CVIU-specific Word-template download in this guide.
 - [Data options](https://www.elsevier.com/researcher/author/tools-and-resources/research-data/data-guidelines): explains OptionC; journal explicitly selects it.
 - [Declarations tool](https://declarations.elsevier.com/): required output comes from tool, not a locally fabricated document. Account actions require applicable authorization.
 
-## Remaining live checks
+## Remaining live checks and readiness vocabulary
 
-Article type label; required file designations; cover letter/reviewer/ORCID fields; upload-stage biography requirement; generated proof and attachment completeness; current fees/license choices; current closing status at the previous venue. Do not call the package submission-ready until unresolved mandatory inputs and scientific checks are satisfied. The skill itself grants no authority to log in, submit, post a preprint, contact an editor, publish data, or change authorship.
+Article type label; required file designations; cover letter/reviewer/ORCID fields; upload-stage biography requirement; generated proof and attachment completeness; current fees/license choices; current closing status at the previous venue. Distinguish files complete, locally rebuilt, platform-compatible, uploaded, and submitted. Mark unresolved mandatory inputs or central scientific issues precisely; do not invent a need for renewed author approval when the same facts and action were already confirmed. A successful local build is evidence of local portability, not a claim that the publisher portal accepted those files. The skill itself grants no authority to log in, submit, post a preprint, contact an editor, publish data, or change authorship.
