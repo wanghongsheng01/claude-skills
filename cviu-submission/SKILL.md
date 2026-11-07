@@ -28,6 +28,8 @@ The historical full guide supports single-anonymized review, editable source, a 
 
 Graphical abstracts are encouraged, not established mandatory. A cover letter can help explain journal fit; do not invent a compulsory length. Keep data-sharing statements factual: a local archive, private Git backup, review attachment, and deposited public research object are different access states.
 
+For a code supplement, distinguish the preserved experiment source from any portable adapter. When reproducing a numerical checkpoint transition, preserve the implemented floating-point operation order; algebraically equivalent expressions can round differently. Keep source/configuration identities with the reported results. Label independent initialization seeds separately from same-seed numerical replays, and retain full-view evidence when providing a deterministic foreground crop. These are reproducibility recommendations, not additional CVIU submission mandates.
+
 For **Editorial Manager source processing**, the current publisher LaTeX FAQ says to place resources at one folder level. If that is the actual target route, prepare a collision-free flat variant, rewrite references, and compare its rebuilt PDF with the editable master. Preserve the organized master. The FAQ is about source submission, not only production; it gives no exception allowing nested folders merely because they are inside a ZIP. Do not infer current CVIU portal behavior without observing it.
 
 Apply current AI rules to the actual use: manuscript assistance, explanatory diagrams, data-derived plots, primary research images, and graphical abstracts have different conditions. Never fabricate research evidence or disguise generative retouching as an experimental output.
