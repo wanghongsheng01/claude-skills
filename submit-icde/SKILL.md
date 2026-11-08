@@ -124,6 +124,9 @@ Plan for the stricter version in every case.
     datasets' labels/costs; make sure public datasets carry every headline claim.
 12. **Before submitting, run the self-negation pass** of `write-icde` (section 9, `icde_structure_check.py`):
     no loss in the abstract, contributions or conclusion; no "Limitations" or "where it does not" heading.
+    Sentences added to satisfy a mock review ("say plainly that ...") need this pass too: on AuthZ-Graph
+    they had become 17 concessions ("offers no benefit", "a natural objection", "we know of no"), which the
+    extended checker now flags (write-icde section 9d).
 13. **Disclosure texts agree with the paper and the artifact** (found on Ladder, ICDE 2027 R2):
     - the AI acknowledgment and the data-availability sentence must not say "all outputs are released"
       when enterprise outputs are withheld; say "all outputs on the public datasets";

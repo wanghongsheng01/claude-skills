@@ -1,6 +1,6 @@
 ---
 name: "write-icde"
-description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers, nine accepted ICDE benchmark papers and twelve accepted AQP/sampling/LLM-query-with-guarantees papers (ICDE 2022-2027, PVLDB) read for how they state limitations, asymptotic guarantees, LLM oracles and proprietary data, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Has a dedicated Experiment, Analysis and Benchmark (EAB) guide (references/eab.md) built from 16 accepted EAB/benchmark papers (ICDE 2024-2027R1 and PVLDB EA&B: CDC chunking, WPBench, entity-matching re-evaluation, SemBench, UDA-Bench, NL2SQL360, learned-optimizer ML perspective, plus the nine in limitations-writing-eab.md): title and abstract patterns, gap tables, RQs/findings/lessons, repetitions/statistics/cost/LLM-version reporting, figures, references, and ten patterns for stating limits and threats to validity without self-negation. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格 / 写 EAB 论文 / benchmark paper / experimental survey / threats to validity / 局限性怎么写). Includes a structure checker with an EAB mode."
+description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers, nine accepted ICDE benchmark papers and twelve accepted AQP/sampling/LLM-query-with-guarantees papers (ICDE 2022-2027, PVLDB), eleven accepted reachability-index/IVM/access-control papers (ICDE 2023-2026, PVLDB, SIGMOD) read for how they state limitations, asymptotic guarantees, LLM oracles and proprietary data, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Has a dedicated Experiment, Analysis and Benchmark (EAB) guide (references/eab.md) built from 16 accepted EAB/benchmark papers (ICDE 2024-2027R1 and PVLDB EA&B: CDC chunking, WPBench, entity-matching re-evaluation, SemBench, UDA-Bench, NL2SQL360, learned-optimizer ML perspective, plus the nine in limitations-writing-eab.md): title and abstract patterns, gap tables, RQs/findings/lessons, repetitions/statistics/cost/LLM-version reporting, figures, references, and ten patterns for stating limits and threats to validity without self-negation. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格 / 写 EAB 论文 / benchmark paper / experimental survey / threats to validity / 局限性怎么写). Includes a structure checker with an EAB mode."
 ---
 
 # Writing for ICDE (Write-ICDE 写作指南)
@@ -144,6 +144,28 @@ OptiAQP, SemiBonsai at ICDE; SUPG, ABae, LOTUS at PVLDB), read in full:
 - **Planner/ablation that looks useless on cost**: find the second metric where it wins (blocked queries,
   latency, certified targets) before the reviewer concludes it is dispensable.
 - Worked before/after table from a real submission (23 statements found, 6 kept) is in the reference.
+
+### 9d. Reachability indexes, IVM and access control (`references/limitations-writing-reachability.md`)
+Eleven accepted papers (TOL, BatchHL at SIGMOD; P2H+, DLCR, M2HL, Sieve, DBSP at PVLDB; IFCA, RLC, HL-index at
+ICDE; F-IVM), read in full on 2026-11-08 for the AuthZ-Graph submission:
+- **"Online search is fast on easy graphs"** is a citable finding (IFCA states it in its introduction; Hanauer
+  et al. for dynamic TC), not a confession. Put the regime into the positive claim ("on deeply nested graphs"),
+  pre-register the expectation at the start of the latency RQ, and turn the loss into a crossover (queries per
+  update, break-even q*): 5/11 papers quantify one. Cite the field's own primary source when it motivates the
+  hard regime (Zanzibar section 3.2.4 built Leopard for deeply nested groups).
+- **Never raise the reviewer's objection yourself** ("A natural objection is...") and never let an RQ announce
+  a null result ("offers no benefit", "the gain is small", "suffices"): state what the RQ establishes
+  (correctness, share of cases that benefit, cost), each cost once, with its mechanism.
+- **Ablation, not concession**: write the full method's increment over its ablated variant ("frontier hubs cut
+  update cost 1.9-7.9x at equal check speed"), not "much of the speedup comes from X".
+- **Synthetic labels/updates/policies** (8/11 use them, 0/8 apologise): two setup sentences, a precedent or
+  real-data grounding, optionally a tick column in the dataset table.
+- **Own baseline implementations** (4/11): provenance plus the fairness control (same store, same binary,
+  single thread); 0/4 doubt their own baseline code.
+- **Model limits** go into the preliminaries as an assumption, reduction or extension pointer (6/11).
+- **No Limitations or Threats heading** (0/11) and no losses in the conclusion (0/11); at most a two- or
+  three-sentence "scope of the comparison" unit at the end of the setup.
+- `icde_structure_check.py` flags the concession phrases found on AuthZ-Graph (17 hits in one manuscript).
 
 ## 10. Readability and layout (with `manuscript-writing-review`)
 - **Math**: put conditions, case distinctions (`cases`), set-builder definitions, sums and chains of

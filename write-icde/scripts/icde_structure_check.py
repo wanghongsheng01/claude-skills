@@ -141,7 +141,12 @@ def main():
         SELF = re.compile(r"\b(are|is|were|was) not evaluated|but not evaluated|cannot separate|should not be used|"
                           r"\bnonetheless keep|is a direct extension|we also report where|where (it|\\sys\{\}|our method) does not|"
                           r"supported only by|holds trivially|only globally|is largest without|at most \d+\\?% on|"
-                          r"recovers most of|almost never change|unfortunately|we could not|we did not", re.I)
+                          r"recovers most of|almost never change|unfortunately|we could not|we did not|"
+                          # AuthZ-Graph R2 (2026-11-08): concessions that invite the reviewer's objection
+                          r"we do not (evaluate|measure|claim)|whose cost we do not|we make no claim|we know of no|"
+                          r"a natural objection|offers? no benefit|lowers? no latency|does not lower|the gain is small|"
+                          r"\bsuffices for|much of the [a-z ]+ comes from|consistent with our [a-z-]+ results|"
+                          r"the cost is substantial|this is weaker than|is weaker than the|is the [a-z ]+ of [A-Z][a-z]+ et al\.? applied", re.I)
         for i, ln in enumerate(s.split("\n"), 1):
             for m in SELF.finditer(strip(ln)):
                 w(f"self-doubt or not-done wording '{m.group(0)}' (line {i} of the expanded source): state the fact once "

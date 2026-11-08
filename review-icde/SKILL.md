@@ -69,6 +69,19 @@ Flag two opposite defects:
   conclusion, or self-negating wording. This is a presentation weakness that hands reviewers rejection
   reasons.
 
+**Self-inflicted objections** (found on AuthZ-Graph, ICDE 2027 R2; `write-icde` section 9d). Flag, as a
+presentation weakness that a real PC will turn into a rejection reason:
+- the paper raises the reviewer's strongest objection itself ("A natural objection is...") and concedes it;
+- an RQ whose text announces a null result ("where it offers no benefit", "the gain is small") instead of
+  stating what the RQ establishes (correctness, the share of cases that benefit, the cost);
+- the same weakness stated in the introduction, the method section and the experiments;
+- an ablation written as a concession ("much of the speedup comes from X") instead of the increment of
+  the full method over the ablated one;
+- "we know of no evidence that the hard regime occurs in practice" where the field's own primary sources
+  (system papers, production reports) motivate exactly that regime.
+When an earlier mock review asked the authors to "say plainly" a negative fact, check that it is said once,
+as a premise or a cost, in the experiment that measures it - not repeated as a concession.
+
 **Area lens: AQP / sampling / LLM queries with guarantees** (`write-icde/references/limitations-writing-aqp.md`).
 Ask the questions these reviewers ask, and check the paper answers each with evidence already in it:
 - asymptotic only? -> is the condition stated once, and is coverage measured at the smallest slices and
