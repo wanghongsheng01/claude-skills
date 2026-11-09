@@ -146,7 +146,11 @@ def main():
                           r"we do not (evaluate|measure|claim)|whose cost we do not|we make no claim|we know of no|"
                           r"a natural objection|offers? no benefit|lowers? no latency|does not lower|the gain is small|"
                           r"\bsuffices for|much of the [a-z ]+ comes from|consistent with our [a-z-]+ results|"
-                          r"the cost is substantial|this is weaker than|is weaker than the|is the [a-z ]+ of [A-Z][a-z]+ et al\.? applied", re.I)
+                          r"the cost is substantial|this is weaker than|is weaker than the|is the [a-z ]+ of [A-Z][a-z]+ et al\.? applied|"
+                          # AuthZ-Graph v6 (2026-11-09): provenance of constants, rerun builds, shared machines and
+                          # "pilot" wording that came back while compressing the paper to 12 pages
+                          r"(was|were|is|are) not tuned|\buntuned\b|chosen ad hoc|arbitrar(il)?y chosen|was fixed when|"
+                          r"a later build|shared the (server|machine)|jobs shared|\bpilot runs?\b", re.I)
         for i, ln in enumerate(s.split("\n"), 1):
             for m in SELF.finditer(strip(ln)):
                 w(f"self-doubt or not-done wording '{m.group(0)}' (line {i} of the expanded source): state the fact once "

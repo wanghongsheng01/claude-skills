@@ -167,6 +167,26 @@ ICDE; F-IVM), read in full on 2026-11-08 for the AuthZ-Graph submission:
   three-sentence "scope of the comparison" unit at the end of the setup.
 - `icde_structure_check.py` flags the concession phrases found on AuthZ-Graph (17 hits in one manuscript).
 
+### 9e. Baselines, hand-set constants and setup (`references/limitations-writing-baselines-constants.md`)
+Ten accepted papers read in full on 2026-11-09 (Beamer SC'12; IFCA ICDE'23; PLL, QbS, BatchHL at SIGMOD; IP, DLCR,
+MLL at PVLDB; Hanauer et al. SEA'20, O'Reach SEA'21):
+- **A loss to a baseline is stated in prose** (10/10) **with a one-sentence mechanism** (9/10), once, where it
+  is measured. If the text carries a number that no table carries (a case study, a baseline added late), it
+  stays in the text.
+- **A stronger baseline slower than a simpler one needs its cost named** (7/10), e.g. MLL: "distance queries
+  used by CTLB are not free". Otherwise reviewers read a strawman. Lead with your result against it, then the
+  inversion, then the one exception with its absolute gap.
+- **Constants**: give a value with a sweep (7/10 sweep). Acceptable provenances are none at all (5/10),
+  "heuristically" or "preliminary tests" (3/10), prior work (3/10) or a micro-benchmark (IFCA's lambda).
+  Never write "ad hoc" or "not tuned" (0/10). State the default's distance to the per-graph best, as Beamer
+  does ("within 15-20% of its peak"), and compare it with run-to-run noise. Compare a run-time switch with
+  the best fixed choice (2/2 papers with a switch).
+- **Setup**: one neutral sentence per machine and claims within one machine (Beamer, PLL). Name the noise
+  controls, not "shared server" (0/10). A second build is a reproducibility statement ("reproduces every
+  counter of the main runs"), not "a later build".
+- **After compressing to 12 pages**, diff against the last approved wording: mechanism and purpose clauses are
+  the first to be cut, and the bare loss stays (submit-icde workflow step 14).
+
 ## 10. Readability and layout (with `manuscript-writing-review`)
 - **Math**: put conditions, case distinctions (`cases`), set-builder definitions, sums and chains of
   inequalities in displays. Theorem statements should not be walls of inline symbols. Under IEEEtran,

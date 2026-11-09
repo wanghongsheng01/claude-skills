@@ -82,6 +82,19 @@ presentation weakness that a real PC will turn into a rejection reason:
 When an earlier mock review asked the authors to "say plainly" a negative fact, check that it is said once,
 as a premise or a cost, in the experiment that measures it - not repeated as a concession.
 
+**Baselines, constants and setup** (found on AuthZ-Graph v6, ICDE 2027 R2; `write-icde` section 9e). Flag:
+- a stronger baseline that is slower than a simpler one on many datasets (e.g., bidirectional search
+  slower than BFS) with no mechanism: a real PC reads it as a weak or strawman implementation. Ask for one
+  sentence that explains it from the design (e.g., the simple baseline already searches from the cheaper
+  side) and for the paper's result against the better of the two;
+- a hand-set constant introduced by its history ("fixed when first implemented", "not tuned") instead of by
+  its sensitivity sweep; ask for the sweep, and for the default's distance to the best value per dataset
+  compared with the noise between runs with identical decisions;
+- setup sentences that cast doubt on all timings ("shared the server", "a later build", "pilot runs")
+  when the design already controls for it (same process, same stream, counters checked across builds);
+- a case study whose last sentence is a loss ("runs at 0.78x the speed of ..."): check that the absolute
+  values and the case study's purpose (here, freshness under real deny rules) are stated.
+
 **Area lens: AQP / sampling / LLM queries with guarantees** (`write-icde/references/limitations-writing-aqp.md`).
 Ask the questions these reviewers ask, and check the paper answers each with evidence already in it:
 - asymptotic only? -> is the condition stated once, and is coverage measured at the smallest slices and

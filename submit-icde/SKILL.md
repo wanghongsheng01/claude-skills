@@ -1,11 +1,11 @@
 ---
 name: "submit-icde"
-description: "Pre-submission checklist and checker for the IEEE International Conference on Data Engineering (ICDE, CCF A) research track, built from the ICDE 2027 call for research papers (read 2026-11-03, re-checked 2026-11-06): two rounds, 12-page IEEE limit without appendix (only references and AI acknowledgment excluded), single-blind, stricter COI reading and CMT order of operations, AI-content disclosure, artifacts, scope/desk-reject rules, EAB category, rebuttal (new in 2027) and camera-ready (IEEE CPS, PDF eXpress). Includes a dedicated Experiment, Analysis and Benchmark (EAB) guide for Round 2 (references/eab.md): the exact [Experiment, Analysis, and Benchmark] title prefix (not the PVLDB/SIGMOD suffixes), all artifacts mandatory with no exceptions, LLM-experiment disclosure, withheld/enterprise data, regular-vs-EAB choice and an EAB countdown. Use when preparing, formatting or packaging a paper for ICDE (投 ICDE / ICDE 投稿 / 投稿前检查 / 投 ICDE EAB / benchmark paper / experimental survey), or when deciding Round 1 vs Round 2 or regular vs EAB. Includes a LaTeX/PDF/artifact checker with an EAB mode."
+description: "Pre-submission checklist and checker for the IEEE International Conference on Data Engineering (ICDE, CCF A) research track, built from the ICDE 2027 call for research papers (read 2026-11-03, re-checked 2026-11-06 and 2026-11-09): two rounds, 12-page IEEE limit without appendix (only references and AI acknowledgment excluded), single-blind, stricter COI reading and CMT order of operations, AI-content disclosure, artifacts, scope/desk-reject rules, EAB category, rebuttal (new in 2027) and camera-ready (IEEE CPS, PDF eXpress). Includes a dedicated Experiment, Analysis and Benchmark (EAB) guide for Round 2 (references/eab.md): the exact [Experiment, Analysis, and Benchmark] title prefix (not the PVLDB/SIGMOD suffixes), all artifacts mandatory with no exceptions, LLM-experiment disclosure, withheld/enterprise data, regular-vs-EAB choice and an EAB countdown. Use when preparing, formatting or packaging a paper for ICDE (投 ICDE / ICDE 投稿 / 投稿前检查 / 投 ICDE EAB / benchmark paper / experimental survey), or when deciding Round 1 vs Round 2 or regular vs EAB. Includes a LaTeX/PDF/artifact checker with an EAB mode."
 ---
 
 # Submitting to ICDE (投稿 ICDE 前须知)
 
-Source: ICDE 2027 CFP https://icde2027.github.io/cf-research-papers.html and submission-guidelines.html, read on 2026-11-03 and re-checked on 2026-11-06 (no change; site last updated 2026-10-28). Microsoft CMT documentation for conflicts and author feedback; IEEE Author Center for copyright and posting. Tags: [CFP] = stated in the call; [OBS] = observed in published ICDE papers; [CHECK] = re-verify for a later edition (rules change each year).
+Source: ICDE 2027 CFP https://icde2027.github.io/cf-research-papers.html and submission-guidelines.html, read on 2026-11-03 and re-checked on 2026-11-06 and 2026-11-09 (no change; site last updated 2026-10-28, which renamed the excluded item in the page-limit sentence to "AI-generated content declaration"; the guidelines page still says "acknowledgement", so either heading is accepted). Microsoft CMT documentation for conflicts and author feedback; IEEE Author Center for copyright and posting. Tags: [CFP] = stated in the call; [OBS] = observed in published ICDE papers; [CHECK] = re-verify for a later edition (rules change each year).
 
 Use with `write-icde` (how accepted papers are built) and `review-icde` (simulated PC review).
 
@@ -135,6 +135,14 @@ Plan for the stricter version in every case.
     - the CMT author list, ORCIDs and title must match the PDF character for character;
     - before pushing a public artifact, regenerate the paper's tables from the artifact copy in a fresh
       folder and diff them with the submitted tables (byte-identical is the target).
+
+14. **Re-check approved limitation rewrites after every page compression** (found on AuthZ-Graph v5/v6,
+    ICDE 2027 R2): squeezing the body back to 12 pages removed the mechanism and purpose clauses of three
+    approved rewrites (a case study again ended on "0.78x the speed of", "shared the server" came back, the
+    primary-source motivation of a synthetic sweep was cut and left "statistics are not published"). After
+    each compression round, `git diff` the paper against the last approved version, list every sentence
+    that lost a clause, and re-run `icde_structure_check.py`. Cut elsewhere, not the clause that turns a
+    loss into a scope statement.
 
 ## 5. Checker
 `scripts/check_icde_submission.py` inlines `\input` files and checks:
