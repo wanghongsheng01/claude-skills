@@ -15,6 +15,8 @@ Translate an application requirement into an observable input–output problem, 
 
 For sensing proposals, distinguish absent measurements from plausible but biased measurements. Identify the sensor principle and available channels before designing a solution. SNNs are model families; event cameras are sensors. A frame-to-spike encoding does not create native event observations, and a spike-operation estimate does not measure device energy.
 
+When code, device manuals or system logs accompany the failure, use [static material evidence](references/static-material-evidence.md) to distinguish documented capability, implementation behavior and actual field evidence before attributing a scientific cause.
+
 ## Attack novelty before designing modules
 
 For each lineage, search the task, mechanism, mathematical operation, failure condition, adjacent-field terminology, and newest public preprints through a stated cutoff. Include older decisive prior art. Verify publication state through primary publisher or proceedings evidence; keep inaccessible and abstract-only sources visible.
