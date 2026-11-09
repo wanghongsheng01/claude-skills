@@ -1,0 +1,174 @@
+{
+  "task": {
+    "T01": {
+      "label": "分类、识别与生物特征",
+      "regex": "\\bclassif\\w*|\\brecogni\\w*|re-identif\\w*|reidentif\\w*|signature verification|face verification|biometric"
+    },
+    "T02": {
+      "label": "分割、显著性与像素级解析",
+      "regex": "\\bsegment\\w*|\\bsalien\\w*|\\bmatting\\b|scene parsing|dense prediction"
+    },
+    "T03": {
+      "label": "聚类与无监督分组",
+      "regex": "\\bclustering\\b|\\bbiclustering\\b|co-clustering|k-means|cluster analysis|cluster validity"
+    },
+    "T04": {
+      "label": "目标检测、跟踪与计数",
+      "regex": "object detect\\w*|target detect\\w*|pedestrian detect\\w*|lane detect\\w*|text detect\\w*|\\btrack\\w*|\\bcounting\\b"
+    },
+    "T05": {
+      "label": "检索、匹配与推荐",
+      "regex": "\\bretriev\\w*|\\bmatching\\b|\\brecommend\\w*|\\bhashing\\b"
+    },
+    "T06": {
+      "label": "恢复、增强与图像融合",
+      "regex": "\\brestor\\w*|\\bdenois\\w*|\\bdeblur\\w*|\\bdehaz\\w*|\\bderain\\w*|super-resolution|super resolution|\\binpaint\\w*|image enhancement|low-light|low light|image fusion|pansharpen\\w*|pan-sharpen\\w*|\\bcolorization\\b"
+    },
+    "T07": {
+      "label": "异常、故障与伪造检测",
+      "regex": "\\banomal\\w*|\\boutlier\\w*|fault detect\\w*|fault diagnos\\w*|defect detect\\w*|\\bdeepfake\\w*|\\bforger\\w*|\\bspoof\\w*"
+    },
+    "T08": {
+      "label": "几何、姿态与三维重建",
+      "regex": "pose estimat\\w*|pose recover\\w*|pose predict\\w*|depth estimat\\w*|depth complet\\w*|\\bstereo\\b|optical flow|\\bodometry\\b|3d reconstruct\\w*|\\bradiance field\\w*|gaussian splat\\w*|point cloud registration|shape complet\\w*"
+    },
+    "T09": {
+      "label": "序列预测与时序建模",
+      "regex": "time series|time-series|\\bforecast\\w*|trajectory predict\\w*|motion predict\\w*|\\btemporal action\\b"
+    },
+    "T10": {
+      "label": "生成、编辑与跨模态描述",
+      "regex": "image generation|image synthesis|text-to-image|text to image|image-to-image|image editing|\\bcaption\\w*|visual question answer\\w*|\\bVQA\\b|image translation"
+    },
+    "T11": {
+      "label": "特征选择与降维",
+      "regex": "feature selection|dimensionality reduction|dimension reduction|feature subset"
+    },
+    "T12": {
+      "label": "图、节点及链接预测",
+      "regex": "node classif\\w*|node representation|link predict\\w*|graph classif\\w*|graph representation|graph embedding|graph learning"
+    }
+  },
+  "challenge": {
+    "C01": {
+      "label": "有限监督、自监督与无监督设定",
+      "regex": "few-shot|few shot|zero-shot|zero shot|one-shot|one shot|low-shot|low shot|semi-supervis\\w*|semisupervis\\w*|weakly-supervis\\w*|weakly supervis\\w*|self-supervis\\w*|self supervis\\w*|\\bunsupervis\\w*|pseudo-label\\w*|\\bpseudo label\\w*|active learning|point-supervis\\w*"
+    },
+    "C02": {
+      "label": "多视图与多模态学习设定",
+      "regex": "multi-view|multiview|multi view|multi-modal|multimodal|multi modal|cross-modal|cross modal|cross-view|cross view|vision-language|vision language|image-text|image text|audio-visual|rgb-d|rgb-t|rgbt|cross-media|multi-spectral|multispectral"
+    },
+    "C03": {
+      "label": "效率、可扩展性与压缩",
+      "regex": "\\befficien\\w*|\\bscalab\\w*|\\blightweight\\b|light-weight|\\bcompress\\w*|\\bprun\\w*|\\bquantiz\\w*|real-time|real time|\\bfast\\b|\\bbudget\\b|parameter-efficient|large-scale|large scale"
+    },
+    "C04": {
+      "label": "迁移、域偏移与泛化设定",
+      "regex": "domain adapt\\w*|domain generali\\w*|domain shift|cross-domain|cross domain|source-free|source free|distribution shift|out-of-distribution|test-time|test time|\\bgeneraliz\\w*|\\bgeneralis\\w*|cross-dataset|\\btransfer learning\\b"
+    },
+    "C05": {
+      "label": "可解释性、因果与可信度",
+      "regex": "\\binterpretab\\w*|\\bexplainab\\w*|\\bexplanation\\w*|\\bcausal\\w*|\\bcounterfactual\\w*|\\bcalibrat\\w*|\\buncertainty\\b|\\btrustworth\\w*"
+    },
+    "C06": {
+      "label": "攻击、隐私与安全",
+      "regex": "adversarial attack\\w*|adversarial robust\\w*|adversarial defen[sc]\\w*|adversarial example\\w*|adversarial perturb\\w*|\\battack\\w*|\\bdefen[sc]\\w*|\\bbackdoor\\w*|\\bprivacy\\b|\\bfederated\\b|\\bpoison\\w*"
+    },
+    "C07": {
+      "label": "缺失、不完整与遮挡观测",
+      "regex": "\\bincomplete\\b|\\bmissing\\b|\\bocclu\\w*|\\bpartial\\b"
+    },
+    "C08": {
+      "label": "噪声、不平衡与长尾",
+      "regex": "noisy label\\w*|label noise|\\bimbalanc\\w*|long-tail\\w*|long tail\\w*|\\bnoisy\\b|\\bcorrupt\\w*"
+    },
+    "C09": {
+      "label": "开放集、增量与持续学习",
+      "regex": "open-set|open set|open-world|open world|open-vocabulary|open vocabulary|\\bincremental\\b|\\bcontinual\\b|\\blifelong\\b|\\bforgetting\\b|novel class|category discovery"
+    },
+    "C10": {
+      "label": "细粒度差异与小目标",
+      "regex": "fine-grained|fine grained|small object|small target|tiny object|tiny target"
+    }
+  },
+  "method": {
+    "M01": {
+      "label": "注意力与Transformer",
+      "regex": "\\battention\\b|\\btransformer\\w*|\\bswin\\b"
+    },
+    "M02": {
+      "label": "图与超图",
+      "regex": "\\bgraph\\w*|\\bhypergraph\\w*"
+    },
+    "M03": {
+      "label": "对比学习",
+      "regex": "\\bcontrastive\\b"
+    },
+    "M04": {
+      "label": "扩散与生成建模",
+      "regex": "\\bdiffusion\\b|\\bgenerative\\b|\\bvariational\\b|\\bGAN\\b|adversarial network|\\bautoencod\\w*"
+    },
+    "M05": {
+      "label": "蒸馏、教师学生与知识迁移",
+      "regex": "\\bdistill\\w*|teacher-student|teacher student|\\bknowledge transfer\\b"
+    },
+    "M06": {
+      "label": "低秩、张量与矩阵分解",
+      "regex": "low-rank|low rank|\\btensor\\b|matrix factori[sz]\\w*|matrix decomposition|\\bsubspace\\b"
+    },
+    "M07": {
+      "label": "核、模糊与粗糙集",
+      "regex": "\\bkernel\\b|\\bfuzzy\\b|rough set\\w*"
+    },
+    "M08": {
+      "label": "基础模型、提示与适配器",
+      "regex": "foundation model\\w*|\\bCLIP\\b|\\bprompt\\w*|\\badapter\\w*|\\bLoRA\\b|large language model\\w*|\\bLLM\\w*|\\bVLM\\w*|vision-language model\\w*"
+    },
+    "M09": {
+      "label": "因果、反事实与信息论",
+      "regex": "\\bcausal\\w*|\\bcounterfactual\\w*|mutual information|information bottleneck|\\bentropy\\b"
+    },
+    "M10": {
+      "label": "状态空间、Mamba与RWKV",
+      "regex": "\\bmamba\\b|state.space model|\\bRWKV\\b"
+    },
+    "M11": {
+      "label": "优化、聚类目标与约束设计",
+      "regex": "\\boptimi[sz]\\w*|\\bregulariz\\w*|\\bregularis\\w*|\\bobjective\\b|\\bconstraint\\w*|\\bloss\\b"
+    }
+  },
+  "application": {
+    "A01": {
+      "label": "医学、生物与生理信号",
+      "regex": "\\bmedical\\b|\\bbiomedical\\b|\\bbrain\\b|\\btumou?r\\b|\\blesion\\w*|\\bcancer\\b|\\bhistopath\\w*|\\bpatholog\\w*|\\bultrasound\\b|\\bMRI\\b|\\bCT\\b|\\bEEG\\b|\\bECG\\b|\\bsEMG\\b|\\bEMG\\b|\\bretin\\w*|\\bpolyp\\w*|\\bnucle[iu]\\w*|\\bcell\\w*|\\bendoscop\\w*|\\bcardiac\\w*|\\bvessel\\w*|\\blung\\w*|\\bprostat\\w*|\\bAlzheimer\\w*|\\btranscriptom\\w*"
+    },
+    "A02": {
+      "label": "遥感、高光谱与地理影像",
+      "regex": "remote sensing|hyperspectral|multispectral|multi-spectral|\\baerial\\b|\\bsatellite\\b|change detect\\w*|\\bSAR\\b"
+    },
+    "A03": {
+      "label": "人脸、行人、动作及生物特征",
+      "regex": "\\bface\\b|\\bfacial\\b|\\bperson\\b|\\bpedestrian\\b|\\bgait\\b|\\bfingerprint\\b|\\bbiometric\\w*|\\bsignature\\b|\\bspeaker\\b|\\baction\\b|\\bgesture\\b|sign language|human pose|skeleton"
+    },
+    "A04": {
+      "label": "三维、机器人与自动驾驶",
+      "regex": "point cloud\\w*|\\blidar\\b|autonomous driv\\w*|\\brobot\\w*|\\bodometry\\b|\\bSLAM\\b|3d reconstruct\\w*|radiance field\\w*|gaussian splat\\w*"
+    },
+    "A05": {
+      "label": "视频与时空动态",
+      "regex": "\\bvideo\\b|spatio-temporal|spatiotemporal|\\btrajectory\\b|\\bmotion\\b"
+    },
+    "A06": {
+      "label": "时序、工业故障与传感器",
+      "regex": "time series|time-series|\\bforecast\\w*|\\bfault\\w*|\\bindustrial\\b|\\bsensor\\w*|electronic nose|\\bbearing\\w*"
+    },
+    "A07": {
+      "label": "文档、文字与语言相关",
+      "regex": "\\bdocument\\w*|\\bhandwrit\\w*|\\bOCR\\b|scene text|text recogn\\w*|text detect\\w*|\\blanguage\\b|\\blinguistic\\b|\\bsentiment\\b"
+    },
+    "A08": {
+      "label": "推荐、社交与关系网络",
+      "regex": "\\brecommend\\w*|\\bsocial\\b|knowledge graph\\w*|\\bcommunity\\b"
+    }
+  }
+}

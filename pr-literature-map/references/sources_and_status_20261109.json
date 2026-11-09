@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-09",
+  "access": "Public publisher-deposited Crossref bibliographic GET; no credentials, redirects, proxies or inference calls",
+  "sources": [
+    {
+      "source_id": "crossref-main-0",
+      "url": "https://api.crossref.org/journals/0031-3203/works?filter=from-pub-date:2024-01-01,until-pub-date:2026-11-09&rows=1000&offset=0&sort=published&order=asc&select=DOI,title,published,published-print,published-online,issued,volume,issue,type,ISSN,publisher,URL,article-number,update-to",
+      "fetched_at_utc": "2026-11-09T03:41:59.759003+00:00",
+      "http_status": 200,
+      "source_response_sha256": "6b0dca712615583c08b54025bc61378cd6bc3aa27aff5fc50dc113f7626d15cd",
+      "response_items": 1000,
+      "response_total": 3781,
+      "purpose": "main"
+    },
+    {
+      "source_id": "crossref-main-1000",
+      "url": "https://api.crossref.org/journals/0031-3203/works?filter=from-pub-date:2024-01-01,until-pub-date:2026-11-09&rows=1000&offset=1000&sort=published&order=asc&select=DOI,title,published,published-print,published-online,issued,volume,issue,type,ISSN,publisher,URL,article-number,update-to",
+      "fetched_at_utc": "2026-11-09T03:43:10.120733+00:00",
+      "http_status": 200,
+      "source_response_sha256": "cba18a280366e83db63b7075a0a9158b534fb297d0f309a760eeb9ac1916d63f",
+      "response_items": 1000,
+      "response_total": 3781,
+      "purpose": "main"
+    },
+    {
+      "source_id": "crossref-main-2000",
+      "url": "https://api.crossref.org/journals/0031-3203/works?filter=from-pub-date:2024-01-01,until-pub-date:2026-11-09&rows=1000&offset=2000&sort=published&order=asc&select=DOI,title,published,published-print,published-online,issued,volume,issue,type,ISSN,publisher,URL,article-number,update-to",
+      "fetched_at_utc": "2026-11-09T03:42:28.897566+00:00",
+      "http_status": 200,
+      "source_response_sha256": "ece3a1615cb62d74cf6501d7ae381e6ba19a683cc0adb9080f7f0c7e06f91142",
+      "response_items": 1000,
+      "response_total": 3781,
+      "purpose": "main"
+    },
+    {
+      "source_id": "crossref-main-3000",
+      "url": "https://api.crossref.org/journals/0031-3203/works?filter=from-pub-date:2024-01-01,until-pub-date:2026-11-09&rows=1000&offset=3000&sort=published&order=asc&select=DOI,title,published,published-print,published-online,issued,volume,issue,type,ISSN,publisher,URL,article-number,update-to",
+      "fetched_at_utc": "2026-11-09T03:42:29.421638+00:00",
+      "http_status": 200,
+      "source_response_sha256": "5141f8b8e5dd68dc3b0edd7e473f76f1496b17eff5b4711ab6181826cd4f7e3e",
+      "response_items": 781,
+      "response_total": 3781,
+      "purpose": "main"
+    },
+    {
+      "source_id": "crossref-roll-prefix-0",
+      "url": "https://api.crossref.org/journals/0031-3203/works?filter=from-pub-date:2023-11-10,until-pub-date:2023-12-31&rows=1000&offset=0&sort=published&order=asc&select=DOI,title,published,published-print,published-online,issued,volume,issue,type,ISSN,publisher,URL,article-number,update-to",
+      "fetched_at_utc": "2026-11-09T03:42:31.874631+00:00",
+      "http_status": 200,
+      "source_response_sha256": "6ebfc606ddafbb7c0d4d0628f7380b1e73e0f4ebf24af80b1581fab1d0bf775b",
+      "response_items": 65,
+      "response_total": 65,
+      "purpose": "roll_prefix"
+    }
+  ],
+  "method_documentation": [
+    "https://www.crossref.org/documentation/retrieve-metadata/rest-api/",
+    "https://www.crossref.org/documentation/retrieve-metadata/rest-api/rest-api-filters/"
+  ],
+  "status": "query fully retrieved and deduplicated; four main pages yield 3781 unique DOI records; one page returned 429 then a delayed single retry succeeded",
+  "limits": [
+    "Crossref live requests are not an atomic historical database snapshot.",
+    "No online dates are present; print dates are month-only.",
+    "The main metadata cohort includes 432 November-2026 rows whose day-level availability cannot be established from these fields.",
+    "The 47 missing-volume research-like rows are excluded from the issue-date core but retained.",
+    "Title categories describe observed rule matches, not guaranteed lower bounds on actual topics.",
+    "No submitted/rejected corpus or acceptance causality is available."
+  ],
+  "artifacts": [
+    {
+      "name": "pr_issue_date_title_map_20261109.csv",
+      "bytes": 887373,
+      "sha256": "18c880be5dfbfdab98821d3ab8a4a9b163e0d0cdef815eecca2ee5e1c80903a5"
+    },
+    {
+      "name": "title_signal_taxonomy_20261109.json",
+      "bytes": 8719,
+      "sha256": "9ddeefe0ce85959b2f28e2f012486b391ed19a4024180158701708b64cfcb54c"
+    },
+    {
+      "name": "title_map_summary_20261109.json",
+      "bytes": 30003,
+      "sha256": "6f8c26ddd7d6aa9f47c432f8d282f66c6d0e32a20dcea8b35c5be069dfe8c553"
+    }
+  ]
+}

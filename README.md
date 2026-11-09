@@ -398,3 +398,19 @@ python3 manuscript-writing-review/scripts/layout_check.py paper/main.pdf --out /
 ```
 The PDF scripts need PyMuPDF (`pip install pymupdf`). Install as for the other skills: copy the folder into
 `~/.claude/skills/`.
+
+## Pattern Recognition research skills
+
+Seven skills support preparation for Elsevier *Pattern Recognition* (ISSN 0031-3203). They separate official requirements, publication-title observations, full-text evidence and research judgments; publication frequency is not acceptance probability. The guideline snapshot was directly read on 2026-11-09 and must be refreshed before submission.
+
+| Skill | Purpose |
+|---|---|
+| [pr-venue-gate](pr-venue-gate/SKILL.md) | Current venue requirements, evidence locations and guide conflicts |
+| [pr-literature-map](pr-literature-map/SKILL.md) | Reproducible publication landscape with date, coverage and classification limits |
+| [pr-evidence-reading](pr-evidence-reading/SKILL.md) | Scientific problem → key mechanism → experimental evidence → writing structure |
+| [pr-experiment-design](pr-experiment-design/SKILL.md) | Falsifiable hypotheses, decisive controls and real run records after literature learning |
+| [pr-paper-craft](pr-paper-craft/SKILL.md) | Claim-evidence writing, paragraphs, figures and tables |
+| [pr-review-revision](pr-review-revision/SKILL.md) | Independent evidence review and concrete revision closure |
+| [pr-submission-package](pr-submission-package/SKILL.md) | Editable manuscript, Highlights, cover letter, declarations and submission-state checks |
+
+Follow the user's requested stage: a request to learn published work first does not start experiments merely because model APIs are available. These skills contain reusable methods and public references, not private research data, API credentials or third-party paper PDFs. Copy the desired skill folders into the personal skills directory of the assistant being used.

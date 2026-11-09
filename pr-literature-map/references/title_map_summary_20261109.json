@@ -1,0 +1,1124 @@
+{
+  "version": "2026-11-09-final-removed-excluded",
+  "venue": "Pattern Recognition",
+  "issn": [
+    "0031-3203",
+    "1873-5142"
+  ],
+  "cutoff_local": "2026-11-09",
+  "timezone": "Asia/Shanghai",
+  "measure": "title-explicit setting/task/method/domain signal counts in publisher-deposited issue-date metadata; not all formally available VoRs by a day cutoff",
+  "counts": {
+    "all": 3846,
+    "main": 3781,
+    "main_excluded": {
+      "nonresearch_publication": 60,
+      "missing_volume": 47
+    }
+  },
+  "cohorts": {
+    "main_issue_core": {
+      "n": 3674,
+      "years": {
+        "2024": 850,
+        "2025": 887,
+        "2026": 1937
+      },
+      "online_date_present": 0,
+      "month_precision": 3674,
+      "axes": {
+        "task": {
+          "covered_n": 2160,
+          "unknown_n": 1514,
+          "categories": [
+            {
+              "tag": "T01",
+              "label": "分类、识别与生物特征",
+              "n": 607,
+              "pct": 16.52,
+              "by_year": {
+                "2024": {
+                  "n": 166,
+                  "denominator": 850,
+                  "pct": 19.53
+                },
+                "2025": {
+                  "n": 150,
+                  "denominator": 887,
+                  "pct": 16.91
+                },
+                "2026": {
+                  "n": 291,
+                  "denominator": 1937,
+                  "pct": 15.02
+                }
+              }
+            },
+            {
+              "tag": "T02",
+              "label": "分割、显著性与像素级解析",
+              "n": 343,
+              "pct": 9.34,
+              "by_year": {
+                "2024": {
+                  "n": 86,
+                  "denominator": 850,
+                  "pct": 10.12
+                },
+                "2025": {
+                  "n": 74,
+                  "denominator": 887,
+                  "pct": 8.34
+                },
+                "2026": {
+                  "n": 183,
+                  "denominator": 1937,
+                  "pct": 9.45
+                }
+              }
+            },
+            {
+              "tag": "T06",
+              "label": "恢复、增强与图像融合",
+              "n": 281,
+              "pct": 7.65,
+              "by_year": {
+                "2024": {
+                  "n": 53,
+                  "denominator": 850,
+                  "pct": 6.24
+                },
+                "2025": {
+                  "n": 75,
+                  "denominator": 887,
+                  "pct": 8.46
+                },
+                "2026": {
+                  "n": 153,
+                  "denominator": 1937,
+                  "pct": 7.9
+                }
+              }
+            },
+            {
+              "tag": "T04",
+              "label": "目标检测、跟踪与计数",
+              "n": 256,
+              "pct": 6.97,
+              "by_year": {
+                "2024": {
+                  "n": 61,
+                  "denominator": 850,
+                  "pct": 7.18
+                },
+                "2025": {
+                  "n": 53,
+                  "denominator": 887,
+                  "pct": 5.98
+                },
+                "2026": {
+                  "n": 142,
+                  "denominator": 1937,
+                  "pct": 7.33
+                }
+              }
+            },
+            {
+              "tag": "T03",
+              "label": "聚类与无监督分组",
+              "n": 205,
+              "pct": 5.58,
+              "by_year": {
+                "2024": {
+                  "n": 57,
+                  "denominator": 850,
+                  "pct": 6.71
+                },
+                "2025": {
+                  "n": 44,
+                  "denominator": 887,
+                  "pct": 4.96
+                },
+                "2026": {
+                  "n": 104,
+                  "denominator": 1937,
+                  "pct": 5.37
+                }
+              }
+            },
+            {
+              "tag": "T05",
+              "label": "检索、匹配与推荐",
+              "n": 153,
+              "pct": 4.16,
+              "by_year": {
+                "2024": {
+                  "n": 36,
+                  "denominator": 850,
+                  "pct": 4.24
+                },
+                "2025": {
+                  "n": 38,
+                  "denominator": 887,
+                  "pct": 4.28
+                },
+                "2026": {
+                  "n": 79,
+                  "denominator": 1937,
+                  "pct": 4.08
+                }
+              }
+            },
+            {
+              "tag": "T07",
+              "label": "异常、故障与伪造检测",
+              "n": 141,
+              "pct": 3.84,
+              "by_year": {
+                "2024": {
+                  "n": 18,
+                  "denominator": 850,
+                  "pct": 2.12
+                },
+                "2025": {
+                  "n": 37,
+                  "denominator": 887,
+                  "pct": 4.17
+                },
+                "2026": {
+                  "n": 86,
+                  "denominator": 1937,
+                  "pct": 4.44
+                }
+              }
+            },
+            {
+              "tag": "T08",
+              "label": "几何、姿态与三维重建",
+              "n": 106,
+              "pct": 2.89,
+              "by_year": {
+                "2024": {
+                  "n": 29,
+                  "denominator": 850,
+                  "pct": 3.41
+                },
+                "2025": {
+                  "n": 29,
+                  "denominator": 887,
+                  "pct": 3.27
+                },
+                "2026": {
+                  "n": 48,
+                  "denominator": 1937,
+                  "pct": 2.48
+                }
+              }
+            },
+            {
+              "tag": "T11",
+              "label": "特征选择与降维",
+              "n": 82,
+              "pct": 2.23,
+              "by_year": {
+                "2024": {
+                  "n": 20,
+                  "denominator": 850,
+                  "pct": 2.35
+                },
+                "2025": {
+                  "n": 19,
+                  "denominator": 887,
+                  "pct": 2.14
+                },
+                "2026": {
+                  "n": 43,
+                  "denominator": 1937,
+                  "pct": 2.22
+                }
+              }
+            },
+            {
+              "tag": "T09",
+              "label": "序列预测与时序建模",
+              "n": 72,
+              "pct": 1.96,
+              "by_year": {
+                "2024": {
+                  "n": 17,
+                  "denominator": 850,
+                  "pct": 2.0
+                },
+                "2025": {
+                  "n": 17,
+                  "denominator": 887,
+                  "pct": 1.92
+                },
+                "2026": {
+                  "n": 38,
+                  "denominator": 1937,
+                  "pct": 1.96
+                }
+              }
+            },
+            {
+              "tag": "T10",
+              "label": "生成、编辑与跨模态描述",
+              "n": 63,
+              "pct": 1.71,
+              "by_year": {
+                "2024": {
+                  "n": 11,
+                  "denominator": 850,
+                  "pct": 1.29
+                },
+                "2025": {
+                  "n": 16,
+                  "denominator": 887,
+                  "pct": 1.8
+                },
+                "2026": {
+                  "n": 36,
+                  "denominator": 1937,
+                  "pct": 1.86
+                }
+              }
+            },
+            {
+              "tag": "T12",
+              "label": "图、节点及链接预测",
+              "n": 63,
+              "pct": 1.71,
+              "by_year": {
+                "2024": {
+                  "n": 18,
+                  "denominator": 850,
+                  "pct": 2.12
+                },
+                "2025": {
+                  "n": 12,
+                  "denominator": 887,
+                  "pct": 1.35
+                },
+                "2026": {
+                  "n": 33,
+                  "denominator": 1937,
+                  "pct": 1.7
+                }
+              }
+            }
+          ]
+        },
+        "challenge": {
+          "covered_n": 1759,
+          "unknown_n": 1915,
+          "categories": [
+            {
+              "tag": "C01",
+              "label": "有限监督、自监督与无监督设定",
+              "n": 489,
+              "pct": 13.31,
+              "by_year": {
+                "2024": {
+                  "n": 132,
+                  "denominator": 850,
+                  "pct": 15.53
+                },
+                "2025": {
+                  "n": 130,
+                  "denominator": 887,
+                  "pct": 14.66
+                },
+                "2026": {
+                  "n": 227,
+                  "denominator": 1937,
+                  "pct": 11.72
+                }
+              }
+            },
+            {
+              "tag": "C02",
+              "label": "多视图与多模态学习设定",
+              "n": 458,
+              "pct": 12.47,
+              "by_year": {
+                "2024": {
+                  "n": 69,
+                  "denominator": 850,
+                  "pct": 8.12
+                },
+                "2025": {
+                  "n": 106,
+                  "denominator": 887,
+                  "pct": 11.95
+                },
+                "2026": {
+                  "n": 283,
+                  "denominator": 1937,
+                  "pct": 14.61
+                }
+              }
+            },
+            {
+              "tag": "C03",
+              "label": "效率、可扩展性与压缩",
+              "n": 321,
+              "pct": 8.74,
+              "by_year": {
+                "2024": {
+                  "n": 69,
+                  "denominator": 850,
+                  "pct": 8.12
+                },
+                "2025": {
+                  "n": 73,
+                  "denominator": 887,
+                  "pct": 8.23
+                },
+                "2026": {
+                  "n": 179,
+                  "denominator": 1937,
+                  "pct": 9.24
+                }
+              }
+            },
+            {
+              "tag": "C04",
+              "label": "迁移、域偏移与泛化设定",
+              "n": 255,
+              "pct": 6.94,
+              "by_year": {
+                "2024": {
+                  "n": 55,
+                  "denominator": 850,
+                  "pct": 6.47
+                },
+                "2025": {
+                  "n": 65,
+                  "denominator": 887,
+                  "pct": 7.33
+                },
+                "2026": {
+                  "n": 135,
+                  "denominator": 1937,
+                  "pct": 6.97
+                }
+              }
+            },
+            {
+              "tag": "C05",
+              "label": "可解释性、因果与可信度",
+              "n": 143,
+              "pct": 3.89,
+              "by_year": {
+                "2024": {
+                  "n": 30,
+                  "denominator": 850,
+                  "pct": 3.53
+                },
+                "2025": {
+                  "n": 28,
+                  "denominator": 887,
+                  "pct": 3.16
+                },
+                "2026": {
+                  "n": 85,
+                  "denominator": 1937,
+                  "pct": 4.39
+                }
+              }
+            },
+            {
+              "tag": "C06",
+              "label": "攻击、隐私与安全",
+              "n": 123,
+              "pct": 3.35,
+              "by_year": {
+                "2024": {
+                  "n": 20,
+                  "denominator": 850,
+                  "pct": 2.35
+                },
+                "2025": {
+                  "n": 21,
+                  "denominator": 887,
+                  "pct": 2.37
+                },
+                "2026": {
+                  "n": 82,
+                  "denominator": 1937,
+                  "pct": 4.23
+                }
+              }
+            },
+            {
+              "tag": "C09",
+              "label": "开放集、增量与持续学习",
+              "n": 114,
+              "pct": 3.1,
+              "by_year": {
+                "2024": {
+                  "n": 29,
+                  "denominator": 850,
+                  "pct": 3.41
+                },
+                "2025": {
+                  "n": 19,
+                  "denominator": 887,
+                  "pct": 2.14
+                },
+                "2026": {
+                  "n": 66,
+                  "denominator": 1937,
+                  "pct": 3.41
+                }
+              }
+            },
+            {
+              "tag": "C10",
+              "label": "细粒度差异与小目标",
+              "n": 87,
+              "pct": 2.37,
+              "by_year": {
+                "2024": {
+                  "n": 15,
+                  "denominator": 850,
+                  "pct": 1.76
+                },
+                "2025": {
+                  "n": 17,
+                  "denominator": 887,
+                  "pct": 1.92
+                },
+                "2026": {
+                  "n": 55,
+                  "denominator": 1937,
+                  "pct": 2.84
+                }
+              }
+            },
+            {
+              "tag": "C08",
+              "label": "噪声、不平衡与长尾",
+              "n": 86,
+              "pct": 2.34,
+              "by_year": {
+                "2024": {
+                  "n": 17,
+                  "denominator": 850,
+                  "pct": 2.0
+                },
+                "2025": {
+                  "n": 21,
+                  "denominator": 887,
+                  "pct": 2.37
+                },
+                "2026": {
+                  "n": 48,
+                  "denominator": 1937,
+                  "pct": 2.48
+                }
+              }
+            },
+            {
+              "tag": "C07",
+              "label": "缺失、不完整与遮挡观测",
+              "n": 83,
+              "pct": 2.26,
+              "by_year": {
+                "2024": {
+                  "n": 16,
+                  "denominator": 850,
+                  "pct": 1.88
+                },
+                "2025": {
+                  "n": 17,
+                  "denominator": 887,
+                  "pct": 1.92
+                },
+                "2026": {
+                  "n": 50,
+                  "denominator": 1937,
+                  "pct": 2.58
+                }
+              }
+            }
+          ]
+        },
+        "method": {
+          "covered_n": 1499,
+          "unknown_n": 2175,
+          "categories": [
+            {
+              "tag": "M01",
+              "label": "注意力与Transformer",
+              "n": 388,
+              "pct": 10.56,
+              "by_year": {
+                "2024": {
+                  "n": 95,
+                  "denominator": 850,
+                  "pct": 11.18
+                },
+                "2025": {
+                  "n": 117,
+                  "denominator": 887,
+                  "pct": 13.19
+                },
+                "2026": {
+                  "n": 176,
+                  "denominator": 1937,
+                  "pct": 9.09
+                }
+              }
+            },
+            {
+              "tag": "M02",
+              "label": "图与超图",
+              "n": 356,
+              "pct": 9.69,
+              "by_year": {
+                "2024": {
+                  "n": 99,
+                  "denominator": 850,
+                  "pct": 11.65
+                },
+                "2025": {
+                  "n": 69,
+                  "denominator": 887,
+                  "pct": 7.78
+                },
+                "2026": {
+                  "n": 188,
+                  "denominator": 1937,
+                  "pct": 9.71
+                }
+              }
+            },
+            {
+              "tag": "M04",
+              "label": "扩散与生成建模",
+              "n": 194,
+              "pct": 5.28,
+              "by_year": {
+                "2024": {
+                  "n": 29,
+                  "denominator": 850,
+                  "pct": 3.41
+                },
+                "2025": {
+                  "n": 49,
+                  "denominator": 887,
+                  "pct": 5.52
+                },
+                "2026": {
+                  "n": 116,
+                  "denominator": 1937,
+                  "pct": 5.99
+                }
+              }
+            },
+            {
+              "tag": "M08",
+              "label": "基础模型、提示与适配器",
+              "n": 189,
+              "pct": 5.14,
+              "by_year": {
+                "2024": {
+                  "n": 10,
+                  "denominator": 850,
+                  "pct": 1.18
+                },
+                "2025": {
+                  "n": 27,
+                  "denominator": 887,
+                  "pct": 3.04
+                },
+                "2026": {
+                  "n": 152,
+                  "denominator": 1937,
+                  "pct": 7.85
+                }
+              }
+            },
+            {
+              "tag": "M11",
+              "label": "优化、聚类目标与约束设计",
+              "n": 186,
+              "pct": 5.06,
+              "by_year": {
+                "2024": {
+                  "n": 40,
+                  "denominator": 850,
+                  "pct": 4.71
+                },
+                "2025": {
+                  "n": 34,
+                  "denominator": 887,
+                  "pct": 3.83
+                },
+                "2026": {
+                  "n": 112,
+                  "denominator": 1937,
+                  "pct": 5.78
+                }
+              }
+            },
+            {
+              "tag": "M03",
+              "label": "对比学习",
+              "n": 130,
+              "pct": 3.54,
+              "by_year": {
+                "2024": {
+                  "n": 26,
+                  "denominator": 850,
+                  "pct": 3.06
+                },
+                "2025": {
+                  "n": 32,
+                  "denominator": 887,
+                  "pct": 3.61
+                },
+                "2026": {
+                  "n": 72,
+                  "denominator": 1937,
+                  "pct": 3.72
+                }
+              }
+            },
+            {
+              "tag": "M05",
+              "label": "蒸馏、教师学生与知识迁移",
+              "n": 102,
+              "pct": 2.78,
+              "by_year": {
+                "2024": {
+                  "n": 16,
+                  "denominator": 850,
+                  "pct": 1.88
+                },
+                "2025": {
+                  "n": 34,
+                  "denominator": 887,
+                  "pct": 3.83
+                },
+                "2026": {
+                  "n": 52,
+                  "denominator": 1937,
+                  "pct": 2.68
+                }
+              }
+            },
+            {
+              "tag": "M06",
+              "label": "低秩、张量与矩阵分解",
+              "n": 99,
+              "pct": 2.69,
+              "by_year": {
+                "2024": {
+                  "n": 21,
+                  "denominator": 850,
+                  "pct": 2.47
+                },
+                "2025": {
+                  "n": 28,
+                  "denominator": 887,
+                  "pct": 3.16
+                },
+                "2026": {
+                  "n": 50,
+                  "denominator": 1937,
+                  "pct": 2.58
+                }
+              }
+            },
+            {
+              "tag": "M07",
+              "label": "核、模糊与粗糙集",
+              "n": 63,
+              "pct": 1.71,
+              "by_year": {
+                "2024": {
+                  "n": 15,
+                  "denominator": 850,
+                  "pct": 1.76
+                },
+                "2025": {
+                  "n": 13,
+                  "denominator": 887,
+                  "pct": 1.47
+                },
+                "2026": {
+                  "n": 35,
+                  "denominator": 1937,
+                  "pct": 1.81
+                }
+              }
+            },
+            {
+              "tag": "M09",
+              "label": "因果、反事实与信息论",
+              "n": 60,
+              "pct": 1.63,
+              "by_year": {
+                "2024": {
+                  "n": 9,
+                  "denominator": 850,
+                  "pct": 1.06
+                },
+                "2025": {
+                  "n": 12,
+                  "denominator": 887,
+                  "pct": 1.35
+                },
+                "2026": {
+                  "n": 39,
+                  "denominator": 1937,
+                  "pct": 2.01
+                }
+              }
+            },
+            {
+              "tag": "M10",
+              "label": "状态空间、Mamba与RWKV",
+              "n": 36,
+              "pct": 0.98,
+              "by_year": {
+                "2024": {
+                  "n": 0,
+                  "denominator": 850,
+                  "pct": 0.0
+                },
+                "2025": {
+                  "n": 3,
+                  "denominator": 887,
+                  "pct": 0.34
+                },
+                "2026": {
+                  "n": 33,
+                  "denominator": 1937,
+                  "pct": 1.7
+                }
+              }
+            }
+          ]
+        },
+        "application": {
+          "covered_n": 1226,
+          "unknown_n": 2448,
+          "categories": [
+            {
+              "tag": "A03",
+              "label": "人脸、行人、动作及生物特征",
+              "n": 349,
+              "pct": 9.5,
+              "by_year": {
+                "2024": {
+                  "n": 90,
+                  "denominator": 850,
+                  "pct": 10.59
+                },
+                "2025": {
+                  "n": 103,
+                  "denominator": 887,
+                  "pct": 11.61
+                },
+                "2026": {
+                  "n": 156,
+                  "denominator": 1937,
+                  "pct": 8.05
+                }
+              }
+            },
+            {
+              "tag": "A01",
+              "label": "医学、生物与生理信号",
+              "n": 286,
+              "pct": 7.78,
+              "by_year": {
+                "2024": {
+                  "n": 55,
+                  "denominator": 850,
+                  "pct": 6.47
+                },
+                "2025": {
+                  "n": 55,
+                  "denominator": 887,
+                  "pct": 6.2
+                },
+                "2026": {
+                  "n": 176,
+                  "denominator": 1937,
+                  "pct": 9.09
+                }
+              }
+            },
+            {
+              "tag": "A05",
+              "label": "视频与时空动态",
+              "n": 187,
+              "pct": 5.09,
+              "by_year": {
+                "2024": {
+                  "n": 39,
+                  "denominator": 850,
+                  "pct": 4.59
+                },
+                "2025": {
+                  "n": 50,
+                  "denominator": 887,
+                  "pct": 5.64
+                },
+                "2026": {
+                  "n": 98,
+                  "denominator": 1937,
+                  "pct": 5.06
+                }
+              }
+            },
+            {
+              "tag": "A07",
+              "label": "文档、文字与语言相关",
+              "n": 154,
+              "pct": 4.19,
+              "by_year": {
+                "2024": {
+                  "n": 23,
+                  "denominator": 850,
+                  "pct": 2.71
+                },
+                "2025": {
+                  "n": 39,
+                  "denominator": 887,
+                  "pct": 4.4
+                },
+                "2026": {
+                  "n": 92,
+                  "denominator": 1937,
+                  "pct": 4.75
+                }
+              }
+            },
+            {
+              "tag": "A02",
+              "label": "遥感、高光谱与地理影像",
+              "n": 127,
+              "pct": 3.46,
+              "by_year": {
+                "2024": {
+                  "n": 10,
+                  "denominator": 850,
+                  "pct": 1.18
+                },
+                "2025": {
+                  "n": 32,
+                  "denominator": 887,
+                  "pct": 3.61
+                },
+                "2026": {
+                  "n": 85,
+                  "denominator": 1937,
+                  "pct": 4.39
+                }
+              }
+            },
+            {
+              "tag": "A04",
+              "label": "三维、机器人与自动驾驶",
+              "n": 113,
+              "pct": 3.08,
+              "by_year": {
+                "2024": {
+                  "n": 26,
+                  "denominator": 850,
+                  "pct": 3.06
+                },
+                "2025": {
+                  "n": 24,
+                  "denominator": 887,
+                  "pct": 2.71
+                },
+                "2026": {
+                  "n": 63,
+                  "denominator": 1937,
+                  "pct": 3.25
+                }
+              }
+            },
+            {
+              "tag": "A06",
+              "label": "时序、工业故障与传感器",
+              "n": 76,
+              "pct": 2.07,
+              "by_year": {
+                "2024": {
+                  "n": 17,
+                  "denominator": 850,
+                  "pct": 2.0
+                },
+                "2025": {
+                  "n": 15,
+                  "denominator": 887,
+                  "pct": 1.69
+                },
+                "2026": {
+                  "n": 44,
+                  "denominator": 1937,
+                  "pct": 2.27
+                }
+              }
+            },
+            {
+              "tag": "A08",
+              "label": "推荐、社交与关系网络",
+              "n": 36,
+              "pct": 0.98,
+              "by_year": {
+                "2024": {
+                  "n": 7,
+                  "denominator": 850,
+                  "pct": 0.82
+                },
+                "2025": {
+                  "n": 5,
+                  "denominator": 887,
+                  "pct": 0.56
+                },
+                "2026": {
+                  "n": 24,
+                  "denominator": 1937,
+                  "pct": 1.24
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "completed_months_core": {
+      "n": 3242,
+      "years": {
+        "2024": 850,
+        "2025": 887,
+        "2026": 1505
+      },
+      "online_date_present": 0,
+      "month_precision": 3242,
+      "top_challenge_counts": [
+        {
+          "tag": "C01",
+          "label": "有限监督、自监督与无监督设定",
+          "n": 442,
+          "pct": 13.63
+        },
+        {
+          "tag": "C02",
+          "label": "多视图与多模态学习设定",
+          "n": 382,
+          "pct": 11.78
+        },
+        {
+          "tag": "C03",
+          "label": "效率、可扩展性与压缩",
+          "n": 283,
+          "pct": 8.73
+        },
+        {
+          "tag": "C04",
+          "label": "迁移、域偏移与泛化设定",
+          "n": 228,
+          "pct": 7.03
+        }
+      ]
+    },
+    "rolling_issue_core": {
+      "n": 3738,
+      "years": {
+        "2023": 64,
+        "2024": 850,
+        "2025": 887,
+        "2026": 1937
+      },
+      "online_date_present": 0,
+      "month_precision": 3738,
+      "top_challenge_counts": [
+        {
+          "tag": "C01",
+          "label": "有限监督、自监督与无监督设定",
+          "n": 498,
+          "pct": 13.32
+        },
+        {
+          "tag": "C02",
+          "label": "多视图与多模态学习设定",
+          "n": 464,
+          "pct": 12.41
+        },
+        {
+          "tag": "C03",
+          "label": "效率、可扩展性与压缩",
+          "n": 327,
+          "pct": 8.75
+        },
+        {
+          "tag": "C04",
+          "label": "迁移、域偏移与泛化设定",
+          "n": 261,
+          "pct": 6.98
+        }
+      ]
+    },
+    "main_including_missing_volume": {
+      "n": 3721,
+      "years": {
+        "2024": 850,
+        "2025": 887,
+        "2026": 1984
+      },
+      "online_date_present": 0,
+      "month_precision": 3721,
+      "top_challenge_counts": [
+        {
+          "tag": "C01",
+          "label": "有限监督、自监督与无监督设定",
+          "n": 496,
+          "pct": 13.33
+        },
+        {
+          "tag": "C02",
+          "label": "多视图与多模态学习设定",
+          "n": 468,
+          "pct": 12.58
+        },
+        {
+          "tag": "C03",
+          "label": "效率、可扩展性与压缩",
+          "n": 323,
+          "pct": 8.68
+        },
+        {
+          "tag": "C04",
+          "label": "迁移、域偏移与泛化设定",
+          "n": 258,
+          "pct": 6.93
+        }
+      ]
+    }
+  },
+  "audit": {
+    "sample_n": 120,
+    "independent_reviewed_n": 60,
+    "sampling": "40 per year sorted by SHA256(DOI); independent reviewer read first 20 per year",
+    "scope": "challenge title semantics only, no fulltext gold",
+    "findings": {
+      "no_obvious_title_signal_error": 54,
+      "explicit_omission": 2,
+      "possible_omission": 3,
+      "weak_problem_inference": 1
+    },
+    "not_accuracy_estimate": true,
+    "removed_record_in_120_sample": false,
+    "removed_record_in_60_review": false
+  }
+}
