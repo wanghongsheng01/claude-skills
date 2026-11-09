@@ -9,6 +9,8 @@ Use after the literature learning stage or when the user explicitly asks for exp
 
 ## Enter with a scientific gap
 
+If the user asks only for topics or an experiment plan, produce draft hypotheses, comparison tables, data requirements, estimated budgets and stop criteria without launching model calls or benchmarks. Mark unresolved licenses, runtime compatibility and sensor channels explicitly. Do not call a draft protocol frozen or a baseline runnable from a repository link alone.
+
 Require an explicit problem, strongest relevant published baselines, their failure conditions and a candidate mechanism. Popularity, a new model name or a combination of modules is not a sufficient gap. Compare the proposed mechanism with the nearest prior mechanisms and a cheap alternative such as reweighting, thresholding, regularization or better tuning.
 
 Write a falsifiable prediction before running experiments: the intervention, expected change, metric, conditions, and an outcome that would reject the explanation. Separate utility claims from mechanism claims. Decide whether the task actually needs an LLM; API availability does not determine venue fit.
@@ -31,4 +33,4 @@ Save data version/license and split hashes, code commit, complete configuration,
 
 For API experiments use the user's approved DataHub/LLM route and per-model budget. Confirm current price and all same-model usage contributing to the daily cap; reserve worst-case cost before calls. Preserve provider failures and retries. Do not silently switch providers or model versions, and never commit credentials.
 
-Deliver a preregistered-in-project protocol (do not claim external registration), run manifest, baseline fairness table, raw-to-table scripts, ablation/intervention results, generalization/efficiency/failure evidence and a claim-evidence map for writing. A protocol is not an experimental result.
+In planning mode, deliver a draft protocol, baseline fairness table, resource requirements and stop criteria. After authorized execution, deliver the frozen, project-registered protocol (do not claim external registration), run manifest, raw-to-table scripts, ablation/intervention results, generalization/efficiency/failure evidence and a claim-evidence map for writing. A protocol is not an experimental result.

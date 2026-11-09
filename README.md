@@ -401,13 +401,14 @@ The PDF scripts need PyMuPDF (`pip install pymupdf`). Install as for the other s
 
 ## Pattern Recognition research skills
 
-Seven skills support preparation for Elsevier *Pattern Recognition* (ISSN 0031-3203). They separate official requirements, publication-title observations, full-text evidence and research judgments; publication frequency is not acceptance probability. The guideline snapshot was directly read on 2026-11-09 and must be refreshed before submission.
+Eight skills support preparation for Elsevier *Pattern Recognition* (ISSN 0031-3203). They separate official requirements, publication-title observations, full-text evidence and research judgments; publication frequency is not acceptance probability. The guideline snapshot was directly read on 2026-11-09 and must be refreshed before submission.
 
 | Skill | Purpose |
 |---|---|
 | [pr-venue-gate](pr-venue-gate/SKILL.md) | Current venue requirements, evidence locations and guide conflicts |
 | [pr-literature-map](pr-literature-map/SKILL.md) | Reproducible publication landscape with date, coverage and classification limits |
 | [pr-evidence-reading](pr-evidence-reading/SKILL.md) | Scientific problem → key mechanism → experimental evidence → writing structure |
+| [pr-opportunity-screen](pr-opportunity-screen/SKILL.md) | Closest-work challenges, falsifiable candidate questions and planning-only experiment protocols |
 | [pr-experiment-design](pr-experiment-design/SKILL.md) | Falsifiable hypotheses, decisive controls and real run records after literature learning |
 | [pr-paper-craft](pr-paper-craft/SKILL.md) | Claim-evidence writing, paragraphs, figures and tables |
 | [pr-review-revision](pr-review-revision/SKILL.md) | Independent evidence review and concrete revision closure |
