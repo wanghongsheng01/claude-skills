@@ -109,6 +109,22 @@ Ask the questions these reviewers ask, and check the paper answers each with evi
 A reviewer may request the incremental experiment that closes a gap (e.g., flooring a ratio interval that
 under-covers); prefer that to an admission in the text.
 
+**Area lens: result caching, view reuse, and fine-grained access control**
+(`references/reviewer-lens-caching-access.md`; writing side in `write-icde/references/limitations-writing-caching-access.md`).
+Two rounds of mock review on a permission-safe result cache (ScopeCache, ICDE 2027 R2) produced these
+recurring requests; check each before the real reviewers do:
+- the strongest *safe* baseline built from the paper's own machinery but partitioned (per-scope cache with the
+  same lifting, measure bundles and pinned views), so the gain of the new idea is isolated;
+- views selected offline vs. an online/adaptive view baseline that pays for its rebuilds;
+- scale (SF10 or larger) and a policy-domain sweep up to owner-level scopes;
+- a real grant set (or a cited real role-mining dataset) besides synthetic policies;
+- determinism: execution counts must be reproducible for a seed (no eviction or selection driven by measured
+  wall-clock time on a shared machine); wall-clock claims only from an isolated machine;
+- timing side channel: stated in the threat model with a mitigation that keeps the claimed cost metric;
+- an independent oracle (formulas evaluated in SQL) for the differential test;
+- tables mark best and second best (ties share the mark) and every RQ states the method's standing.
+The reviewer may request any of these as an incremental experiment; the authors run it before submission.
+
 ## 3c. Discussion, rebuttal and re-scoring (simulates the 2027 process)
 1. **Discussion.** Each reviewer reads the other reports and may change scores, with one sentence of
    reason.

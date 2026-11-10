@@ -1,6 +1,6 @@
 ---
 name: "write-icde"
-description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers, nine accepted ICDE benchmark papers and twelve accepted AQP/sampling/LLM-query-with-guarantees papers (ICDE 2022-2027, PVLDB), eleven accepted reachability-index/IVM/access-control papers (ICDE 2023-2026, PVLDB, SIGMOD) read for how they state limitations, asymptotic guarantees, LLM oracles and proprietary data, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Has a dedicated Experiment, Analysis and Benchmark (EAB) guide (references/eab.md) built from 16 accepted EAB/benchmark papers (ICDE 2024-2027R1 and PVLDB EA&B: CDC chunking, WPBench, entity-matching re-evaluation, SemBench, UDA-Bench, NL2SQL360, learned-optimizer ML perspective, plus the nine in limitations-writing-eab.md): title and abstract patterns, gap tables, RQs/findings/lessons, repetitions/statistics/cost/LLM-version reporting, figures, references, and ten patterns for stating limits and threats to validity without self-negation. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格 / 写 EAB 论文 / benchmark paper / experimental survey / threats to validity / 局限性怎么写). Includes a structure checker with an EAB mode."
+description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers, nine accepted ICDE benchmark papers and twelve accepted AQP/sampling/LLM-query-with-guarantees papers (ICDE 2022-2027, PVLDB), eleven accepted reachability-index/IVM/access-control papers (ICDE 2023-2026, PVLDB, SIGMOD), eight result-caching/view-reuse/access-control papers (ICDE, PVLDB, SIGMOD, OSDI; 2013-2026) read for how they state limitations, asymptotic guarantees, LLM oracles and proprietary data, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Has a dedicated Experiment, Analysis and Benchmark (EAB) guide (references/eab.md) built from 16 accepted EAB/benchmark papers (ICDE 2024-2027R1 and PVLDB EA&B: CDC chunking, WPBench, entity-matching re-evaluation, SemBench, UDA-Bench, NL2SQL360, learned-optimizer ML perspective, plus the nine in limitations-writing-eab.md): title and abstract patterns, gap tables, RQs/findings/lessons, repetitions/statistics/cost/LLM-version reporting, figures, references, and ten patterns for stating limits and threats to validity without self-negation. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格 / 写 EAB 论文 / benchmark paper / experimental survey / threats to validity / 局限性怎么写). Includes a structure checker with an EAB mode."
 ---
 
 # Writing for ICDE (Write-ICDE 写作指南)
@@ -186,6 +186,28 @@ MLL at PVLDB; Hanauer et al. SEA'20, O'Reach SEA'21):
   counter of the main runs"), not "a later build".
 - **After compressing to 12 pages**, diff against the last approved wording: mechanism and purpose clauses are
   the first to be cut, and the bare loss stays (submit-icde workflow step 14).
+
+### 9f. Result caching, view reuse and fine-grained access control (`references/limitations-writing-caching-access.md`)
+Eight papers read in full on 2026-11-10 (Sieve PVLDB'20, Data Guard ICDE'26/arXiv, Recycling ICDE'13, Crystal
+PVLDB'21, Predicate Caching SIGMOD'24, Athena Fusion ICDE'22, Blockaid OSDI'22, and an OLAP semantic-cache
+workshop paper as the contrast case), 118 short quotes checked against the text, 20 rewrite rules with
+before/after examples from the ScopeCache submission (ICDE 2027 R2):
+- **Scope goes into the claim**: "for distributive metrics over a governed fact table, ..." (R1); each
+  guarantee states its domain and the real systems it covers (R2).
+- **Every out-of-domain input has a named safe path** (bypass, scope-keyed path, recheck), so a limit reads as a
+  safety property (R3); a structural restriction is presented as the lever that makes the method work (R4).
+- **Threat model as named assumptions**: who observes what; a timing channel is named with its mitigation and its
+  exact price (R6), never "needs its own analysis" or "we do not address side channels".
+- **Loss or tie to a baseline**: fact -> mechanism -> regime -> bound, next to the regime where the method wins
+  (R7); report the subset where the mechanism applies as well as all calls (R8); a small gain gets the second
+  metric that moved (R9).
+- **Synthetic data**: provenance, calibration against a real system, release; never "may not generalize" (R11).
+- **Setup facts that undermine every number** (shared machine, run-to-run variation, measured-time-driven
+  eviction): remove the cause (deterministic cost model, isolated timing), then state the setup neutrally.
+- **Ranges that overlap a baseline's range** look like no gain: report the means the figure shows, keep per-run
+  ranges in the tables.
+- **Tables**: best bold, second underlined, ties share the mark; one "Standing" sentence per RQ.
+- Section 5 of the reference lists the phrases to avoid with replacements; section 6 is a grep checklist.
 
 ## 10. Readability and layout (with `manuscript-writing-review`)
 - **Math**: put conditions, case distinctions (`cases`), set-builder definitions, sums and chains of

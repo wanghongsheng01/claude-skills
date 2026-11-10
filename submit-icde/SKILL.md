@@ -1,11 +1,11 @@
 ---
 name: "submit-icde"
-description: "Pre-submission checklist and checker for the IEEE International Conference on Data Engineering (ICDE, CCF A) research track, built from the ICDE 2027 call for research papers (read 2026-11-03, re-checked 2026-11-06 and 2026-11-09): two rounds, 12-page IEEE limit without appendix (only references and AI acknowledgment excluded), single-blind, stricter COI reading and CMT order of operations, AI-content disclosure, artifacts, scope/desk-reject rules, EAB category, rebuttal (new in 2027) and camera-ready (IEEE CPS, PDF eXpress). Includes a dedicated Experiment, Analysis and Benchmark (EAB) guide for Round 2 (references/eab.md): the exact [Experiment, Analysis, and Benchmark] title prefix (not the PVLDB/SIGMOD suffixes), all artifacts mandatory with no exceptions, LLM-experiment disclosure, withheld/enterprise data, regular-vs-EAB choice and an EAB countdown. Use when preparing, formatting or packaging a paper for ICDE (投 ICDE / ICDE 投稿 / 投稿前检查 / 投 ICDE EAB / benchmark paper / experimental survey), or when deciding Round 1 vs Round 2 or regular vs EAB. Includes a LaTeX/PDF/artifact checker with an EAB mode."
+description: "Pre-submission checklist and checker for the IEEE International Conference on Data Engineering (ICDE, CCF A) research track, built from the ICDE 2027 call for research papers (read 2026-11-03, re-checked 2026-11-06, 2026-11-09 and 2026-11-10): two rounds, 12-page IEEE limit without appendix (only references and AI acknowledgment excluded), single-blind, stricter COI reading and CMT order of operations, AI-content disclosure, artifacts, scope/desk-reject rules, EAB category, rebuttal (new in 2027) and camera-ready (IEEE CPS, PDF eXpress). Includes a dedicated Experiment, Analysis and Benchmark (EAB) guide for Round 2 (references/eab.md): the exact [Experiment, Analysis, and Benchmark] title prefix (not the PVLDB/SIGMOD suffixes), all artifacts mandatory with no exceptions, LLM-experiment disclosure, withheld/enterprise data, regular-vs-EAB choice and an EAB countdown. Use when preparing, formatting or packaging a paper for ICDE (投 ICDE / ICDE 投稿 / 投稿前检查 / 投 ICDE EAB / benchmark paper / experimental survey), or when deciding Round 1 vs Round 2 or regular vs EAB. Includes a LaTeX/PDF/artifact checker with an EAB mode."
 ---
 
 # Submitting to ICDE (投稿 ICDE 前须知)
 
-Source: ICDE 2027 CFP https://icde2027.github.io/cf-research-papers.html and submission-guidelines.html, read on 2026-11-03 and re-checked on 2026-11-06 and 2026-11-09 (no change; site last updated 2026-10-28, which renamed the excluded item in the page-limit sentence to "AI-generated content declaration"; the guidelines page still says "acknowledgement", so either heading is accepted). Microsoft CMT documentation for conflicts and author feedback; IEEE Author Center for copyright and posting. Tags: [CFP] = stated in the call; [OBS] = observed in published ICDE papers; [CHECK] = re-verify for a later edition (rules change each year).
+Source: ICDE 2027 CFP https://icde2027.github.io/cf-research-papers.html and submission-guidelines.html, read on 2026-11-03 and re-checked on 2026-11-06, 2026-11-09 and 2026-11-10 (research rules unchanged; the site's last commit on 2026-11-09 changed only the demonstration dates; `references/requirements-recheck-2026-11-10.md` has every URL and status; the research text was last changed on 2026-10-28, which renamed the excluded item in the page-limit sentence to "AI-generated content declaration"; the guidelines page still says "acknowledgement", so either heading is accepted). Microsoft CMT documentation for conflicts and author feedback; IEEE Author Center for copyright and posting. Tags: [CFP] = stated in the call; [OBS] = observed in published ICDE papers; [CHECK] = re-verify for a later edition (rules change each year).
 
 Use with `write-icde` (how accepted papers are built) and `review-icde` (simulated PC review).
 
@@ -28,11 +28,14 @@ ICDE 2027: Round 1 due 2026-06-11, Round 2 due 2026-11-11, 5:00 PM Pacific Time 
 | CMT | every author needs a CMT profile with domain and individual conflicts; one missing profile = desk reject |
 | COI | Conflicts are declared against PC **and senior PC** members. A conflict exists for: co-authors of any submission under review; co-authors of a paper since 2023; co-authors of 4+ papers since 2016; same institution since 2023 (declare as Domain Conflicts); collaborators since 2023; thesis advisor ever; relatives and close friends. The older submission-guidelines page uses a 3-year/10-year wording, so declare under both. Declarations are checked by software as of the deadline; missing or frivolous COIs mean desk reject. |
 | Quota | at most 5 research-track submissions (regular + EAB) per author per round |
-| Overlap | not under review elsewhere; cite any prior publication it overlaps with |
+| Overlap | not under review elsewhere; cite any prior publication it overlaps with; IEEE policy also asks authors to disclose prior publications and current submissions when submitting |
 | Scope | must fit a CFP topic and position itself against ICDE/VLDB/SIGMOD work; pure ML/DM without a data-engineering angle is out of scope |
 | EAB | title begins with `[Experiment, Analysis, and Benchmark]` (removed at camera-ready); all artifacts mandatory, no exceptions. Full EAB rules with URLs: `references/eab.md` |
 
 ## 2a. CMT order of operations [CMT docs, CFP]
+CMT help (re-read 2026-11-10): an "Edit Conflicts of Interest" page may appear right after Submit; domain
+conflicts may also be requested per submission; co-authors whose e-mail is not registered in CMT receive no
+mail from the chairs, so register every co-author's e-mail before submitting.
 1. Every author creates a CMT profile, adds ORCID, and enters **Domain Conflicts** as semicolon-separated
    domains (`tudelft.nl; example.com`). Do not enter institution names or public mail domains such as
    gmail.com.
@@ -61,6 +64,13 @@ Plan for the stricter version in every case.
 - At least three reviewers plus a senior PC meta-review.
 - Inclusive writing: reviewers may demand changes to language or examples that marginalise or
   stereotype.
+- **AI guideline cited by the CFP is stricter than the CFP text** [IEEE AI-content guideline page linked from the
+  CFP, readable since 2026-11-10; see `references/requirements-recheck-2026-11-10.md` item 0.2]: LLM-generated
+  text is prohibited unless it is presented as part of the paper's experimental analysis; LLMs may only edit
+  text written by the authors; disclosure of editing use is recommended. Check the acknowledgment wording
+  against this before submission. If an assistant drafted prose, the authors must rewrite it themselves before
+  they may describe the AI use as editing; never change the disclosure to something that did not happen.
+  Treat a disclosure that says an LLM "drafted" sections as a desk-reject risk and raise it with the authors.
 - AI disclosure details:
   - use the heading "AI-Generated Content Acknowledgement" placed just before the references;
   - write it even if use was minimal; IEEE recommends disclosing grammar editing;
@@ -79,6 +89,8 @@ Plan for the stricter version in every case.
 ## 3b. Camera-ready (if accepted; due 2027-03-10)
 - Upload the paper and the copyright form through **IEEE CPS**, not CMT. The CPS kit contains the IEEE
   PDF eXpress instructions: all fonts embedded, no Type 3 fonts, no security, US Letter.
+  IEEE Xplore requirements (Author Center, camera-ready): PDF 1.4 or later, fonts embedded or subset, no
+  security, no bookmarks, links or attachments; the Type 3 rule comes from PDF eXpress practice, not that page.
 - Sign the IEEE eCF copyright form after acceptance.
 - Keep the 12-page limit, remove the EAB tag, keep the AI acknowledgment.
 - The title, abstract and authors must not change.
