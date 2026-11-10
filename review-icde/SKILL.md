@@ -109,6 +109,19 @@ Ask the questions these reviewers ask, and check the paper answers each with evi
 A reviewer may request the incremental experiment that closes a gap (e.g., flooring a ratio interval that
 under-covers); prefer that to an admission in the text.
 
+**Self-negation scan (sentence types found on Certify-Join, ICDE 2027 R2; writing side in
+`write-icde/references/limitations-writing-profiling.md`).** Grep the manuscript for each and flag every hit
+that is not stated once, with a mechanism, in the experiment that measures it:
+"is a heuristic here", "carries no (approximation) guarantee", "do(es) not carry over", "can only come from",
+"not semantic correctness", "has no shortcut", "are close", "reach the same coverage" (ablation),
+"N points below the optimum" in a takeaway, "non-monotone", "falls to", "costs ... once" without break-even,
+"takes Nx longer, because" (own method), "grows with ..., because every iteration", "could not ... and fell
+back", "dominated by latency", "leave ... to future work" outside the conclusion, an "exact detection
+probability" simulation that the artifact will expose, and any cross-cost-model comparison (rows of one model
+vs rows of another). For each, the reviewer may request the experiment that removes the cause (executed
+samples instead of simulated outcomes; a workload with deep shared-key chains for a null ablation) and also
+re-derives every number in the rewritten paragraph from the result files.
+
 **Area lens: result caching, view reuse, and fine-grained access control**
 (`references/reviewer-lens-caching-access.md`; writing side in `write-icde/references/limitations-writing-caching-access.md`).
 Two rounds of mock review on a permission-safe result cache (ScopeCache, ICDE 2027 R2) produced these

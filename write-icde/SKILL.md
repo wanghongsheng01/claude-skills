@@ -1,6 +1,6 @@
 ---
 name: "write-icde"
-description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers, nine accepted ICDE benchmark papers and twelve accepted AQP/sampling/LLM-query-with-guarantees papers (ICDE 2022-2027, PVLDB), eleven accepted reachability-index/IVM/access-control papers (ICDE 2023-2026, PVLDB, SIGMOD), eight result-caching/view-reuse/access-control papers (ICDE, PVLDB, SIGMOD, OSDI; 2013-2026) read for how they state limitations, asymptotic guarantees, LLM oracles and proprietary data, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Has a dedicated Experiment, Analysis and Benchmark (EAB) guide (references/eab.md) built from 16 accepted EAB/benchmark papers (ICDE 2024-2027R1 and PVLDB EA&B: CDC chunking, WPBench, entity-matching re-evaluation, SemBench, UDA-Bench, NL2SQL360, learned-optimizer ML perspective, plus the nine in limitations-writing-eab.md): title and abstract patterns, gap tables, RQs/findings/lessons, repetitions/statistics/cost/LLM-version reporting, figures, references, and ten patterns for stating limits and threats to validity without self-negation. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格 / 写 EAB 论文 / benchmark paper / experimental survey / threats to validity / 局限性怎么写). Includes a structure checker with an EAB mode."
+description: "Writing guide for IEEE ICDE (CCF A) research papers, built from 21 deep-read accepted papers (ICDE 2025-2027R1: LLM-for-data, Text-to-SQL, vector search, EAB benchmarks, dynamic graph algorithms), ten accepted cohesive-subgraph maintenance papers, nine accepted ICDE benchmark papers and twelve accepted AQP/sampling/LLM-query-with-guarantees papers (ICDE 2022-2027, PVLDB), eleven accepted reachability-index/IVM/access-control papers (ICDE 2023-2026, PVLDB, SIGMOD), eight result-caching/view-reuse/access-control papers (ICDE, PVLDB, SIGMOD, OSDI; 2013-2026), eight data-profiling/dependency-discovery/join-inference papers (ICDE 2007-2024, PVLDB, CIDR) read for how they state limitations, asymptotic guarantees, LLM oracles and proprietary data, and statistics of 1058 accepted titles/abstracts: data-engineering framing, title and abstract patterns, paragraph-by-paragraph introduction, problem definition, method sections with theorems, experiment sections by RQ with takeaways, related work positioning against ICDE/VLDB/SIGMOD, figures/tables, references, the 12-page budget and the AI-content acknowledgment. Has a dedicated Experiment, Analysis and Benchmark (EAB) guide (references/eab.md) built from 16 accepted EAB/benchmark papers (ICDE 2024-2027R1 and PVLDB EA&B: CDC chunking, WPBench, entity-matching re-evaluation, SemBench, UDA-Bench, NL2SQL360, learned-optimizer ML perspective, plus the nine in limitations-writing-eab.md): title and abstract patterns, gap tables, RQs/findings/lessons, repetitions/statistics/cost/LLM-version reporting, figures, references, and ten patterns for stating limits and threats to validity without self-negation. Use when drafting, restructuring or polishing a paper for ICDE (写 ICDE 论文 / 投 ICDE 写作 / 改写成 ICDE 风格 / 写 EAB 论文 / benchmark paper / experimental survey / threats to validity / 局限性怎么写). Includes a structure checker with an EAB mode."
 ---
 
 # Writing for ICDE (Write-ICDE 写作指南)
@@ -208,6 +208,26 @@ before/after examples from the ScopeCache submission (ICDE 2027 R2):
   ranges in the tables.
 - **Tables**: best bold, second underlined, ties share the mark; one "Standing" sentence per RQ.
 - Section 5 of the reference lists the phrases to avoid with replacements; section 6 is a grep checklist.
+
+### 9g. Data profiling, dependency discovery and join inference (`references/limitations-writing-profiling.md`)
+Eight papers read in full on 2026-11-10 (SPIDER, SWAN, Aurum, Ver, AutoFeat, Auto-BI, BINDER, Lazy discovery;
+527 concessions), 15 patterns, anti-patterns and a worked weakness-to-pattern mapping (Certify-Join, ICDE 2027 R2):
+- **No abstract negates its own method**; no paper has a Limitations section or applies "limitation" to itself;
+  ~90% of concessions sit in the method (~40%) and experiment (~50%) sections, each with a cause or a regime.
+- **Hardness first, then the design choice, then the measured gap** to the clairvoyant optimum, which is an upper
+  bound, not a rival (Auto-BI, SWAN, BINDER). Never "the rule carries no guarantee" on its own.
+- **Syntactic vs semantic correctness**: the guarantee is stated for the data property (cardinality, inclusion);
+  semantic plausibility is delegated to a named component (priors, a human, the downstream step).
+- **A baseline's strength in a cost model** (shared scans, one profiling pass) is acknowledged once with the cost
+  model in the claim; drop cross-model conversions that compare numbers measured under different cost models.
+- **An ablation with no effect on the benchmarks** is a finding with its mechanism (no chains to infer on stars);
+  run the workload where the component acts (deep shared-key chains) and report the increment there.
+- **Simulation**: prefer executing the real operation (e.g., real row-id samples) over simulated outcomes; if a
+  simulation remains, say "simulate" once in the setup with its purpose and a real-data anchor.
+- **One-off costs** get a break-even point; **planning overhead** is normalised per probe and compared with the
+  probe it saves; **future work** is one concrete sentence in the conclusion.
+- **Fact-check before rewriting**: re-derive every number you keep from the result files; a rewrite of a loss
+  paragraph is where mismatched cells (a baseline's value quoted for the wrong budget) surface.
 
 ## 10. Readability and layout (with `manuscript-writing-review`)
 - **Math**: put conditions, case distinctions (`cases`), set-builder definitions, sums and chains of
