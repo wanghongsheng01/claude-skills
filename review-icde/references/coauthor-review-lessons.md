@@ -44,3 +44,31 @@ official rules say and the fix applied.
 - [ ] Papers that use LLMs cover at least one international vendor, with the channel and date stated.
 - [ ] Conclusions hold on public data; enterprise data is supplementary.
 - [ ] Companion submissions are cited once and have no dedicated paragraph.
+
+## 4. Worked case: CertKP (dynamic maximum k-plex, ICDE 2027 R2), fixes and pitfalls
+
+The co-author's comments on this paper, verbatim in substance: Table 5 mixes units, Table 7 mixes decimals,
+figure fonts differ, Table 6 reads like an experiment log, and Table 1 and Algorithms 1–2 belong in an appendix.
+An earlier comment asked whether the method is SOTA on most metrics, or at least second. What was done, and
+what was learned on the way:
+
+| Comment | Fix applied | Pitfall found while fixing |
+|---|---|---|
+| Winners not visible (P1) | Bold/underline by printed value in all five result tables, a count row per table, one standing sentence per RQ, and standing macros (`\NumMainBest` of `\NumMainCells`) reused in the abstract, contributions and conclusion. Result: main table 61 best / 13 second / 0 third of 74 cells. | Rank on the printed value: two cells printed as 1.0 tie, even if the raw ratios differ. Generate the counts in the same script as the table, never by hand. |
+| Mixed units (P3) | One time unit per column (µs); the absolute columns that only restated a ratio (slowest update in ms, static time in ms) moved to the artifact, leaving Avg (µs), ×ST and ×BX⁺. | **"k"/"M" suffixes look like a unit change** (5.4k µs next to 189 µs). Remove them; print integers with thousands separators instead. Dropping redundant absolute columns also freed the width needed for the longer numbers. |
+| Mixed decimals (P2) | One rule for every table, implemented once in the generator: one decimal below 1,000, integers with separators above. Static solver times (4 ms to 2 h) use seconds with two decimals throughout. | Prose needs a different format from tables: "8,789,090×" in the abstract reads badly. Use a separate prose formatter (two significant digits, "8.8 million") for the text macros. |
+| Figure fonts (P4) | All figures regenerated with Times at 8 pt (`font.serif` = Times New Roman/Times/Nimbus Roman, `mathtext.fontset` = stix, every tick, legend and label size set to 8). | matplotlib `font.family: serif` alone falls back to **DejaVu Serif**, not Times. Per-bar value labels at 5.5 pt had to become 8 pt; rotating them 90° kept them from colliding. |
+| Experiment-log table (P7) | The two-column "Experiment / Result" table (26 rows of prose results) became a generated standing table: per experiment and baseline, the number of cells where CertKP is faster (ratio > 1.05), on par (0.95–1.05) or slower, plus the median ratio. Total row: 147 faster, 26 on par, 39 slower of 212. The script reads the facts printed by the analysis scripts, so the table is reproducible. | The replaced table carried design-choice evidence (region size vs. alternatives). Check what disappears with a removed table and move the essential sentence into the text (here: one sentence in the ablation RQ). |
+| "Table 1 and Algorithms 1–2 to the appendix" (V2) | No appendix is allowed. Table 1 was not a notation table but a method-comparison table with the closest prior work; it became a "Differences from LazyMC" paragraph. Both algorithms stayed, with merged steps and fewer lines. | Read the table the comment points to before applying the generic fix. After editing algorithm2e pseudocode, look at the compiled algorithm: `\lIf{..}{.. \tcp*{..}}` produced an empty numbered line containing only ";". |
+| Page budget | The full-width log table (one third of a page) became a one-column summary; the experiments text was cut from 3,630 to about 3,000 words; the body ends on page 12 again with the two-author block. | Recheck after every number refresh: a single extra line moved the conclusion onto page 13. |
+
+Experiment-side lessons from the same revision (they decide whether the new tables are fair):
+- **Paired reruns.** When many runs share a machine, start all methods of one table cell together, so each ratio
+  compares runs made under the same load, and say so in the setup. Mixing batches from different nights made
+  CertKP look slower than its baseline in several cells.
+- **Merging capped runs.** A run stopped by a time cap reports a load-dependent number of processed updates.
+  A merge keyed on (graph, k, stream, seed, tag, updates) silently keeps the old record. Merge again on the key
+  without the update count, and count the unmatched new records.
+- **Memory when pairing large runs.** Two billion-edge runs started together (48 GB + 51 GB on a 110 GB server)
+  got one of them killed by the OOM killer (signal 9, no output record). Check the peak resident memory of
+  each run before pairing them, and rerun the killed one alone.

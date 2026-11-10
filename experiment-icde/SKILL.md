@@ -52,3 +52,9 @@ Use >= 200 replays per cell, report mean and a dispersion measure, and keep a si
 - [ ] All LLM calls cached; costs from list prices with date; keys outside the repo.
 - [ ] Every RQ block present; negative regions reported.
 - [ ] One script and one CSV per number in the paper.
+
+## Paired reruns on a shared server (from CertKP, ICDE 2027 R2)
+- Start all methods of one table cell together, so every ratio compares runs under the same load; state this in the setup.
+- Runs stopped by a time cap process a load-dependent number of updates: never merge new records on a key that includes that count.
+- Check peak memory before pairing large runs; an OOM-killed run leaves no record and is easy to miss. Count records per job after every batch.
+- Details: `../review-icde/references/coauthor-review-lessons.md`, section 4.

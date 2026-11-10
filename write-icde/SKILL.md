@@ -247,6 +247,9 @@ These are lessons from a co-author's review of eleven ICDE 2027 R2 manuscripts. 
   - cover at least one international LLM vendor whenever LLMs are used;
   - make every conclusion stand on public data;
   - cite companion submissions once, without a dedicated paragraph.
+- **Implementation (worked case CertKP, section 4 of the lessons file):** one number-format function in the table
+  generator for every table (no k/M suffixes), a separate prose formatter for the text macros, matplotlib with an
+  explicit Times font list (plain `serif` falls back to DejaVu), and standing tables generated from the analysis output.
 
 ## 10. Readability and layout (with `manuscript-writing-review`)
 - **Math**: put conditions, case distinctions (`cases`), set-builder definitions, sums and chains of

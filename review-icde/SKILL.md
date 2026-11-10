@@ -132,6 +132,8 @@ Before the science review, run the checklist from a senior co-author's read of e
 - no experiment-log or mostly-"–" tables;
 - a title that explains the method name.
 
+A worked case (CertKP: one number rule in the generator, no k/M suffixes, Times in matplotlib, log table → standing table, paired reruns) is in section 4 of that file.
+
 Venue facts from the CFP:
 - EAB papers keep the title tag;
 - no appendix is allowed;
