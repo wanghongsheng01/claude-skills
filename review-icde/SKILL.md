@@ -122,6 +122,23 @@ vs rows of another). For each, the reviewer may request the experiment that remo
 samples instead of simulated outcomes; a workload with deep shared-key chains for a null ablation) and also
 re-derives every number in the rewritten paragraph from the result files.
 
+**First-two-minutes lens: co-author presentation review** (`references/coauthor-review-lessons.md`).
+Before the science review, run the checklist from a senior co-author's read of eleven ICDE 2027 R2 manuscripts:
+- winners marked (bold best, underline second, Best/2nd row, one standing sentence per RQ);
+- decimals unified per metric and one unit per column;
+- figure fonts equal to the body font;
+- one colour-blind-safe palette with the method highlighted;
+- chart types that carry the claim (Pareto, heatmap, CDF), and a takeaway-first caption;
+- no experiment-log or mostly-"–" tables;
+- a title that explains the method name.
+
+Venue facts from the CFP:
+- EAB papers keep the title tag;
+- no appendix is allowed;
+- related work may sit after the introduction or before the conclusion (EAB: after the introduction);
+- papers that use LLMs should include at least one international vendor;
+- conclusions must hold on public data.
+
 **Area lens: result caching, view reuse, and fine-grained access control**
 (`references/reviewer-lens-caching-access.md`; writing side in `write-icde/references/limitations-writing-caching-access.md`).
 Two rounds of mock review on a permission-safe result cache (ScopeCache, ICDE 2027 R2) produced these

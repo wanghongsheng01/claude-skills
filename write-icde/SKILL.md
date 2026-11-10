@@ -229,6 +229,25 @@ Eight papers read in full on 2026-11-10 (SPIDER, SWAN, Aurum, Ver, AutoFeat, Aut
 - **Fact-check before rewriting**: re-derive every number you keep from the result files; a rewrite of a loss
   paragraph is where mismatched cells (a baseline's value quoted for the wrong budget) surface.
 
+### 9h. Presentation that a senior reader checks first (`../review-icde/references/coauthor-review-lessons.md`)
+These are lessons from a co-author's review of eleven ICDE 2027 R2 manuscripts. Write them in from the start:
+- **Tables:**
+  - mark the best value (bold) and the second best (underline), with a Best/2nd count row;
+  - give one sentence per RQ on the method's standing;
+  - unify decimals per metric and use one unit per column;
+  - never ship an experiment-log or mostly-"–" table.
+- **Figures:**
+  - use the body font, one colour-blind-safe palette, and one highlight colour for our method;
+  - choose the chart type for the claim (Pareto scatter, heatmap, CDF, small multiples);
+  - start each caption with the takeaway; every figure must show the advantage.
+- **Title, structure, models and data:**
+  - the title explains what the method name means;
+  - EAB papers keep the "[Experiment, Analysis, and Benchmark]" tag and put related work right after the introduction;
+  - no appendix (compress, or move to a technical report);
+  - cover at least one international LLM vendor whenever LLMs are used;
+  - make every conclusion stand on public data;
+  - cite companion submissions once, without a dedicated paragraph.
+
 ## 10. Readability and layout (with `manuscript-writing-review`)
 - **Math**: put conditions, case distinctions (`cases`), set-builder definitions, sums and chains of
   inequalities in displays. Theorem statements should not be walls of inline symbols. Under IEEEtran,
