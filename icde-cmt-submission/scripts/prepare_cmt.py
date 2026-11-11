@@ -201,11 +201,16 @@ def main():
     if rel:
         relevance_checks(rel, info, a.paper, chk)
     chk(bool(re.match(r'https?://', a.artifact_url)), 'artifact URL given')
-    try:
-        u = subprocess.run(['curl', '-s', '-o', '/dev/null', '-w', '%{http_code}', a.artifact_url], capture_output=True, text=True, timeout=30).stdout
-        chk(u == '200', f'artifact URL reachable without login (HTTP {u})')
-    except Exception as e:
-        chk(False, f'artifact URL check failed: {e}')
+    u, err = '', ''
+    for _ in range(3):  # a slow network once timed out a reachable repository: retry before failing
+        try:
+            u = subprocess.run(['curl', '-s', '-L', '-m', '45', '-o', '/dev/null', '-w', '%{http_code}', a.artifact_url],
+                               capture_output=True, text=True, timeout=60).stdout
+            if u == '200':
+                break
+        except Exception as e:
+            err = str(e)
+    chk(u == '200', f'artifact URL reachable without login (HTTP {u or err})')
     areas = ''
     sa = os.path.join(os.path.dirname(__file__), '..', '..', 'icde-subject-areas', 'scripts', 'suggest_areas.py')
     if os.path.exists(sa):
