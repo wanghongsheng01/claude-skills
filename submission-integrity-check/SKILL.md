@@ -125,6 +125,9 @@ Never delete anything: write a new output folder for each run instead of removin
 - IEEE Xplore records whose year is the indexing date (2002) rather than the conference year (2000/1997): the year check is skipped when the DOI is identical.
 - An "et al." match inside a surname (Hi**etal**a).
 - CJK name order in OpenAlex ("LI Yufei"): authors are matched on full names.
+- Author-order false positives (15 in one paper): a short surname such as "Li" matched inside another name ("Lin", "Oliveira"). Surnames are now matched as whole words, and each record author is used at most once.
+- Titles with accents or symbols ("KÙZU∗ Graph ..."): symbols become spaces and accents are folded before comparison, so the URL fallback finds the title in the PDF.
+- A URL that prints an underscore as a rule (url.sty) copies as "n1 kg eab" from the PDF. The compliance check now reaches the paper's own repository link, and this defect was found in an already submitted PDF.
 
 ### Source outages
 

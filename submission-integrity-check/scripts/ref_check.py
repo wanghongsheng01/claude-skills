@@ -90,7 +90,10 @@ def url_status(url):
 
 
 def norm(s):
-    s = tb.plain(s).lower()
+    import unicodedata
+    s = unicodedata.normalize("NFKD", tb.plain(s))
+    s = "".join(c if (c.isalnum() or unicodedata.category(c) == "Mn") else " " for c in s)  # symbols such as * become spaces
+    s = s.encode("ascii", "ignore").decode().lower()
     s = re.sub(r"[^a-z0-9 ]+", " ", s)
     return re.sub(r"\s+", " ", s).strip()
 
@@ -255,7 +258,13 @@ def judge(key, e, cands):
         fulls = [ascii_fold(x) for x in (best.get("full") or [])]
         bl = [ascii_fold(x) for x in auth if x != "others"]
         if fulls and len(bl) >= 2 and len(fulls) >= len(bl):
-            pos = [next((i for i, f in enumerate(fulls) if b and b in f), -1) for b in bl]
+            # whole-word surname match ("li" must not match "lin" or "oliveira"); first match not yet used
+            used, pos = set(), []
+            for b in bl:
+                hit = next((i for i, f in enumerate(fulls) if i not in used and b and re.search(r"\b" + re.escape(b) + r"\b", f)), -1)
+                if hit >= 0:
+                    used.add(hit)
+                pos.append(hit)
             if -1 not in pos and pos != sorted(pos):
                 verdict = "CHECK"; issues.append("author order differs from the record: " + ", ".join(best.get("full", [])[:8]))
             elif -1 in pos and "others" not in auth:
