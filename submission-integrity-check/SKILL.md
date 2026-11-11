@@ -107,6 +107,19 @@ Never delete anything: write a new output folder for each run instead of removin
 - **A preprint cited although the journal version exists:** the bib cited arXiv 1003.3967 (2017) instead of JAIR 42:427-486 (2011).
 - **Bare month names:** `month=June`, `month=Sept` and `month=July` are not BibTeX macros, so bibtex warns and silently drops the month. Use `jun`, `sep` and `jul`.
 
+### What the citation-accuracy pass found (about 260 citations, after every other gate had passed)
+
+- **One WRONG citation.** A claim that "experiments find simple traversal competitive" cited a study that concludes the opposite: BFS/DFS are "far from competitive". The competitive result belongs to the earlier studies that this study re-examined. Typical cause: the cited paper's related-work summary is mistaken for its finding.
+- **27 IMPRECISE citations.** The typical patterns were:
+  - a broader contribution attributed to a tool (a dependency profiler said to find keys);
+  - an error statistic attributed to a benchmark that never reports it;
+  - an RDF/SPARQL study cited as if it used property graphs;
+  - a number from the introduction of a paper presented as a measured result;
+  - a term of art attributed to a book that does not use it;
+  - five different systems grouped under one technique (2-hop labels).
+- **Ten arXiv citations of papers that have peer-reviewed versions** (ICLR, ICML, PVLDB, JAIR, EMNLP, workshops).
+- **Proceedings titles can differ from arXiv titles.** RouteLLM is "...from Preference Data" at ICLR 2025 but "...with Preference Data" on arXiv. Before "fixing" a CHECK title, confirm which version the entry cites.
+
 ### False alarms the checker now avoids
 
 - IEEE Xplore records whose year is the indexing date (2002) rather than the conference year (2000/1997): the year check is skipped when the DOI is identical.
