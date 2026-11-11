@@ -91,7 +91,7 @@ def pdf_info(path):
     text = [p.get_text() for p in d]
     # the heading is a whole line in capitals ("REFERENCES", small caps may extract as "R EFERENCES"); a case-
     # insensitive prefix match also hit body lines such as "references of ..." and under-counted the body
-    head = r'^\s*(AI-G\s?ENERATED C\s?ONTENT A\s?CKNOWLEDGMENT|R\s?EFERENCES)\s*$'
+    head = r'^\s*(AI-G\s?ENERATED C\s?ONTENT A\s?CKNOWLEDGE?MENT|R\s?EFERENCES)\s*$'
     body_end = next((i for i, t in enumerate(text) if re.search(head, t, re.M)), len(text))
     heading_first = body_end < len(text) and len(re.split(head, text[body_end], flags=re.M)[0].strip()) < 40
     body_pages = body_end if heading_first else body_end + 1
@@ -101,8 +101,8 @@ def pdf_info(path):
 
 
 CORE = r"ICDE|PVLDB|VLDB|VLDBJ|SIGMOD|PODS|TODS|PACMMOD"
-VENUE_OF_BIB = [(r"data engineering|\bicde\b", "ICDE"), (r"vldb endowment|\bpvldb\b", "PVLDB"), (r"vldb journal", "VLDBJ"),
-                (r"management of data|\bsigmod\b", "SIGMOD"), (r"principles of database systems|\bpods\b", "PODS"),
+VENUE_OF_BIB = [(r"data engineering|\bicde\b", "ICDE"), (r"vldb endowment|vldb endow\b|\bpvldb\b", "PVLDB"), (r"vldb journal", "VLDBJ"),
+                (r"management of data|acm manag\. data|\bsigmod\b", "SIGMOD"), (r"principles of database systems|\bpods\b", "PODS"),
                 (r"transactions on database systems", "TODS"), (r"\bcidr\b|innovative data systems", "CIDR"),
                 (r"statistical database|\bssdbm\b", "SSDBM"), (r"\bedbt\b|extending database", "EDBT")]
 
