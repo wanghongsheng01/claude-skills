@@ -22,7 +22,7 @@ import argparse, glob, os, re, sys
 WARN, INFO = "WARN", "INFO"
 CLAIM = re.compile(r"\b(is|are|stays?|remains?|costs?|beats?|reach(es)?|holds?|never|always|outperforms?|saves?|"
                    r"cheapest|fastest|best|lowest|highest|wins?|dominates?|matches|grows?|drops?|falls?|keeps?|"
-                   r"improves?|reduces?|cuts?)\b", re.I)
+                   r"improves?|reduces?|cuts?|matters?|helps?|pays? off|hurts?)\b", re.I)
 EXPLAIN = re.compile(r"\b(because|since|due to|the reason|this is why|as a result|when|whenever|whereas|explains?|"
                      r"caused by|owing to|which makes|so that)\b", re.I)
 RESULTY = re.compile(r"cost|time|latency|runtime|accuracy|f1|error|throughput|speed|recall|precision|coverage|"
@@ -174,7 +174,7 @@ def check_text(text, method, beaten_by, out):
     sents = re.split(r"(?<=[.!?])\s+", plain)
     for base, labels in sorted(beaten_by.items()):
         if not base.split(): continue
-        b = re.escape(base.split()[0])
+        b = re.escape(base.split()[0].rstrip("."))  # header abbreviations ("Strat-shr.") match the full name as a prefix
         if not any(re.search(b, s, re.I) and EXPLAIN.search(s) for s in sents):
             out.append((WARN, "S07", ",".join(sorted(labels)), f"'{base}' beats {method or 'our method'} in some rows, but no "
                         "sentence explains why or when (name the baseline with because/when/since)"))
