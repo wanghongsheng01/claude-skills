@@ -247,6 +247,13 @@ These are lessons from a co-author's review of eleven ICDE 2027 R2 manuscripts. 
   - cover at least one international LLM vendor whenever LLMs are used;
   - make every conclusion stand on public data;
   - cite companion submissions once, without a dedicated paragraph.
+- **Second-round lessons (skill `results-presentation-review`, run its `results_lint.py`):**
+  - keep table captions to about 2 lines, opening with the claim, with the protocol in the setup text;
+  - explain every empty band or cluster in a figure, or split it into zoomed small multiples;
+  - draw box plots or percentile whiskers instead of mean bars on skewed strips;
+  - give ablation tables an average row set off by a rule and quoted in the text;
+  - for each baseline that beats the method anywhere, write one why/when sentence;
+  - add one where-it-wins / where-it-loses paragraph, and close every RQ with a takeaway.
 - **Implementation (worked case CertKP, section 4 of the lessons file):** one number-format function in the table
   generator for every table (no k/M suffixes), a separate prose formatter for the text macros, matplotlib with an
   explicit Times font list (plain `serif` falls back to DejaVu), and standing tables generated from the analysis output.

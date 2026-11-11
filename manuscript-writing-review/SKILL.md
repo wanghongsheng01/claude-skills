@@ -42,6 +42,11 @@ Scripts live in `scripts/` of this skill. They need Python 3; the PDF scripts ne
      (rules R01–R14).
    - Also run `manuscript-proofcheck/scripts/tex_lint.py` if that skill is installed.
    - Fix every ERROR. Check every WARN in the compiled PDF.
+1a. **Results-presentation lint** (data-systems papers; skill `results-presentation-review`, if installed):
+   `python3 ../results-presentation-review/scripts/results_lint.py <paper_dir> --method <Name> --figscripts <scripts>`.
+   Layout can be clean while a reader still cannot see the claim. This step catches long captions, missing
+   second-best marks, mixed decimals, hidden ablation averages, unexplained losses, mean bars on skewed strips
+   and unexplained empty bands.
 2. **Figure check before compiling.**
    - Run `python3 scripts/fig_check.py figs/*.pdf --png <dir>` (F01 text cut off, F02 text over
      text, F03 text over bars).

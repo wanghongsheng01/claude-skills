@@ -134,6 +134,19 @@ Before the science review, run the checklist from a senior co-author's read of e
 
 A worked case (CertKP: one number rule in the generator, no k/M suffixes, Times in matplotlib, log table → standing table, paired reruns) is in section 4 of that file.
 
+**Second round of the same lens: run `results-presentation-review`** (rules S01–S10, `results_lint.py`).
+The co-author's second read of Ladder added:
+- explain every visual feature (empty bands, clusters, a mean that sits off the points);
+- underline the second best so near-ties (451 vs. 452) show;
+- prefer box plots or percentile whiskers to mean bars on skewed strips;
+- give ablation tables a visible average row;
+- for every baseline that wins any row, say why and when, and add one where-it-wins / where-it-loses paragraph
+  with takeaways ("all-best is not credible");
+- keep table captions to about 2 lines that open with the claim.
+
+As a reviewer, raise each missing item as a presentation weakness, and raise a missing loss analysis under
+soundness.
+
 Venue facts from the CFP:
 - EAB papers keep the title tag;
 - no appendix is allowed;

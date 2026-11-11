@@ -123,6 +123,11 @@ Plan for the stricter version in every case.
 5. Compile and run the layout gate `manuscript-writing-review`: 0 layout errors, every page seen. If the
    paper lives in an Overleaf project with git access, push through its git bridge, then compare the
    Overleaf PDF with the local one.
+5a. Run the results-presentation lens `results-presentation-review`:
+    `python3 ../results-presentation-review/scripts/results_lint.py paper/ --method <Name> --figscripts <scripts>`.
+    It checks caption length and claims, winner marks, decimals, ablation average rows, why/when sentences for
+    every baseline that wins a row, strip-plot means, and unexplained empty bands. Fix every WARN in the
+    generator or the text before packaging.
 6. Run the checker: `python3 scripts/check_icde_submission.py paper/ --pdf paper/main.pdf [--eab] [--artifact ../artifact] [--scope scope.txt]` (`--camera-ready` after acceptance).
 7. Every author: ORCID, CMT profile, conflicts (section 2a). The corresponding author fills the subject areas (choose one Primary and 2-3 Secondary with `icde-subject-areas`, which holds the exact CMT list and a scorer) and, if needed, the scope statement (`assets/scope_statement_template.md`).
 8. Submit the PDF and the supplemental link on CMT before 5:00 PM PT; keep the CMT confirmation. Prepare and check every CMT field (abstract, authors, the ten additional questions, Relevance and Availability texts) with `icde-cmt-submission`.
@@ -193,4 +198,7 @@ It also checks: IEEEtran conference class; no negative `\vspace`, geometry chang
 - [ ] Every author marked individual conflicts after the paper record was created.
 - [ ] Body ends on page <= 12 (references free); Overleaf PDF text-identical to the checked PDF.
 - [ ] Self-negation pass of write-icde: 0 warnings in abstract, contributions, conclusion.
+- [ ] `results-presentation-review` lint has 0 WARN, or each WARN is answered in the report: short claim-first captions,
+      bold/underline plus count rows, ablation average row, a why/when sentence for every baseline that wins, and a
+      where-it-wins/loses paragraph.
 - [ ] Deadline in local time noted (Round 2: 2026-11-12 09:00 Beijing).

@@ -43,7 +43,16 @@ official rules say and the fix applied.
 - [ ] No appendix; any "move to appendix" request becomes compress-or-technical-report.
 - [ ] Papers that use LLMs cover at least one international vendor, with the channel and date stated.
 - [ ] Conclusions hold on public data; enterprise data is supplementary.
-- [ ] Companion submissions are cited once and have no dedicated paragraph.
+- [ ] Companion submissions are cited once and have no dedicated paragraph; papers that are not submitted in
+      the same round are not cited at all.
+- [ ] Second round (skill `results-presentation-review`, `references/round2-lessons.md` there):
+  - [ ] every visual feature is explained (empty bands, clusters, outliers);
+  - [ ] near-ties are visible through the second-best underline;
+  - [ ] box plots or percentile whiskers are used instead of mean bars on skewed strips;
+  - [ ] ablation tables have a set-off average row;
+  - [ ] a why/when sentence exists for every baseline that wins a row;
+  - [ ] there is a where-it-wins / where-it-loses paragraph;
+  - [ ] table captions are about 2 lines and open with the claim.
 
 ## 4. Worked case: CertKP (dynamic maximum k-plex, ICDE 2027 R2), fixes and pitfalls
 

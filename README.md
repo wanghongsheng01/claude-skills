@@ -47,6 +47,36 @@ python3 manuscript-proofcheck/scripts/pdf_check.py paper.pdf --out /tmp/proof --
 ```
 Then inspect every page PNG, verify the bibliography online, fix, and re-run. Install like the other skills (`cp -r manuscript-proofcheck ~/.claude/skills/`).
 
+## results-presentation-review
+A senior co-author's lens on the experiments section of an ICDE/VLDB/SIGMOD paper. It checks what a reader sees in
+the first two minutes of the figures and tables, and whether the text explains where the method wins and where it
+loses. The rules come from two rounds of a senior co-author's review of ICDE 2027 Round 2 manuscripts.
+`results_lint.py` reads the LaTeX sources, the figure scripts and the figure PDFs and flags:
+- S01: captions that are too long;
+- S02: captions that do not open with the claim;
+- S03/S04: tables without a bold best and underlined second best, or without a count row;
+- S05: mixed decimals;
+- S06: ablation tables without a visible average row;
+- S07: baselines that win rows with no sentence explaining why;
+- S08: mean bars on skewed strip plots;
+- S09: unexplained empty bands in scatter panels;
+- S10: missing takeaways or a missing where-it-wins/loses paragraph.
+
+The `write-icde`, `review-icde`, `submit-icde` and `manuscript-writing-review` workflows run it.
+
+```
+results-presentation-review/
+  SKILL.md                      rules S01-S10, workflow, generator-side recipes
+  references/round2-lessons.md  worked case (Ladder, ICDE 2027 R2), template sentences for win/loss analysis
+  scripts/results_lint.py       checker (needs PyMuPDF for the figure check)
+```
+
+### Use
+```bash
+python3 results-presentation-review/scripts/results_lint.py paper/ --method Ladder --figscripts code/make_figs.py
+```
+Install like the other skills (`cp -r results-presentation-review ~/.claude/skills/`).
+
 ## amp-figure-design
 AMP (antimicrobial peptide) / protein-generative-model paper figure design conventions. Use when creating or revising figures for AMP papers submitted to Briefings in Bioinformatics, Nature Biomedical Engineering, Nature Communications, Cell, Science, or Nature Methods. Grounded in 13+ published papers (Das 2021, Wan 2024, HydrAMP, Diff-AMP, AMPSphere, ESMFold, DOME).
 
