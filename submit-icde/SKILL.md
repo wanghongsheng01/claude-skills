@@ -124,7 +124,7 @@ Plan for the stricter version in every case.
    paper lives in an Overleaf project with git access, push through its git bridge, then compare the
    Overleaf PDF with the local one.
 6. Run the checker: `python3 scripts/check_icde_submission.py paper/ --pdf paper/main.pdf [--eab] [--artifact ../artifact] [--scope scope.txt]` (`--camera-ready` after acceptance).
-7. Every author: ORCID, CMT profile, conflicts (section 2a). The corresponding author fills the subject areas and, if needed, the scope statement (`assets/scope_statement_template.md`).
+7. Every author: ORCID, CMT profile, conflicts (section 2a). The corresponding author fills the subject areas (choose one Primary and 2-3 Secondary with `icde-subject-areas`, which holds the exact CMT list and a scorer) and, if needed, the scope statement (`assets/scope_statement_template.md`).
 8. Submit the PDF and the supplemental link on CMT before 5:00 PM PT; keep the CMT confirmation.
 9. **Page-count answer for the author.** A 14-page PDF is normal: count body pages up to the page that
    holds the end of the Conclusion and the AI acknowledgment (must be <= 12); references after it are
