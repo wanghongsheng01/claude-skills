@@ -62,18 +62,29 @@ pairings.
 7. **Keep the CMT form and the paper consistent**: the scope statement and the keywords should use the same terms
    as the chosen areas.
 8. **Never use "None Of Above"** when any area fits; it routes the paper to a generic pool.
+9. **Judge by the cited community, not by frequent words.** Words such as edges, joins, queries, graphs, schema,
+   maintenance and labels occur in most data papers; the scorer counts them with a third of the weight. The titles of
+   the cited work (the .bib files) are scored separately: the venue community of the related work is the reviewer
+   pool you want. A paper that certifies keys and inclusion dependencies on a "schema graph" is a data-quality paper,
+   not a graph-data paper.
+10. **Tick exactly what you chose.** Run `--choose "Primary; Secondary; ..."`: it rejects names that are not verbatim
+   CMT names or that appear twice, and prints the column (left/right), the row and the box (first = Primary, second =
+   Secondary) to tick on the form.
 
 ## 3. Workflow
 1. Run the scorer on the paper folder (LaTeX) or the PDF:
    `python3 scripts/suggest_areas.py <paper_dir_or_pdf> [--top 6] [--eab]`
-   It weights title and abstract (x3), keywords/index terms (x3), section and paragraph headings (x2) and the body
-   (x1, capped), and prints the ranked areas with the matched words.
+   It weights title and abstract (x3), keywords/index terms (x3), section and paragraph headings (x2), the body
+   (x1, capped) and the titles of the cited work (x1.5, capped); generic words count a third. It prints the ranked
+   areas with the matched words as [front matter / body / cited titles].
 2. Apply the rules of section 2 to the ranking: confirm the primary against the contribution list, keep 2-3
    secondaries that a section of the paper supports, drop areas that only match incidental words.
 3. Write the answer for the author as a table: Primary (one), Secondary (ticked boxes), one line of reason each, in
    Chinese, and the verbatim English names to tick in CMT.
-4. Update the CMT fields file of the submission (primary/secondary lines) so that the form, the scope statement and
-   the keywords agree.
+4. Run `python3 scripts/suggest_areas.py --choose "<Primary>; <Secondary 1>; <Secondary 2>"` and give the author the
+   printed positions (or pass the same string to `icde-cmt-submission/scripts/prepare_cmt.py --areas`).
+5. Update the CMT fields file of the submission (primary/secondary lines) so that the form, the relevance text (its
+   "Topics:" line) and the keywords agree.
 
 ## 4. Worked example (AuthZ-Graph, "No Stale Allows", ICDE 2027 R2)
 - Scorer: Graph data first; then Storage, indexing, and physical database design; Data security and privacy;
@@ -83,3 +94,16 @@ pairings.
   indexing, and physical database design (index maintenance and size); Query processing and optimization (check
   latency, probe/scan choice). Transaction management was not ticked: the deferral rule is about acknowledging
   writes on a replica, but the paper has no transaction protocol or isolation claim.
+
+## 5. Worked example (Certify-Join, ICDE 2027 R2, 2026-11-11)
+- The first version of the scorer ranked Query processing and optimization first and Graph data second, from the
+  words "joins", "queries" and "edges" of a schema graph. The author rejected it as imprecise. Fixes: generic words
+  weighted a third, data-quality words added (certif, inclusion dependenc, unique column combination, profil,
+  orphan, duplicate key), the cited titles scored as evidence.
+- Re-run: Data quality, curation, provenance, and workflows first (certif 8/140, inclusion dependencies, profiling);
+  Multidimensional data … OLAP second (BI, summarizability, semantic layer, fan trap); LLM area third only because
+  the LLMs are priors and baselines (rule 6: not chosen).
+- Choice: **Primary** Data quality, curation, provenance, and workflows (left column, row 8, first box);
+  **Secondary** Data preparation, cleaning, and integration (left, row 6, second box), Multidimensional data, data
+  warehousing, OLAP, and analytics (right, row 6, second box), Query processing and optimization (right, row 7,
+  second box).

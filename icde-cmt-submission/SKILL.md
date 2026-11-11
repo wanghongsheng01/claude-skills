@@ -25,7 +25,7 @@ document.
 | Toronto Paper Matching System* | consent | tick "I agree" | |
 | Additional questions | 1 Desk Rejection Policy* | tick "I agree" | read the policy: format, COI, scope, re-submission |
 | | 2 Maximum number of submissions per author* | tick "I agree" | at most 5 papers per author per round |
-| | 3 Relevance (text box) | scope statement: (a) data-engineering challenge, (b) principled contributions with section numbers, (c) ICDE/VLDB/SIGMOD work it builds on | CFP: 1,000 characters (box allows 8,000); recommended for every paper, required if scope could be questioned |
+| | 3 Relevance (text box) | see section 2a: Topics line, (a) challenge, (b) contributions with section numbers, (c) ICDE/VLDB/SIGMOD work it builds on and how it extends it | CFP: 1,000 characters (box shows "8000 characters left"); recommended for every paper, required if scope could be questioned |
 | | 4 Duplicate Submissions* | tick "I agree" | no parallel submission until the decision |
 | | 5 Conflicts of Interest* | tick "I agree" | only after every author has entered domain and individual conflicts in the CMT profile (name, top right) |
 | | 6 Integrity of the review process* | tick "I agree" | no contact with PC/SPC about the paper |
@@ -35,6 +35,24 @@ document.
 | | 10 Presentation for accepted papers* | tick "I agree" | an author must present in person |
 [CHECK] the form for later editions: CMT pages change every year; refresh this table from a screenshot.
 
+## 2a. Writing the Relevance text (what the form itself asks, ICDE 2027 R2)
+The form says a submission must align with at least one ICDE topic area and position itself in the state of the art
+of the data-engineering community; authors explain in 1,000 characters (a) the key data-engineering challenge(s),
+(b) principled ideas and contributions, with reference to specific sections, and (c) research published in ICDE or
+other core outlets such as VLDB and SIGMOD that it builds on. Its examples favour "We propose X ... in Section Z we
+..." and "builds substantially on the following papers in ICDE, SIGMOD and VLDB"; "a similar problem was once
+published at ICDE" is called insufficient. Hence:
+1. First line `Topics:` with the chosen CMT subject areas (same names as the ticked boxes).
+2. (a) the challenge in data-engineering terms (what breaks in a data system, under which budget or update regime).
+3. (b) "We formalize/prove/give/evaluate ... (Sec. II/III/IV/V)", using the section numbers of the final PDF.
+4. (c) only papers that are in the bibliography and appeared in ICDE, PVLDB/VLDB Journal, SIGMOD/PODS or TODS, cited as
+   NAME, VENUE'YY, and one clause on how the paper extends them ("from profiling all data to certifying what queries
+   need"). Workshop, CIDR, SSDBM, arXiv or ML-venue papers do not count for (c) even if they are the closest work.
+5. At most 1,000 characters, counting line breaks (aim for <= 995 in case CMT counts a break as two).
+6. Unicode for symbols (ε, δ, ×, –), no LaTeX.
+`prepare_cmt.py` checks 1-6 (topic named, (a)(b)(c), sections exist in the PDF, core venues only, each venue/year in
+the .bib, an "extends/builds on" clause, length).
+
 ## 2. Workflow
 1. Make sure the PDF is final: same as the last compiled version and as Overleaf, all gates of `submit-icde` and
    `manuscript-writing-review` clean, body <= 12 pages.
@@ -42,7 +60,7 @@ document.
 3. Write `authors.json` (author order, e-mail, first/last name, organization, country, ORCID, primary contact) and the
    relevance text (<= 1,000 characters, (a)(b)(c), section numbers of the final PDF).
 4. Run
-   `python3 scripts/prepare_cmt.py <paper_dir> --pdf <final.pdf> --artifact-url <url> --authors authors.json --relevance relevance.txt --withheld "<what is not released and why>" --out cmt_form_EN.md`
+   `python3 scripts/prepare_cmt.py <paper_dir> --pdf <final.pdf> --artifact-url <url> --authors authors.json --relevance relevance.txt --withheld "<what is not released and why>" --areas "<Primary>; <Secondary 1>; <Secondary 2>" --out cmt_form_EN.md`
    It writes every field and a check list; it exits non-zero if any check fails (title or abstract differ from the
    PDF, abstract > 2,000 characters, PDF > 20 MB or not US Letter, Type 3 fonts, body > 12 pages, no AI declaration,
    relevance text too long or missing (a)/(b)/(c), artifact URL not reachable without login).
@@ -62,7 +80,15 @@ document.
 
 ## 4. Pitfalls seen
 - Pasting the LaTeX abstract (macros, `\xx`, `{,}`) instead of the plain text: the generator expands macros and checks
-  the result against the PDF.
+  the result against the PDF. Greek letters and relations (`\epsilon`, `\delta`, `\le`) are now converted to Unicode;
+  before 2026-11-11 they leaked into the plain abstract and the check failed with no hint. A failed check now prints
+  the differing words.
+- Body page count: the heading test once matched any line starting with "references" and reported 5 body pages for
+  an 11-page body; it now matches only the whole-line REFERENCES / AI-GENERATED CONTENT ACKNOWLEDGMENT heading.
+- Relevance text citing the closest work from CIDR or SSDBM in (c), or listing papers without saying how the
+  submission extends them: the form asks for ICDE/VLDB/SIGMOD work the paper builds on.
+- Subject areas taken from the scorer's first guess: apply the rules of icde-subject-areas (Certify-Join: the scorer
+  first proposed Query processing and Graph data from generic words; the right primary was Data quality).
 - Uploading an older PDF with a similar name: compare the file name, size (CMT shows Kb) and upload time with the final
   file.
 - Two affiliations: CMT has one Organization field; write both, separated by a comma, as in the PDF.
@@ -75,3 +101,10 @@ All twelve checks passed: title and abstract identical to the PDF (1,787 charact
 Type 3 fonts, body 12 pages, AI declaration present, relevance 959 characters with (a)(b)(c), artifact URL public.
 Subject areas: Primary Graph data; Secondary Data security and privacy; Storage, indexing, and physical database
 design; Query processing and optimization.
+
+## 6. Worked example (Certify-Join, ICDE 2027 R2, 2026-11-11)
+Eighteen checks passed: title and abstract identical to the PDF (1,636 characters), PDF 0.46 MB, US Letter, body on
+11 pages, AI declaration present, relevance 995 characters (Topics line, (a)(b)(c), Sec. II-V exist, SPIDER ICDE'07,
+BINDER PVLDB'15, SWAN ICDE'14, Auto-BI PVLDB'23, SIGMOD'17 all in the .bib, "extends ... from ... to"), artifact URL
+public, areas verbatim. The first relevance draft failed three of the new checks (no topic named; CIDR and SSDBM in
+(c); no "extends" clause), which is what the author had noticed.
