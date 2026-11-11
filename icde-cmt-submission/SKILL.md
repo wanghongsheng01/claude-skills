@@ -67,7 +67,12 @@ the .bib, an "extends/builds on" clause, length).
 5. Give the author a Chinese walkthrough: for each CMT section, what to paste (from `cmt_form_EN.md`) and what to tick,
    then the author-only items of section 3. When the author sends screenshots, compare every filled field with the
    file (title, abstract end, author rows, uploaded file name, size and time, ticks) before Submit.
-6. After Submit: the author keeps the CMT confirmation e-mail; record submission ID, PDF hash and Overleaf/artifact
+6. After Submit, read the Submission Summary page (the author's screenshot) row by row: title, abstract end, author
+   rows, areas, file name/size/time, every question "Agreement accepted", both text boxes. Check the column
+   **"Individual Conflicts / Attested?"**: every author must show "Yes" (a co-author who never attested shows
+   "(0) No" even with zero conflicts; this is a desk-reject risk until the deadline). In the Availability box put the
+   URL alone on the first line: "https://…/repo. The repository …" makes the trailing period part of the link.
+   Then: the author keeps the CMT confirmation e-mail; record submission ID, PDF hash and Overleaf/artifact
    commits in the project notes. Do not change the artifact repository after the deadline except to fix a broken
    link.
 
@@ -108,3 +113,7 @@ Eighteen checks passed: title and abstract identical to the PDF (1,636 character
 BINDER PVLDB'15, SWAN ICDE'14, Auto-BI PVLDB'23, SIGMOD'17 all in the .bib, "extends ... from ... to"), artifact URL
 public, areas verbatim. The first relevance draft failed three of the new checks (no topic named; CIDR and SSDBM in
 (c); no "extends" clause), which is what the author had noticed.
+
+Post-submit check of the same paper (CMT Paper ID 2052): all fields matched, but the second author's "Individual
+Conflicts / Attested?" showed "(0) No", and the Availability box had been pasted as "URL. The repository …" on one
+line; both were sent back to the author before the deadline.
