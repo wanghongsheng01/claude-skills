@@ -219,7 +219,7 @@ def check_text(text, method, beaten_by, out):
             out.append((WARN, "S07", ",".join(sorted(labels)), f"'{base}' beats {method or 'our method'} in some rows, but no "
                         "sentence explains why or when (name the baseline with because/when/since)"))
     rqs = len(re.findall(r"\\subsection\{RQ", exp)) or len(re.findall(r"\\subsection\{", exp))
-    take = len(re.findall(r"Takeaway|Lesson|In summary", exp))
+    take = len(re.findall(r"Takeaway|Lesson|In summary|\\takeaway\{", exp))   # also the \takeaway{...} macro that prints "Takeaway."
     if rqs and take < rqs - 1:
         out.append((WARN, "S10", "experiments", f"{take} takeaways for {rqs} result subsections: close each RQ with one"))
     if not re.search(r"(when|where) (does|do|is) .{0,40}(win|lose|help|pay|cheaper|faster|better)|"
