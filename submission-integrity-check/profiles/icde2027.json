@@ -1,0 +1,15 @@
+{
+  "venue": "IEEE ICDE 2027, research track (Research and EAB papers), Round 2",
+  "source": "https://icde2027.github.io/cf-research-papers.html and submission-guidelines.html, re-read 2026-11-11 (byte-identical to the 2026-11-10 snapshot; last site commit 2026-11-09, demo dates only)",
+  "class": "IEEEtran",
+  "class_options": ["conference"],
+  "body_page_limit": 12,
+  "page_limit_excludes": ["references", "AI-generated content declaration"],
+  "no_appendix": true,
+  "max_pdf_mb": 20,
+  "review": "single-blind",
+  "ai_declaration_required": true,
+  "eab_title_prefix": "[Experiment, Analysis, and Benchmark]",
+  "citation_style": "ieee-numeric",
+  "bst": "IEEEtran"
+}

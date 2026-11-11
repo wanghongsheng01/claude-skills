@@ -28,6 +28,46 @@ python3 academic-latex-polish/scripts/fix_tt_quotes.py sections/*.tex
 python3 academic-latex-polish/scripts/style_stats.py refpapers/* paper/
 ```
 
+## submission-integrity-check
+The final gate before a paper is uploaded. It answers four questions about the exact PDF:
+- Does it follow every must-follow item of the call?
+- Is every reference correctly formatted?
+- Does every cited work exist, with the title, authors, year and venue the bib entry gives? This catches invented or mangled references.
+- Does every citing sentence describe the cited work correctly?
+
+The ICDE 2027 profile encodes the research-track call as re-read on 2026-11-11:
+- IEEEtran conference template;
+- 12 body pages, excluding the references and the AI-generated-content declaration;
+- no appendix;
+- PDF of at most 20 MB, US Letter;
+- single-blind author block;
+- mandatory AI declaration;
+- EAB title tag;
+- public artifact URL;
+- no spacing or margin hacks.
+
+References are checked online against Crossref, OpenAlex, arXiv and the entry's own URL.
+
+```
+submission-integrity-check/
+  SKILL.md                              workflow, verdicts, fix-and-rerun loop, lessons
+  profiles/icde2027.json                venue rules (copy for another venue)
+  references/icde2027-must-follow.md    the call's must-follow items with sources and consequences
+  references/rules.md                   rule ids C01-C12 and reference verdicts
+  scripts/compliance_check.py           call rules on the source and the PDF (needs PyMuPDF)
+  scripts/ref_check.py                  bib format lint + online existence check (cached), optional scratch compile
+  scripts/cite_contexts.py              worksheet: each citing sentence next to the cited work's record and abstract
+  scripts/texbib.py                     shared LaTeX/BibTeX helpers
+```
+
+### Use
+```bash
+python3 submission-integrity-check/scripts/compliance_check.py paper/ --pdf paper.pdf --profile icde2027 [--eab] --out out/
+python3 submission-integrity-check/scripts/ref_check.py paper/ --out out/ --compile
+python3 submission-integrity-check/scripts/cite_contexts.py paper/ --refcheck out/refcheck.json --out out/cite_worksheet.md
+```
+Then judge every non-VERIFIED reference and every citing claim (OK / IMPRECISE / WRONG), fix, and re-run. Install like the other skills (`cp -r submission-integrity-check ~/.claude/skills/`).
+
 ## manuscript-proofcheck
 Reviews and corrects the typesetting, rendering, bibliography and mechanical writing of any LaTeX paper before submission, for any venue. It lints the source, checks the compiled PDF (wrong glyphs, unresolved references, leftover TODO or red text, placeholder author blocks, dashes for repeated authors, title breaks, tables or text past the margin, fonts, body pages) and renders every page for a visual pass. A writing-mechanics pass checks that names, counts, symbols and generated numbers are consistent across text, tables and figures. It also verifies every bib entry online and fixes the source with minimal edits. Its defect catalog grows with every paper. It does not change claims or numbers; use the venue's review skill for content.
 

@@ -128,6 +128,10 @@ Plan for the stricter version in every case.
     It checks caption length and claims, winner marks, decimals, ablation average rows, why/when sentences for
     every baseline that wins a row, strip-plot means, and unexplained empty bands. Fix every WARN in the
     generator or the text before packaging.
+5b. Run the integrity gate `submission-integrity-check` on the exact PDF to be uploaded:
+    `compliance_check.py paper/ --pdf <upload.pdf> --profile icde2027 [--eab]`, then `ref_check.py paper/ --compile`
+    (every cited work looked up online: VERIFIED/CHECK/SUSPECT/NOT_FOUND), then `cite_contexts.py` and an
+    OK/IMPRECISE/WRONG verdict for every citing sentence. Fix every ERROR, NOT_FOUND, SUSPECT, CHECK and non-OK claim.
 6. Run the checker: `python3 scripts/check_icde_submission.py paper/ --pdf paper/main.pdf [--eab] [--artifact ../artifact] [--scope scope.txt]` (`--camera-ready` after acceptance).
 7. Every author: ORCID, CMT profile, conflicts (section 2a). The corresponding author fills the subject areas (choose one Primary and 2-3 Secondary with `icde-subject-areas`, which holds the exact CMT list and a scorer) and, if needed, the scope statement (`assets/scope_statement_template.md`).
 8. Submit the PDF and the supplemental link on CMT before 5:00 PM PT; keep the CMT confirmation. Prepare and check every CMT field (abstract, authors, the ten additional questions, Relevance and Availability texts) with `icde-cmt-submission`.
@@ -201,4 +205,6 @@ It also checks: IEEEtran conference class; no negative `\vspace`, geometry chang
 - [ ] `results-presentation-review` lint has 0 WARN, or each WARN is answered in the report: short claim-first captions,
       bold/underline plus count rows, ablation average row, a why/when sentence for every baseline that wins, and a
       where-it-wins/loses paragraph.
+- [ ] `submission-integrity-check`: compliance 0 ERROR; every cited work VERIFIED or a WEB link that opens; every citing
+      sentence judged OK (no invented, garbled or misattributed reference).
 - [ ] Deadline in local time noted (Round 2: 2026-11-12 09:00 Beijing).
