@@ -1,0 +1,77 @@
+---
+name: "icde-cmt-submission"
+description: "Prepare everything the ICDE CMT 'Create New Submission' page asks for, from the paper itself, and check it before the author presses Submit: title, plain-text abstract (CMT limit 2,000 characters, rebuilt from LaTeX with macros expanded and compared word for word with the PDF), authors table (email, first/last name, organization, country, primary contact, ORCID), subject areas (via icde-subject-areas), the single PDF (<= 20 MB), Toronto Paper Matching consent, and the ten additional questions of the ICDE 2027 research track, including the Relevance text (<= 1,000 characters, (a)(b)(c)) and the Availability text (artifact URL plus the reason for anything withheld). Field list taken from the ICDE 2027 Research Second Round form on 2026-11-11. Use whenever a paper is submitted to ICDE through CMT (投 ICDE / ICDE 投稿 / CMT 投稿 / 投稿窗口 / 投稿表单 / 准备投稿材料 / Create New Submission)."
+---
+
+# Filling the ICDE CMT submission form (投稿窗口材料)
+
+Use with `submit-icde` (rules and checks of the call), `icde-subject-areas` (Primary/Secondary areas) and
+`manuscript-writing-review` / `manuscript-proofcheck` (the PDF itself). This skill turns the final paper into the exact
+text and ticks the CMT page needs, and checks that every pasted field matches the uploaded PDF.
+
+## Language convention
+All text pasted into CMT is reviewer-facing: formal academic English, copied from the generated file, never retyped.
+The walkthrough for the author (which box, which tick, what only the author can do) is in Chinese (中文), as a
+document.
+
+## 1. The form (ICDE 2027, track "ICDE 2027 Research Second Round", seen 2026-11-11)
+| Section | Field | What to enter | Limit / rule |
+|---|---|---|---|
+| Title and abstract | Title* | paper title, identical to the PDF | |
+| | Abstract* | plain text of the PDF abstract (no LaTeX; × and – as Unicode) | 2,000 characters (CMT counter) |
+| Authors* | one row per author, in PDF order | Email, First Name, Last Name, Organization (one text field; join two affiliations with a comma), Country/Region; "Primary Contact" radio for one author; reorder with the arrows | every author needs a CMT account with the same e-mail; ORCID is entered in each author's CMT profile and is required at submission |
+| Subject Areas* | one Primary, 2-3 Secondary | see `icde-subject-areas` | "None Of Above" only if nothing fits |
+| Files | exactly one file | the final PDF | 1 file, <= 20 MB, doc/docx/pdf |
+| Toronto Paper Matching System* | consent | tick "I agree" | |
+| Additional questions | 1 Desk Rejection Policy* | tick "I agree" | read the policy: format, COI, scope, re-submission |
+| | 2 Maximum number of submissions per author* | tick "I agree" | at most 5 papers per author per round |
+| | 3 Relevance (text box) | scope statement: (a) data-engineering challenge, (b) principled contributions with section numbers, (c) ICDE/VLDB/SIGMOD work it builds on | CFP: 1,000 characters (box allows 8,000); recommended for every paper, required if scope could be questioned |
+| | 4 Duplicate Submissions* | tick "I agree" | no parallel submission until the decision |
+| | 5 Conflicts of Interest* | tick "I agree" | only after every author has entered domain and individual conflicts in the CMT profile (name, top right) |
+| | 6 Integrity of the review process* | tick "I agree" | no contact with PC/SPC about the paper |
+| | 7 Authorship* | tick "I agree" | author list frozen after acceptance |
+| | 8 Availability* (text box) | public artifact URL (e.g. GitHub), then one paragraph on what is in it and why anything is withheld | no personal web pages; EAB papers must release everything |
+| | 9 Registration for accepted papers* | tick "I agree" | one full registration per accepted paper |
+| | 10 Presentation for accepted papers* | tick "I agree" | an author must present in person |
+[CHECK] the form for later editions: CMT pages change every year; refresh this table from a screenshot.
+
+## 2. Workflow
+1. Make sure the PDF is final: same as the last compiled version and as Overleaf, all gates of `submit-icde` and
+   `manuscript-writing-review` clean, body <= 12 pages.
+2. Choose the subject areas with `icde-subject-areas` and record them.
+3. Write `authors.json` (author order, e-mail, first/last name, organization, country, ORCID, primary contact) and the
+   relevance text (<= 1,000 characters, (a)(b)(c), section numbers of the final PDF).
+4. Run
+   `python3 scripts/prepare_cmt.py <paper_dir> --pdf <final.pdf> --artifact-url <url> --authors authors.json --relevance relevance.txt --withheld "<what is not released and why>" --out cmt_form_EN.md`
+   It writes every field and a check list; it exits non-zero if any check fails (title or abstract differ from the
+   PDF, abstract > 2,000 characters, PDF > 20 MB or not US Letter, Type 3 fonts, body > 12 pages, no AI declaration,
+   relevance text too long or missing (a)/(b)/(c), artifact URL not reachable without login).
+5. Give the author a Chinese walkthrough: for each CMT section, what to paste (from `cmt_form_EN.md`) and what to tick,
+   then the author-only items of section 3. When the author sends screenshots, compare every filled field with the
+   file (title, abstract end, author rows, uploaded file name, size and time, ticks) before Submit.
+6. After Submit: the author keeps the CMT confirmation e-mail; record submission ID, PDF hash and Overleaf/artifact
+   commits in the project notes. Do not change the artifact repository after the deadline except to fix a broken
+   link.
+
+## 3. Only the author can do these (desk-reject risks)
+- Every author has a CMT account with the e-mail used in the author row, a complete profile with ORCID, and domain
+  plus individual conflicts entered before the deadline ("If a CMT profile is missing even for one author of a
+  submission, the paper will be desk rejected"). The COI helper https://opencoi.greatji.com/icde2027 is advisory only.
+- Log in to CMT and press Submit; never type or store credentials for the author.
+- Count the papers per author in the round (<= 5).
+
+## 4. Pitfalls seen
+- Pasting the LaTeX abstract (macros, `\xx`, `{,}`) instead of the plain text: the generator expands macros and checks
+  the result against the PDF.
+- Uploading an older PDF with a similar name: compare the file name, size (CMT shows Kb) and upload time with the final
+  file.
+- Two affiliations: CMT has one Organization field; write both, separated by a comma, as in the PDF.
+- Relevance text written for a different version of the paper: section numbers must match the final PDF.
+- Availability text that only says "code on GitHub" when enterprise data is withheld: say what is released, what is
+  not, and why; keep the headline claims on public data.
+
+## 5. Worked example (AuthZ-Graph, ICDE 2027 R2, 2026-11-11)
+All twelve checks passed: title and abstract identical to the PDF (1,787 characters), PDF 0.53 MB, US Letter, no
+Type 3 fonts, body 12 pages, AI declaration present, relevance 959 characters with (a)(b)(c), artifact URL public.
+Subject areas: Primary Graph data; Secondary Data security and privacy; Storage, indexing, and physical database
+design; Query processing and optimization.
