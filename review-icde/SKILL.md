@@ -134,7 +134,7 @@ Before the science review, run the checklist from a senior co-author's read of e
 
 A worked case (CertKP: one number rule in the generator, no k/M suffixes, Times in matplotlib, log table → standing table, paired reruns) is in section 4 of that file.
 
-**Second round of the same lens: run `results-presentation-review`** (rules S01–S10, `results_lint.py`).
+**Second round of the same lens: run `results-presentation-review`** (rules S01–S11, `results_lint.py`).
 The co-author's second read of Ladder added:
 - explain every visual feature (empty bands, clusters, a mean that sits off the points);
 - underline the second best so near-ties (451 vs. 452) show;

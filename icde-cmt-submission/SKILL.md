@@ -90,6 +90,8 @@ the .bib, an "extends/builds on" clause, length).
   the differing words.
 - Body page count: the heading test once matched any line starting with "references" and reported 5 body pages for
   an 11-page body; it now matches only the whole-line REFERENCES / AI-GENERATED CONTENT ACKNOWLEDGMENT heading.
+  A paper whose AI section is titled "AI-Generated Content Declaration" was then reported with 13 body pages (the
+  reference page counted as body); DECLARATION is now accepted too (AuthZ-Graph, 2026-11-11).
 - Relevance text citing the closest work from CIDR or SSDBM in (c), or listing papers without saying how the
   submission extends them: the form asks for ICDE/VLDB/SIGMOD work the paper builds on.
 - Subject areas taken from the scorer's first guess: apply the rules of icde-subject-areas (Certify-Join: the scorer

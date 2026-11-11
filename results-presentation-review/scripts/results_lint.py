@@ -15,6 +15,8 @@ Usage:
     S08 jittered strip plot with a mean bar in a figure script: check skew, prefer a box plot or median + IQR
     S09 scatter panel with a large empty band between point clusters: explain it, or split/zoom the panels
     S10 experiments text without a takeaway per RQ, or without a where-it-wins / where-it-loses paragraph
+    S11 descriptive table (dataset statistics) that shows nothing about the method: a constant or near-constant column,
+        or a caption that never says which statistic matters for the method (AuthZ-Graph, second author, 11-11)
 Exit code 1 if any WARN is found. --method is the name used in the table header (\\textsc{Ladder} -> Ladder).
 """
 import argparse, glob, os, re, sys
@@ -106,6 +108,16 @@ def decimals(cell):
     return len(m.group(3)) if m.group(3) else 0
 
 
+MACROS = {}
+
+
+def expand_macros(s, macros):
+    """Expand zero-argument \\newcommand macros (e.g. \\sys -> FLIX) so that captions written with them are read."""
+    for _ in range(3):
+        s = re.sub(r"\\([A-Za-z]+)\b", lambda m: macros.get(m.group(1), m.group(0)), s)
+    return s
+
+
 def check_tables(text, method, out):
     tables = [(cap, body) for kind, cap, body in floats(text) if kind == "table"]
     beaten_by = {}
@@ -116,6 +128,9 @@ def check_tables(text, method, out):
         if words > 40:
             out.append((WARN, "S01", label, f"table caption has {words} words: keep the claim and what is measured "
                                             "(<= 40 words); move protocol details to the setup text"))
+        elif words > 30:
+            out.append((INFO, "S01", label, f"table caption has {words} words: aim for about two printed lines "
+                                            "(<= 30 words); define only the abbreviations a reader cannot guess"))
         fs = first_sentence(cap)
         if fs and not CLAIM.search(fs):
             out.append((WARN, "S02", label, f"caption opens without a claim: '{fs[:70]}...'"))
@@ -127,6 +142,31 @@ def check_tables(text, method, out):
             if len(ds) > 1:
                 name = header[j] if j < len(header) else f"column {j + 1}"
                 out.append((WARN, "S05", label, f"column '{name}' mixes {sorted(ds)} decimals: one precision per metric"))
+        # S11 descriptive tables: constant columns, and a caption that says what the table shows about the method
+        data = [r for r in rows if not SUMMARY_ROW.search(strip_tex(r[0])) and not COUNT_ROW.search(strip_tex(r[0]))
+                and "multicolumn" not in "&".join(r)]
+        # only descriptive tables: in a results table (our method as a column or a row, or winner marks) a constant
+        # column is a finding (e.g. 0/0 = always exact), not a defect
+        rowtxt = " ".join(strip_tex(expand_macros(r[0], MACROS)).lower() for r in rows)
+        ours_any = bool(method) and (any(method.lower() in strip_tex(expand_macros(h, MACROS)).lower() for h in header[1:])
+                                     or method.lower() in rowtxt)
+        is_results = ours_any or "\\textbf" in body or "\\underline" in body
+        for j in range(1, len(header) if not is_results else 1):
+            vals = [re.sub(r"\\(textbf|underline)\{([^{}]*)\}", r"\2", r[j]).strip() for r in data if j < len(r)]
+            vals = [v for v in vals if v not in ("", "--", "-", "n/a")]
+            if len(vals) >= 5:
+                top = max(set(vals), key=vals.count)
+                if vals.count(top) == len(vals):
+                    out.append((WARN, "S11", label, f"column '{header[j]}' is {top} in every row: state it once in the "
+                                                    "setup text and drop the column"))
+                elif vals.count(top) == len(vals) - 1 and len(vals) >= 8:
+                    out.append((INFO, "S11", label, f"column '{header[j]}' is {top} in all rows but one: state the value "
+                                                    "and the exception in the text and drop the column"))
+        descriptive = bool(method) and not any(method.lower() in h.lower() for h in header[1:]) and \
+            re.search(r"dataset|graph|statistic|benchmark", cap, re.I) and not RESULTY.search(cap)
+        if descriptive and method.lower() not in strip_tex(expand_macros(cap, MACROS)).lower():
+            out.append((INFO, "S11", label, "descriptive table never names the method: say in the caption which "
+                                            "column matters for it (the statistic it exploits), or trim the table"))
         # S03/S04 winner marks on results tables
         # a comparison table has our method as one of its columns (descriptive and summary tables are exempt)
         ours = bool(method) and any(method.lower() in h.lower() for h in header[1:])
@@ -232,6 +272,8 @@ def main():
         "\n".join(read_tex(a.paper).values())
     text = re.sub(r"(?<!\\)%.*", "", text)
     out = []
+    for m in re.finditer(r"\\(?:re)?newcommand\*?\{?\\([A-Za-z]+)\}?\s*\{((?:[^{}]|\{[^{}]*\})*)\}", text):
+        MACROS[m.group(1)] = re.sub(r"\\xspace", "", m.group(2))
     beaten = check_tables(text, a.method, out)
     check_text(text, a.method, beaten, out)
     check_scripts(a.figscripts, out)

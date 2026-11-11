@@ -91,7 +91,9 @@ def pdf_info(path):
     text = [p.get_text() for p in d]
     # the heading is a whole line in capitals ("REFERENCES", small caps may extract as "R EFERENCES"); a case-
     # insensitive prefix match also hit body lines such as "references of ..." and under-counted the body
-    head = r'^\s*(AI-G\s?ENERATED C\s?ONTENT A\s?CKNOWLEDGE?MENT|R\s?EFERENCES)\s*$'
+    # the AI section is titled "Acknowledg(e)ment" or "Declaration" (AuthZ-Graph: a Declaration heading made the
+    # check count the reference page as body and report 13 body pages for a 12-page body)
+    head = r'^\s*(AI-G\s?ENERATED C\s?ONTENT (A\s?CKNOWLEDGE?MENT|D\s?ECLARATION)|R\s?EFERENCES)\s*$'
     body_end = next((i for i, t in enumerate(text) if re.search(head, t, re.M)), len(text))
     heading_first = body_end < len(text) and len(re.split(head, text[body_end], flags=re.M)[0].strip()) < 40
     body_pages = body_end if heading_first else body_end + 1

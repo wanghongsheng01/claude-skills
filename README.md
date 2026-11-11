@@ -60,14 +60,16 @@ loses. The rules come from two rounds of a senior co-author's review of ICDE 202
 - S07: baselines that win rows with no sentence explaining why;
 - S08: mean bars on skewed strip plots;
 - S09: unexplained empty bands in scatter panels;
-- S10: missing takeaways or a missing where-it-wins/loses paragraph.
+- S10: missing takeaways or a missing where-it-wins/loses paragraph;
+- S11: dataset tables with constant columns or a caption that never says what the table shows about the method.
 
 The `write-icde`, `review-icde`, `submit-icde` and `manuscript-writing-review` workflows run it.
 
 ```
 results-presentation-review/
-  SKILL.md                      rules S01-S10, workflow, generator-side recipes
+  SKILL.md                      rules S01-S11, workflow, generator-side recipes, page budget
   references/round2-lessons.md  worked case (Ladder, ICDE 2027 R2), template sentences for win/loss analysis
+  references/authz-round2-lessons.md  worked case (AuthZ-Graph, ICDE 2027 R2): dataset table, why LCR wins, captions
   scripts/results_lint.py       checker (needs PyMuPDF for the figure check)
 ```
 
