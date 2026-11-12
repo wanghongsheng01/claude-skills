@@ -489,3 +489,37 @@ Eight skills support preparation for Elsevier *Pattern Recognition* (ISSN 0031-3
 | [pr-submission-package](pr-submission-package/SKILL.md) | Editable manuscript, Highlights, cover letter, declarations and submission-state checks |
 
 Follow the user's requested stage: a request to learn published work first does not start experiments merely because model APIs are available. These skills contain reusable methods and public references, not private research data, API credentials or third-party paper PDFs. Copy the desired skill folders into the personal skills directory of the assistant being used.
+
+## PVLDB, SIGMOD Industrial, TKDE, and baseline absorption (2026-11-12)
+
+Four skills added for CCF-A data-management writing. They do **not** replace or edit the existing ICDE skills. Official dates and page limits were checked on 2026-11-12 and must be re-read on the official pages before submission. Presentation rules are Deng S01–S11 (`results-presentation-review`). These skills do **not** include a new full-PDF census of VLDB 2025–2026; structural habits are cross-referenced from `write-icde`, and `baseline-paper-absorption` is the process for doing a real sample later.
+
+```
+write-vldb/                      PVLDB Vol. 20 / VLDB 2027: monthly deadlines, 12-page body, single-blind,
+  SKILL.md                       author caps, EA&B package at initial submission
+  references/official-rules.md   snapshot of official URLs and numbers (re-read before use)
+write-sigmod-industrial/         SIGMOD 2027 Industrial: 2026-11-24 23:59 AoE, 12 pages + unlimited refs,
+  SKILL.md                       not double-blind, non-academic author, honest deployment scope
+  references/official-rules.md
+write-tkde/                      IEEE TKDE rolling journal: completeness, no dual submission with PVLDB;
+  SKILL.md                       page limits must be re-read on the IEEE CS author page
+  references/official-rules.md
+baseline-paper-absorption/       Process: select official TOC → per-paper notes (title, outline, captions,
+  SKILL.md                       citations, limitations) → aggregate → optionally update a venue skill
+  references/this-turn-honesty.md
+```
+
+### Install
+Copy the skill folder into the assistant’s skills directory, same as the other skills:
+
+```bash
+git clone https://github.com/wanghongsheng01/claude-skills.git
+mkdir -p ~/.claude/skills
+cp -r claude-skills/write-vldb ~/.claude/skills/
+cp -r claude-skills/write-sigmod-industrial ~/.claude/skills/
+cp -r claude-skills/write-tkde ~/.claude/skills/
+cp -r claude-skills/baseline-paper-absorption ~/.claude/skills/
+```
+
+### Use
+Ask to “write the paper with write-vldb” (or write-sigmod-industrial / write-tkde), and always also apply `results-presentation-review` and `academic-latex-polish`. For ICDE, keep using `write-icde` / `review-icde` / `submit-icde`. To study accepted papers’ writing before extending a skill, invoke `baseline-paper-absorption` and record the sample size honestly.
