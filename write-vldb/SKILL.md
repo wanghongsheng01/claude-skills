@@ -60,3 +60,15 @@ Follow `write-icde` §§2–4 as a starting structure (they were measured on ICD
 4. If EA&B: finish the reproducibility package **before** the full-paper deadline.
 5. Run `results-presentation-review` and `academic-latex-polish`; then a compliance pass (page count, template, AI declaration, artifact URL).
 6. Enterprise traces stay out of the repo and the artifact; public generators and SHA-pinned downloads stay in.
+
+## 7. Advisor meeting lessons for experiment analysis (additive, 2026-11-12)
+
+This section is **additive**. It does not change §§1–6 or `references/official-rules.md`. Official PVLDB pages still win. Full quotes: `paper-presubmission-review/references/deng-meeting-lessons.md`. Run `paper-presubmission-review` and `ccfa-submission-workflow` before submitting.
+
+- **Wins and losses by scenario.** If the method is better on some datasets and a baseline on others, discuss *why* and in which regime, with a takeaway. "All best is not realistic" and is not required (邓-会议). The loss must still have a mechanism from counters (already §4).
+- **Average row** when a table goes up and down across datasets, in addition to the Best/2nd count row. Geometric mean for ratios.
+- **Problem-necessity figures** (iterative repair plateaus, residual error) are welcome but compact: one row of panels, captions 1–2 lines, no body restatement. 95% CI bands are fine. Secondary module-ablation figures may leave the 12-page body if they do not earn their height. Appendix still counts toward those 12 pages.
+- **Figure 1** should make the gap visible, mark this paper's contribution vs upstream work, offline vs online, and an LLM icon where an LLM is used. Empty plot regions need one sentence. A suspicious mean curve is checked or drawn as a box plot. Large whitespace or overlapping labels look "model-generated" — tighten or redraw by hand.
+- **Do not** put a body table that only lists other people's datasets. Drop low-information figures rather than overflowing the 12-page body.
+- Before the CMT/portal packet: page-by-page check of the Overleaf PDF against the local latest (`ccfa-submission-workflow`); declare related concurrent submissions (already §5).
+
