@@ -523,3 +523,27 @@ cp -r claude-skills/baseline-paper-absorption ~/.claude/skills/
 
 ### Use
 Ask to “write the paper with write-vldb” (or write-sigmod-industrial / write-tkde), and always also apply `results-presentation-review` and `academic-latex-polish`. For ICDE, keep using `write-icde` / `review-icde` / `submit-icde`. To study accepted papers’ writing before extending a skill, invoke `baseline-paper-absorption` and record the sample size honestly.
+
+## Advisor-guided presubmission review (2026-11-12, added on this branch)
+
+A fifth skill on this branch, still **without** modifying any previously existing skill.
+
+```
+paper-presubmission-review/          Advisor-guided self-check used before submission or a
+  SKILL.md                           co-author review: SOTA-at-a-glance tables, decimals/units/fonts,
+  references/venue-conflicts.md      no experiment-log tables, title and EAB tags, appendix and
+  references/advisor-sources.md      related-work placement, public-data confirmation, international
+  references/checklist-recipes.md    LLM baselines, novelty story. Every item is tagged (邓/梁/附件)
+                                     and judged against official CFPs (VLDB, SIGMOD Industrial,
+                                     ICDE, TKDE, KDD). Official pages win on conflicts.
+```
+
+Official URLs and conflict rulings were checked on **2026-11-12** and must be re-read before use. This skill complements, and does not replace, `results-presentation-review`, `write-vldb`, `write-sigmod-industrial`, `write-tkde` and the ICDE skill family.
+
+### Install (same pattern)
+```bash
+cp -r claude-skills/paper-presubmission-review ~/.claude/skills/
+```
+
+### Use
+Ask to “run the presubmission review / 投稿前自审” for a named venue. The skill produces a Chinese report with a SOTA 总表 and a conflict log. Apply presentation fixes in the table generator; do not change experimental numbers or frozen author lists.
