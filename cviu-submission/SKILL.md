@@ -7,6 +7,8 @@ description: Prepare or audit a Computer Vision and Image Understanding submissi
 
 Read [requirements and evidence dates](references/requirements.md). The last full journal-guide reading is **2026-11-05**. A **2026-11-07** refresh verified the official CAS ZIP and Elsevier LaTeX, AI, data, and review guidance; the journal guide itself returned 403. Do not present an inaccessible page as newly read or use another journal's rules to fill gaps. [Source status](references/official-refresh.md) records the distinction.
 
+For actual upload categories or replacement of a submission draft, read [live upload observations and versioning](references/live-upload-and-versioning.md). The **2026-11-12** supplied CVIU screenshots show compiled manuscript PDF under required files and its LaTeX ZIP under optional files; the latter category does not waive the source requirement. The same-day journal-guide GET still returned 403, while the official Elsevier review guidance was accessible.
+
 ## Work within the requested stage
 
 Infer the authorized stage from the conversation: plan only, manuscript revision, evidence development, packaging, or journal-system action. When a user requests approval of a plan before editing, make the proposed changes concrete and reviewable, but leave manuscript and experiments unchanged. Once approved, execute the authorized changes without asking again for the same permission. Reuse confirmed author facts; ask only for a genuinely missing fact that cannot be established from supplied material.
