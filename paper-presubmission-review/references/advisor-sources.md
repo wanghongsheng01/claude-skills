@@ -1,6 +1,6 @@
 # Advisor sources absorbed into this skill
 
-The nine hashed attachment paths named in the 2026-11-12 request were not present on the shared box at execution time. The content below was read from (1) the verbatim 邓老师 and 梁老师 comments in the author's message, and (2) 邓老师's writing-method documents stored on the author's Mac and in the Feishu-sourced copies used in earlier work. No credential, enterprise dump, or copyrighted full-paper text is copied here — only distilled rules.
+The nine hashed attachment paths named in the first 2026-11-12 request were not on the box at the first skill commit; sections 2–4 below were read from 邓老师's writing-method documents (Mac / Feishu-sourced copies) and from the verbatim 邓/梁 comments in the author's message. **The six meeting-record files requested later are now available** at `/workspace/deng_meetings/` (identical to the attachments folder) and are absorbed in section 6 and in `deng-meeting-lessons.md`. No credential, enterprise dump, or copyrighted full-paper text is copied here — only distilled rules and short quotes.
 
 ## 1. Verbatim advisor comments (author message, 2026-11-12)
 
@@ -38,3 +38,13 @@ Venue survey → absorb accepted papers' writing → idea and real experiments �
 ## 5. Relationship to existing skills
 
 S01–S11 in `results-presentation-review` and the first-round co-author lessons in `review-icde/references/coauthor-review-lessons.md` already encode many of the same presentation rules for ICDE. This skill **generalises** them across VLDB, SIGMOD Industrial, TKDE and KDD, adds the official-vs-advisor conflict table, and adds the novelty-story and SOTA-总表 gates. It does not rewrite those files.
+
+
+## 6. Meeting records (available 2026-11-12, read in full)
+
+Two meetings, each as a verbatim transcript, structured minutes, and an AI chapter list. Details and quotes: `deng-meeting-lessons.md`. Checklist tag: **邓-会议**.
+
+- **M1, ICDE 投稿评审** (邓达臻、王宏升): 10–15 minute, often LLM-assisted, review; do not submit overlapping-data papers to the same venue (pick 2–3 by novelty and results); bold / underline, including close losses; explain empty plot regions; check or replace a strange mean line with a box plot; add an average row when results go up and down; discuss why the method wins in some regimes and a baseline in others, with takeaways (“都是最好不是很真实”); drop tables that only list other people's datasets; compress long headers.
+- **M2, 架构图与实验图** (邓达臻、Magii): Figure 1 shows the gap, this paper's contribution vs upstream, offline vs online, and an LLM icon where an LLM is used; large whitespace looks “模型生成的”; overlapping text or overflow must be fixed, and coding-drawn figures should be redrawn by hand if corners stay messy; problem-necessity figures are welcome but compact, captions 1–2 lines, 95% CI OK; secondary ablation figures may leave the body; one Overleaf project per paper, synced with Git.
+
+A remark in M1 by Dr.Wang that EAB has a lower novelty bar is **not** a rule of this skill. Official CFPs define EAB. The “7 页纸” remark in M2 is about that paper's budget, not a universal cap.

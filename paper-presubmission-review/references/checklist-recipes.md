@@ -32,3 +32,24 @@ Copy the official string, do not paraphrase. ICDE: prefix `[Experiment, Analysis
 ## Public-data confirmation (E2)
 
 One paragraph (or a takeaway) of the form: "The official / public X independently supports conclusions C1–Ck. The production result Y that does not appear on public data is reported as a fidelity ceiling / a portfolio-size lesson, not as a claim that holds only on private data." If a conclusion holds only on private data, do not offer it.
+
+
+## Average row vs Best/2nd row (A5, 邓-会议)
+
+The Best/2nd count row (A2) answers “how often are we first or second.” The **average (or geometric-mean) row** answers “when some datasets go up and some go down, what is the overall effect.” Add it when a first glance cannot tell. Do not average incomparable units. For ratios, prefer a geometric mean (already S06).
+
+## Empty regions and anomalous aggregates (B6, 邓-会议)
+
+If a scatter or cost plot has a large empty band, one sentence in the caption or the body must say why (all models concentrate on one dataset; a method is undefined in that range; a filter removed points). If a plotted mean looks inconsistent with the points, **check the data** before redrawing; a box plot is the fallback Deng asked for, not a decoration.
+
+## Dataset-only tables (C4, 邓-会议)
+
+Keep a dataset table if it also reports something the method produces (index size, signatures, build time, coverage). Delete it from the body if it is only a listing of public datasets taken from prior work.
+
+## Figure 1 story marks (F4, 邓-会议)
+
+In the architecture / running-example figure, a two-minute reader should see: (1) the gap vs prior work, (2) which blocks are this paper's contribution, (3) offline vs online, (4) where an LLM is involved (a small icon is enough), (5) a negative / refuse path if the method can refuse. Do not draw a strict pipeline arrow among modules that may run in parallel.
+
+## Compact necessity figures (F5, B7, 邓-会议)
+
+One row of small panels beats three large low-density figures. Captions stay 1–2 lines and do not restate the body. 95% CI bands are fine. Drop a module-ablation figure from the body if it does not earn its height against the venue page limit. If whitespace, overflow or text–graphics overlap make the figure look generated, tighten it or redraw by hand — do not ship the messy automated version.

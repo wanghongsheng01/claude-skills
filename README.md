@@ -547,3 +547,9 @@ cp -r claude-skills/paper-presubmission-review ~/.claude/skills/
 
 ### Use
 Ask to “run the presubmission review / 投稿前自审” for a named venue. The skill produces a Chinese report with a SOTA 总表 and a conflict log. Apply presentation fixes in the table generator; do not change experimental numbers or frozen author lists.
+
+## Advisor meeting lessons and CCF-A submission commander (2026-11-12)
+
+- `paper-presubmission-review` now includes **邓-会议** items distilled from six meeting records (average row, empty-region captions, Figure 1 gap marks, dataset-only tables, 10-minute LLM-assisted review, one Overleaf+Git). Quotes: `paper-presubmission-review/references/deng-meeting-lessons.md`.
+- `write-vldb` §7 (additive) and `write-vldb/references/deng-meeting-experiment-analysis.md` apply the same experiment-analysis lessons under PVLDB's 12-page-including-appendix rule. Existing §§1–6 and `official-rules.md` are unchanged.
+- New skill **`ccfa-submission-workflow`**: a submission-prep commander playbook from Dr.Wang's ICDE 2027 R2 process log, generalized to other CCF-A venues. It orchestrates the venue skills and `paper-presubmission-review`; it does not replace them. Historical wording that "acceptance, not honesty, is the first priority" is **not** adopted.
