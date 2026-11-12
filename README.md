@@ -553,3 +553,20 @@ Ask to “run the presubmission review / 投稿前自审” for a named venue. T
 - `paper-presubmission-review` now includes **邓-会议** items distilled from six meeting records (average row, empty-region captions, Figure 1 gap marks, dataset-only tables, 10-minute LLM-assisted review, one Overleaf+Git). Quotes: `paper-presubmission-review/references/deng-meeting-lessons.md`.
 - `write-vldb` §7 (additive) and `write-vldb/references/deng-meeting-experiment-analysis.md` apply the same experiment-analysis lessons under PVLDB's 12-page-including-appendix rule. Existing §§1–6 and `official-rules.md` are unchanged.
 - New skill **`ccfa-submission-workflow`**: a submission-prep commander playbook from Dr.Wang's ICDE 2027 R2 process log, generalized to other CCF-A venues. It orchestrates the venue skills and `paper-presubmission-review`; it does not replace them. Historical wording that "acceptance, not honesty, is the first priority" is **not** adopted.
+
+## Experiment-analysis writing from a 12-paper PVLDB sample (2026-11-12)
+
+Additive follow-up (this branch). Does **not** modify `paper-presubmission-review`, `ccfa-submission-workflow`, or `write-vldb` §§1–7 / `official-rules.md`.
+
+- New skill **`experiment-analysis-writing`**: how to write first-place (component–problem–ablation) and second-place (winner mechanism, regime, choice rule) evaluation paragraphs, Lessons, captions, and titles. Distilled from 12 official PVLDB Vol. 17–19 PDFs (NL2SQL, SemBench, MV rewriting, k-plex, columnar EA&B) plus 邓老师's meeting guidance. Paper list and habits: `experiment-analysis-writing/references/pvldb-sample-2023-2026.md`.
+- **`write-vldb` §8** (additive) and `write-vldb/references/experiment-analysis-from-pvldb-2023-2026.md` point at that skill. The previous honesty note that this skill “did not claim a new full-text census” is updated for the *evaluation* section only; title/abstract/introduction structure is still started from `write-icde`.
+
+### Install
+```bash
+cp -r claude-skills/experiment-analysis-writing ~/.claude/skills/
+# write-vldb is already installed; re-copy to pick up §8
+cp -r claude-skills/write-vldb ~/.claude/skills/
+```
+
+### Use
+When writing a PVLDB (or other CCF-A) evaluation section, run `write-vldb` (or the venue skill) and `experiment-analysis-writing`. Before submission, still run `paper-presubmission-review` and `results-presentation-review`.
