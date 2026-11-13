@@ -614,3 +614,29 @@ Lessons from formally published PVLDB EA&B and diagnosis papers (Dawn NL2SQL, DA
 
 ## ccfa-b2-first-problem-definition
 Lessons from formally published papers that introduce a setting or task (SPADE, SIC, and the class/setting definitions in SemBench, TACO, ELT-Bench). Do not rename a known problem as a first definition.
+
+## PVLDB paper craft (production pipeline, reviewer skim, layout, 2026-11-13)
+
+Complementary to **`write-pvldb`** (section prose, W/T/L, limitation wording without self-negation) and **`submit-pvldb`** (official Volume 20 rules). This skill does **not** replace either, and this PR does **not** modify those folders.
+
+- **`pvldb-paper-craft`**: end-to-end production pipeline (problem selection, SOTA/benchmark positioning, method design, experiment design, figures/tables, writing, self-review) with how each step is done in formally published PVLDB/SIGMOD papers; the reviewer’s 10–20 minute skim in the order **tables → figures → experiment analysis tied to each figure/table → title/abstract/intro**, plus how exemplars optimise for that skim; full paper anatomy, paragraph organisation, and a grounded what-NOT-to-write list; formula/figure/table/reference checklists; Volume 20 mandatory blocks (`\vldbtopmatter`, 12-page body, ALL-CAPS heads); a four-layer pre-delivery self-review protocol (compile log, 150 dpi visual pass, reviewer skim, consistency); and a read-only PDF layout lint.
+
+```
+pvldb-paper-craft/  SKILL.md  check_pdf_layout.py  check_pdf_layout.sh  requirements.txt
+```
+
+### Install
+```bash
+cp -r claude-skills/pvldb-paper-craft ~/.claude/skills/
+# optional, for the layout lint:
+pip install -r claude-skills/pvldb-paper-craft/requirements.txt   # pymupdf
+```
+
+### Use
+Ask to “run the reviewer-skim and pre-delivery layout check with pvldb-paper-craft”, or lint a compiled PDF:
+
+```bash
+./pvldb-paper-craft/check_pdf_layout.sh paper.pdf --log main.log --out lint.txt
+```
+
+The lint is calibrated for letter, acmart two-column (612×792 pt). Errors (text overlap, margin overflow, tables at 6 pt) must be zero before delivery; warnings are inspected by eye. A 150 dpi pass on every page remains mandatory and is not replaced by the script.
