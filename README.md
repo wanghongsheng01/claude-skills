@@ -570,3 +570,15 @@ cp -r claude-skills/write-vldb ~/.claude/skills/
 
 ### Use
 When writing a PVLDB (or other CCF-A) evaluation section, run `write-vldb` (or the venue skill) and `experiment-analysis-writing`. Before submission, still run `paper-presubmission-review` and `results-presentation-review`.
+
+## ccfa-paper-front-loaded-research
+Front-loaded research gate for any new CCF-A paper: stages 1–6 (template, venue fit, problem/SOTA/datasets, opportunity/novelty, type-specific reading, research and experiment plan) must finish and pass quality gates before methods or experiments start. The coauthor briefing PDF is a product of this process, not a post-hoc wrap. Companion file: `paper_reading_清单.md` (16 officially published PVLDB papers in the first tranche).
+
+## ccfa-b1-method-writing
+Lessons from formally published PVLDB 2024–2026 method papers (Sphinteract, REDSQL, LLM-R2, Magneto, CHORUS, OpenForge). SOTA gate on a majority of pre-registered metrics; constructed strongest controls; losses explained once; official fold not retuned.
+
+## ccfa-b1-benchmark-writing
+Lessons from formally published PVLDB EA&B and diagnosis papers (Dawn NL2SQL, DAIL-SQL, TACO, SemBench, Annotation Errors, plus NL2SQLBench, an MV pipeline paper, ELT-Bench). Insight plus a reproducible protocol; do not claim “our method is #1” as the paper’s contribution.
+
+## ccfa-b2-first-problem-definition
+Lessons from formally published papers that introduce a setting or task (SPADE, SIC, and the class/setting definitions in SemBench, TACO, ELT-Bench). Do not rename a known problem as a first definition.
