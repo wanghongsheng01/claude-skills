@@ -50,6 +50,8 @@ description: 对拟投 Computer Vision and Image Understanding 的作者自有�
 
 审查新性能改进或 SOTA 主张时，使用 [性能主张的核查](references/performance-claims.md)，区分整方法复现、共同骨干上的策略对照、开发结果与确认结果。
 
+涉及模型表示、几何与外观耦合时，使用 [模型级性能改进的审阅](references/model-level-sota-review.md)，把最近邻完整性、函数合同、优化历史与训练到 held-out 的变化转成最小可检验动作。
+
 ## 实验调整与结果完整性
 
 在看到新结果前记录研究问题、对照、预算、输入/划分、指标、聚合、纳入规则和停止条件。已看过的测试结果不能因改文件名再次称为未见测试；后续改进如继续使用这些结果，明确其探索性质，或另设真正未使用的确认数据。
