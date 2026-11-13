@@ -32,6 +32,8 @@ description: 依据已发表 Computer Vision and Image Understanding 论文的�
 
 涉及表示、几何或外观模型本身的改动时，进一步读 [模型级改进与强方法比较](references/model-level-sota-experiments.md)，区分完整近邻与受控核心、参数数量与函数容量、共同输出与优化历史，并设计与主张对应的几何—外观和泛化检查。
 
+涉及方向先验、可逆重参数化或多个质量指标相互冲突时，按需读 [模型先验与指标冲突](references/model-priors-and-metric-conflicts.md)，核对实际约束、诊断与质量证据及统一测量的调用链。
+
 ## 让每个实验回答一个问题
 
 主比较回答任务性能；机制实验回答模块怎样起作用；预算对照回答提升是否仅来自额外资源；跨条件实验回答结论范围。分别组织这些问题，而不是让一个总分承担全部证明。

@@ -52,6 +52,8 @@ description: 对拟投 Computer Vision and Image Understanding 的作者自有�
 
 涉及模型表示、几何与外观耦合时，使用 [模型级性能改进的审阅](references/model-level-sota-review.md)，把最近邻完整性、函数合同、优化历史与训练到 held-out 的变化转成最小可检验动作。
 
+涉及方向先验、内部能量指标或PSNR与感知指标冲突时，按需使用 [模型先验与指标冲突的定向审阅](references/model-prior-and-metric-review.md)，不把内部状态变化代替任务质量。
+
 ## 实验调整与结果完整性
 
 在看到新结果前记录研究问题、对照、预算、输入/划分、指标、聚合、纳入规则和停止条件。已看过的测试结果不能因改文件名再次称为未见测试；后续改进如继续使用这些结果，明确其探索性质，或另设真正未使用的确认数据。
