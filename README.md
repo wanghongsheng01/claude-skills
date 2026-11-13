@@ -571,6 +571,38 @@ cp -r claude-skills/write-vldb ~/.claude/skills/
 ### Use
 When writing a PVLDB (or other CCF-A) evaluation section, run `write-vldb` (or the venue skill) and `experiment-analysis-writing`. Before submission, still run `paper-presubmission-review` and `results-presentation-review`.
 
+## PVLDB and SIGMOD venue skills (submit / write / review, 2026-11-12)
+
+Six new skills for PVLDB Volume 20 and SIGMOD (Industrial 2027, and research for later cycles). They follow the structure of `submit-icde`, `write-icde` and `review-icde`. Official pages were read on **2026-11-12 PT** and always win; each skill records URLs and the access date in `references/`. They **do not replace** the ICDE family. For new PVLDB or SIGMOD drafts they **cover and extend** the shorter `write-vldb` and `write-sigmod-industrial` (those skills are kept). They also reuse, and do not edit, `ccfa-paper-front-loaded-research`, the B1/B2 writing skills, `experiment-analysis-writing`, and the ICDE limitation-writing corpora.
+
+The **write** skills include a dedicated guide on stating limitations, losses and not-done work **without self-negation**, based on counts from accepted PVLDB, SIGMOD, ICDE and VLDBJ papers (0/10 algorithm abstracts and conclusions state a loss of the authors' method; 0/9 EAB papers put limits of their own benchmark there). This changes wording, placement and frequency only: numbers, losing cells, and venue-mandatory statements stay. It is not a licence to hide facts.
+
+- **`submit-pvldb`**: Volume 20 guidelines — four categories and page limits (regular/EA&B 12 pages excluding only references), mandatory abstract on the 25th and full paper on the 1st at 17:00 PT, monthly cap of two and yearly cap of twelve, single-blind, CMT `PVLDBv20_2027`, COI, related-submission declaration, Scope Policy and SAR, EA&B full reproducibility package at the **initial** submission, Light Load Reviewer nomination, 12-month embargo, ACM AI policy.
+- **`write-pvldb`**: titles, abstracts, introductions, theorems, RQ-structured experiments, W/T/L tables, EA&B writing, and §7 limitation-writing rules (R1–R11) with English templates and a ban-list of self-negating phrases.
+- **`review-pvldb`**: official process (AE, ≥3 reviews, one revision), EiC letters on desk-rejects (Vol. 18–19 front matter), common revision requests, permission to ask for added or dropped experiments, and a mandatory self-negation pass. For pre-submission self-review, not a real PC assignment.
+- **`submit-sigmod`**: SIGMOD 2027 Industrial (12 pages + unlimited references, not double-blind, non-academic author required, CMT `SIGMODIND2027`, deadline 2026-11-24 23:59 AoE = 2026-11-25 19:59 Beijing) and a snapshot of the research track (already closed for 2027; double-anonymous, separate appendix, author feedback) for later cycles.
+- **`write-sigmod`**: industrial structure (what is or is not in production, lessons as first-class, weak cells as operating guidance, public-data confirmation) and research-track writing aligned with `write-pvldb`, including the same limitation rules.
+- **`review-sigmod`**: industrial dimensions (fit, overclaim, public confirmation, lessons), PACMMOD/SIGMOD official allowed and disallowed revision requests, and the self-negation pass (e.g. a 0.9× cell must stay, must not be repeated five times).
+
+```
+submit-pvldb/     SKILL.md  references/official-pages-2026-11-12.md
+write-pvldb/      SKILL.md  references/limitations-without-self-negation.md
+review-pvldb/     SKILL.md  references/official-process-2026-11-12.md
+submit-sigmod/    SKILL.md  references/official-pages-2026-11-12.md
+write-sigmod/     SKILL.md
+review-sigmod/    SKILL.md  references/official-process-2026-11-12.md
+```
+
+### Install
+```bash
+cp -r claude-skills/submit-pvldb claude-skills/write-pvldb claude-skills/review-pvldb \
+      claude-skills/submit-sigmod claude-skills/write-sigmod claude-skills/review-sigmod \
+      ~/.claude/skills/
+```
+
+### Use
+Ask to “prepare a PVLDB submission with submit-pvldb”, “write the paper with write-pvldb” (including “how to state limitations without self-negation”), or “run a simulated PVLDB review with review-pvldb”. For SIGMOD Industrial, use the `*-sigmod` triple. Re-read the official CFP of that cycle before every submission. For a plan-only task, the review skill reports and does not edit the manuscript until the author approves.
+
 ## ccfa-paper-front-loaded-research
 Front-loaded research gate for any new CCF-A paper: stages 1–6 (template, venue fit, problem/SOTA/datasets, opportunity/novelty, type-specific reading, research and experiment plan) must finish and pass quality gates before methods or experiments start. The coauthor briefing PDF is a product of this process, not a post-hoc wrap. Companion file: `paper_reading_清单.md` (16 officially published PVLDB papers in the first tranche).
 
