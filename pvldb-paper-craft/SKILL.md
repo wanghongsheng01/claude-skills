@@ -241,6 +241,7 @@ These are not style preferences. They are patterns **absent** from the formally 
 - [ ] After compile: no formula in the gutter or past the right edge; accents and subscripts do not collide with the next line.
 - [ ] Algorithms: numbered, Input/Output, readable line numbers, type at least ~80% of body size, no column collision.
 - [ ] Theorems, lemmas, definitions numbered via `\label`/`\ref`, never by hand.
+- [ ] A display is readable on a first pass: an intuition sentence before it, an interpretation after it, and a running-example instantiation when the paper has one. Prefer named predicates over dense set-theoretic shorthand. Details and published-paper quotations are in the addendum at the end of this file.
 
 ### Figure
 
@@ -267,6 +268,7 @@ These are not style preferences. They are patterns **absent** from the formally 
 - [ ] Each entry has year, pages or volume(issue), and a DOI when published.
 - [ ] Every table citation is a real `\cite`.
 - [ ] The PVLDB Reference Format short title is a complete phrase (check the macro arguments, not a hand-copied block).
+- [ ] The bibliography length is aligned with formally published same-field papers of the same type (method / EA&B / SIGMOD industrial). Counts, how to expand without padding, and a no-fabrication rule are in the addendum at the end of this file.
 
 ---
 
@@ -370,3 +372,124 @@ Usage is in §6 Layer 0. Do not close a delivery on the lint summary alone.
 - `submit-pvldb` — official rules, calendar, caps, CMT; wins over any memory of this file.
 - `review-pvldb` — simulated Volume 20 review.
 - `ccf-a` — when to use the strongest reasoning tier for paper work.
+
+
+<!-- addendum_formulas_and_refs (2026-11-13) -->
+# Addendum: formula-writing rules and reference-count norms
+
+Grounded in a 2026-11-13 study of formally published PVLDB/SIGMOD papers (2023–2026, plus WeTune 2022 because it is in the instructed core-12) and in the CertMetric v8 rewrite of equations (3)–(6). Counts come from the actual published PDFs: a `[N]` line-start sequence 1..N with no gaps is authoritative. DBLP was blocked (Anubis 403); metadata for new citations was verified via Crossref, official VLDB PDFs, and ACM/IEEE DOIs. Never invent a citation or a DOI.
+
+## 1. Reference-count norms (Step A)
+
+Sample: **n = 21** formally published same-field papers, split by category. WeTune (SIGMOD 2022) is included because it is in the core-12; EQUITAS (2019) and Cosette (2018) were counted but are **outside** the 2023–2026 window and are not in the statistics. The CodeS *arXiv* PDF (16 pages / 85 refs) is **not** used: the PACMMOD camera-ready is 28 pages and may differ. ACM Digital Library PDFs that 403'd were replaced by a DOI-verified author copy or official VLDB PDF, and a mismatched download (wrong arXiv) was discarded, never counted.
+
+### Method / research papers (n = 8)
+
+| Paper | Venue | Refs |
+|---|---|---|
+| QED | PVLDB 17, 2024 | 18 |
+| ParSEval | PVLDB 18, 2025 | 43 |
+| LLM-R2 | PVLDB 18, 2024 | 46 |
+| SQLSolver | PACMMOD 1, 2023 / SIGMOD 2024 | 48 |
+| WeTune | SIGMOD 2022 (core-12) | 52 |
+| CatSQL | PVLDB 16, 2023 | 58 |
+| Sphinteract | PVLDB 18, 2024 | 76 |
+| REDSQL | PVLDB 18, 2025 | 96 |
+
+- **Mean 54.625, median 50, range 18–96.**
+- QED is a real published outlier at 18, not a licence to stop at 18.
+
+### EA&B / benchmark papers (n = 10)
+
+| Paper | Venue | Refs |
+|---|---|---|
+| ScienceBenchmark | PVLDB 17 | 53 |
+| MV Rewrite Bench | PVLDB 19, 2026 | 55 |
+| SemBench | PVLDB 19, 2026 | 57 |
+| TACO | PVLDB 19, 2026 | 57 |
+| DAIL-SQL | PVLDB 17 | 58 |
+| Dawn of NL2SQL | PVLDB 17 | 62 |
+| Annotation Errors | PVLDB 19, 2026 | 69 |
+| Enterprise DE (Bodensohn et al.) | PVLDB 19 | 72 |
+| NL2SQLBench | PVLDB 19, 2026 | 80 |
+| ELT-Bench | PVLDB 19 | 85 |
+
+- **Mean 64.8, median 60, range 53–85.**
+- The EA&B floor in this sample is 53: a 15-item EA&B bibliography is short of every published comparator.
+
+### SIGMOD industrial (n = 3)
+
+| Paper | Venue | Refs | Provenance |
+|---|---|---|---|
+| Measures in SQL (Hyde & Fremlin) | SIGMOD Companion 2024, pp. 31–40, DOI 10.1145/3626246.3653374 | 22 | arXiv:2406.00251v2, DOI-verified |
+| FinSQL | SIGMOD Companion 2024, pp. 93–105, DOI 10.1145/3626246.3653375 | 41 | arXiv:2401.10506, DOI-verified |
+| DataFusion | SIGMOD 2024, DOI 10.1145/3626246.3653368 | 77 | author PDF (DOI-verified); a wrong arXiv download was discarded |
+
+- **Mean 46.67, median 41, range 22–77.**
+
+### Our drafts at the time of the study (before the CertMetric v8 pass)
+
+| Draft | Refs | Notes |
+|---|---|---|
+| CertMetric v7 | 13 | Below every category, including QED's 18 |
+| RateQ v5 | 56 | Already at the method median |
+| MetricSemBench v5 | 15 | Far below the EA&B floor of 53 |
+| BindOrClarify (09a33ec) | 15 | Far below the method median |
+
+### How to expand (quality over a target number)
+
+- Align *toward* the category median (method ≈ 50, EA&B ≈ 60, industrial ≈ 41). Do **not** pad to hit the median exactly.
+- Every new entry must be a real, verified work (Crossref / official PDF / publisher DOI). No fabricated titles, authors, pages, or DOIs. If Crossref and the official PDF disagree on the venue, trust the official PDF and Crossref (example: Chaudhuri et al., “Optimizing queries with materialized views”, is **ICDE 1995**, DOI 10.1109/ICDE.1995.380392, not SIGMOD).
+- Take author given names from the official first page, not from memory (ParSEval is Chunyu Chen, Zhengjie Miao, Yong Zhang, Jiannan Wang; MV Rewrite Bench is Xinjie Hu and Zhengjie Miao).
+- Each new citation must be used in the text at a place where it genuinely supports a claim — typically related work, baselines, or background. A related-work paragraph still ends on a *difference*, not a dump of names.
+- Skip a work rather than invent a DOI (do not invent Gupta & Mumick 1995 or TPC-DS 2006 DOIs if Crossref is unclean).
+- Books: complete publisher metadata, no fake DOI (Kimball & Ross 2013 is a book; Wiley, 3rd ed., ISBN 978-1-118-53080-1).
+- Software documentation (MetricFlow, LookML) is cited as `@misc` with a real URL, like the already-accepted MetricFlow entry.
+- PVLDB Volume 20: the 12-page limit is **body only**; references are unlimited. A 35-item bibliography that starts on page 12 is legal. Do not shrink body claims to make room for refs.
+- Never leave verification notes (`"Verified from QED's bibliography"`) in the `.bib` `note` field: they appear in the printed reference list.
+- After expansion, confirm the compiled PDF has `[1]…[N]` with no gaps, and that every `.bib` key is cited (no uncited padding).
+
+CertMetric v8 applied this: 13 → 35 verified entries, all cited, body still 12 pages including the AI statement, refs on page 12.
+
+## 2. Formula-writing rules (Step B)
+
+Absorbed from QED, SQLSolver, WeTune, LLM-R2, SPES, and the same published set. CertMetric v7's equations (3)–(6) violated several of these (dense inference-rule fractions, an undefined “match” in the display, `A^{-1}(ADD)` and `i∈Δ` packed into the premise, explanations only *after* a four-rule block, no GrossMarch instantiation). v8 rewrote them to the rules below, **same formal judgment, same experimental numbers**.
+
+### Rules, with quotes from the published papers
+
+1. **Define every symbol at first use, or at the start of the sentence that introduces the display.**
+   - SQLSolver: “A LIA* formula has the following form, where *u*, *v* and *x* are integer vectors.”
+   - QED: “[P] denotes a multiplicity…”
+   - If a section uses more than about eight symbols, add a compact notation table (8 pt, two columns: symbol, meaning) and point to it in prose (“Table 1 collects the symbols used in this section”).
+
+2. **One intuition sentence *before* the display, and one interpretation sentence *after*.**
+   - WeTune, before the correctness definition: “Next, we define the correctness of a rule. Intuitively, if a rule…”
+   - SQLSolver, after its equation (2): “In the above formula, {x | F2(x)} represents…”
+   - Do not stack four inference rules and only then explain them. Each numbered display is a self-contained unit: intuition → formal statement → “In words, …” → (when possible) a running-example instantiation.
+
+3. **Instantiate the formula on the paper's own running example.**
+   - SQLSolver walks a SQL pair (Figure 2) into U-expressions and then a five-step derivation.
+   - QED, after (6): “This means that for table R with a primary key k, we can rewrite…” and then displays (7).
+   - CertMetric v8 instantiates Expand / Reuse / Hybrid on `Σ_GrossMarch` (March company-level gross) and RatioAtG on a company margin (net over gross, not a mean of store rates).
+
+4. **Prefer named predicates and named functions over dense set-theoretic shorthand.**
+   - QED writes inductive semantics as named functions: `JTable(R:S)K`, `JFilter(P,Q)K`, not a single packed fraction.
+   - CertMetric v8 replaced `eff(v,G) ⊆ A^{-1}(ADD)` and “κ, τ, K, μ, Φ match” with `Honest(v)`, `FinerGrain(v,G)`, `AdditiveRoll(v,G,A)`, and `ContractMatch(v,Σ)`, each defined in English immediately before the Reuse display.
+
+5. **Number only the equations that are referenced**, and keep the reader's numbers stable across revisions. If a lemma sits between two rules the author is discussing as “(3)–(6)”, move the lemma (or leave its display unnumbered) so those four numbers stay on the four rules.
+
+6. **Limit nesting of sub/superscripts and custom operators.** Align with the established notation of the area (U-semiring and `[P]` for bag-SQL; `Γ ⊢ p : Σ` for a judgment; `grain(v) ⪯ G` for a grain order). If a custom operator would be used once, write the condition in words in the premise instead.
+
+7. **Keep inference-rule fractions readable.** Stack a long premise in a small `array`, put English premises (“the parts are disjoint and complete”) in the display itself, and put the rule name (`\textsc{Reuse}`) flush with the fraction. The conclusion should be the judgment the rest of the paper uses, not a new symbol.
+
+8. **Same semantics, same numbers.** A readability rewrite is not a licence to change a theorem, a residual lemma, a frozen rule, or any experimental cell. Forward-references to a lemma by name (`Lemma 4.1`) are fine; changing the formal side-conditions is not.
+
+9. **The surrounding prose is part of the formula.** Fold old “paragraph: Expand / Reuse / …” text into the per-equation blocks so the same rule is not defined twice. Keep “two rules stated negatively”, completeness caveats, and limitation sentences that already exist; do not self-negate the contribution.
+
+## 3. Pre-delivery checks that this addendum does not replace
+
+- Official Volume 20 rules first (12-page body, unlimited refs, `\vldbtopmatter`, abstract 150–250 words).
+- `numbers.tex` is never rewritten in a craft pass; confirm the sha256 is unchanged.
+- 0 Overfull `\hbox` > 1 pt, 0 undefined citations, `check_pdf_layout.py` 0 errors. Visual 150 dpi of every page is authoritative over lint false positives (underfull vbox after floats; a documented two-corresponding-author footnote).
+- A last bibliography page that contains only a DOI fragment is a visual defect: tighten `\itemsep` of `thebibliography` (0–1 pt is acceptable) so the last item completes on the previous page, or force a clean item-level page break so the last page holds one or more *complete* entries. Do not `\enlargethispage` into the page number. Do not put verification notes in `note` fields.
+- Take given names and venues from official first pages and Crossref, then compile and count `[1]…[N]` in the PDF, not in the `.bbl` regex (ACM `\bibitem` format is easy to miss).
