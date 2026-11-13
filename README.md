@@ -602,3 +602,15 @@ cp -r claude-skills/submit-pvldb claude-skills/write-pvldb claude-skills/review-
 
 ### Use
 Ask to “prepare a PVLDB submission with submit-pvldb”, “write the paper with write-pvldb” (including “how to state limitations without self-negation”), or “run a simulated PVLDB review with review-pvldb”. For SIGMOD Industrial, use the `*-sigmod` triple. Re-read the official CFP of that cycle before every submission. For a plan-only task, the review skill reports and does not edit the manuscript until the author approves.
+
+## ccfa-paper-front-loaded-research
+Front-loaded research gate for any new CCF-A paper: stages 1–6 (template, venue fit, problem/SOTA/datasets, opportunity/novelty, type-specific reading, research and experiment plan) must finish and pass quality gates before methods or experiments start. The coauthor briefing PDF is a product of this process, not a post-hoc wrap. Companion file: `paper_reading_清单.md` (16 officially published PVLDB papers in the first tranche).
+
+## ccfa-b1-method-writing
+Lessons from formally published PVLDB 2024–2026 method papers (Sphinteract, REDSQL, LLM-R2, Magneto, CHORUS, OpenForge). SOTA gate on a majority of pre-registered metrics; constructed strongest controls; losses explained once; official fold not retuned.
+
+## ccfa-b1-benchmark-writing
+Lessons from formally published PVLDB EA&B and diagnosis papers (Dawn NL2SQL, DAIL-SQL, TACO, SemBench, Annotation Errors, plus NL2SQLBench, an MV pipeline paper, ELT-Bench). Insight plus a reproducible protocol; do not claim “our method is #1” as the paper’s contribution.
+
+## ccfa-b2-first-problem-definition
+Lessons from formally published papers that introduce a setting or task (SPADE, SIC, and the class/setting definitions in SemBench, TACO, ELT-Bench). Do not rename a known problem as a first definition.
