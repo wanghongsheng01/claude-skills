@@ -75,3 +75,5 @@ python3 scripts/montage.py out/montage.png out/crops/fig-*.png
 - A decision-flow figure whose "no" labels were struck through by routing lines (R2).
 - A panel annotation that crossed an axis tick and spine (R2/R5). Iso-F1 curves that ran through point labels (R2).
 - A node with "met-ric" hyphenated (R13). A visible "[pending: …]" cell in a table (R8).
+
+- Page-level layout (blank holes in a column, float placement, last-page balance, spacing hacks): see `ccfa-paper-layout-review` (L1–L10, `scripts/layoutlint.py`, `scripts/floatmap.py`).

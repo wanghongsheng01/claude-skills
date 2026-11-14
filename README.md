@@ -667,3 +667,18 @@ pip install -r claude-skills/ccfa-figure-layout-review/scripts/requirements.txt 
 python3 ccfa-figure-layout-review/scripts/figlint.py main.pdf out/ --log main.log --dpi 200
 ```
 Then open every crop in `out/crops/` and write the review against R1–R16 and S1–S29. Review only pdfTeX/Overleaf builds.
+
+## ccfa-paper-layout-review
+Page-layout review for two-column CCF-A database papers (PVLDB, SIGMOD, ICDE). It catches blank holes in a column, float-only pages, floats far from their first `\ref` or never referenced, unbalanced last pages, gutter or margin overflow, stranded headings, forbidden spacing hacks, and the wrong Overleaf main document.
+- Red lines L1–L10 and style rules P1–P12 are calibrated on 55 accepted 2024–2026 papers (757 pages).
+- The reviewer and the fixer are different agents. They loop until 0 blocker and 0 major.
+
+```
+ccfa-paper-layout-review/  SKILL.md  references/{LAYOUT_PRINCIPLES.md,corpus_table.md,corpus_stats.json}
+                           scripts/{layoutlint.py,floatmap.py,corpus_stats.py,requirements.txt}
+```
+```bash
+pip install -r ccfa-paper-layout-review/scripts/requirements.txt
+python3 ccfa-paper-layout-review/scripts/layoutlint.py main.pdf out/ --log main.log --tex .
+python3 ccfa-paper-layout-review/scripts/floatmap.py main.tex
+```

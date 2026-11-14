@@ -1,0 +1,160 @@
+{
+ "counts": {
+  "papers": 55,
+  "pages": 757,
+  "floats": 804,
+  "float_Figure": 499,
+  "place_top": 494,
+  "colw": 630,
+  "col_Figure": 391,
+  "place_here": 287,
+  "full": 174,
+  "full_Figure": 108,
+  "float_Table": 258,
+  "col_Table": 192,
+  "full_Table": 66,
+  "place_bottom": 23,
+  "float_only_pages": 3,
+  "papers_with_hole10": 3,
+  "float_Algorithm": 35,
+  "col_Algorithm": 35,
+  "float_Listing": 12,
+  "col_Listing": 12
+ },
+ "maxhole_frac": {
+  "n": 663,
+  "median": 0.0,
+  "p90": 0.0,
+  "p95": 0.0,
+  "p99": 0.0,
+  "max": 1.001,
+  "min": 0.0
+ },
+ "fill": {
+  "n": 663,
+  "median": 0.895,
+  "p90": 0.953,
+  "p95": 0.966,
+  "p99": 0.986,
+  "max": 1.0,
+  "min": 0.082
+ },
+ "floats_per_page": {
+  "n": 663,
+  "median": 1,
+  "p90": 3,
+  "p95": 4,
+  "p99": 4,
+  "max": 5,
+  "min": 0
+ },
+ "float_page_fill": {
+  "n": 3,
+  "median": 0.847,
+  "p90": 0.967,
+  "p95": 0.967,
+  "p99": 0.967,
+  "max": 0.967,
+  "min": 0.844
+ },
+ "last_imb": {
+  "n": 52,
+  "median": 0.013,
+  "p90": 0.054,
+  "p95": 0.495,
+  "p99": 0.948,
+  "max": 0.948,
+  "min": 0.0
+ },
+ "last_used": {
+  "n": 52,
+  "median": 0.503,
+  "p90": 0.99,
+  "p95": 0.998,
+  "p99": 0.999,
+  "max": 0.999,
+  "min": 0.043
+ },
+ "capwords_Figure": {
+  "n": 499,
+  "median": 10,
+  "p90": 37,
+  "p95": 50,
+  "p99": 78,
+  "max": 91,
+  "min": 1
+ },
+ "capwords_Table": {
+  "n": 258,
+  "median": 9.0,
+  "p90": 31,
+  "p95": 38,
+  "p99": 54,
+  "max": 73,
+  "min": 2
+ },
+ "dist": {
+  "n": 762,
+  "median": 0.0,
+  "p90": 1,
+  "p95": 1,
+  "p99": 5,
+  "max": 8,
+  "min": -2
+ },
+ "dist_hist": {
+  "1": 195,
+  "-1": 68,
+  "0": 467,
+  "2": 10,
+  "5": 5,
+  "7": 1,
+  "8": 1,
+  "-2": 4,
+  "4": 4,
+  "3": 4,
+  "6": 3
+ },
+ "hole_list": [
+  [
+   "icde_2409.06148",
+   [
+    [
+     14,
+     0.31,
+     "bottom"
+    ],
+    [
+     14,
+     0.32,
+     "bottom"
+    ]
+   ]
+  ],
+  [
+   "icde_2505.05738",
+   [
+    [
+     13,
+     0.82,
+     "bottom"
+    ],
+    [
+     13,
+     1.0,
+     "bottom"
+    ]
+   ]
+  ],
+  [
+   "p4159-okolnychyi",
+   [
+    [
+     12,
+     0.18,
+     "bottom"
+    ]
+   ]
+  ]
+ ]
+}
