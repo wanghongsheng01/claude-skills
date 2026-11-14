@@ -682,3 +682,18 @@ pip install -r ccfa-paper-layout-review/scripts/requirements.txt
 python3 ccfa-paper-layout-review/scripts/layoutlint.py main.pdf out/ --log main.log --tex .
 python3 ccfa-paper-layout-review/scripts/floatmap.py main.tex
 ```
+
+## ccfa-references-review
+Reviews the reference list and in-text citations of CCF-A database and NL2SQL papers (PVLDB, SIGMOD research and industrial, ICDE, ACL-family).
+- The norms come from 56 accepted papers from 2024–26. Median printed references are 51.5 for method papers, 57 for benchmark / EA&B papers and 47 for industrial papers. The norms also cover citations per section, the recent and arXiv shares, grouped citations and citations in captions.
+- Red lines R1–R8: minimum reference count; cite every baseline, dataset, metric, tool and LLM at first use; same-author concurrent submissions must be in the bibliography; no unverified entries; cite the published version rather than arXiv; no uncited entries.
+- `reflint.py` checks a .tex/.bib pair against these norms and verifies every entry online (Crossref, arXiv, Semantic Scholar, DBLP). `verify_candidates.py` verifies candidate references before anyone proposes them. The reviewer and the fixer are different agents.
+
+```
+ccfa-references-review/  SKILL.md  requirements.txt  references/{REFERENCE_PRINCIPLES.md,corpus_table.md}
+                         scripts/{reflint.py,verify_candidates.py,refcorpus_stats.py,pdf2cols.py}
+```
+```bash
+pip install -r ccfa-references-review/requirements.txt
+python3 ccfa-references-review/scripts/reflint.py --tex main.tex --type method --online --own "MySystem" --out report.md
+```
