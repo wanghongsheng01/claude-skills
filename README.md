@@ -640,3 +640,30 @@ Ask to “run the reviewer-skim and pre-delivery layout check with pvldb-paper-c
 ```
 
 The lint is calibrated for letter, acmart two-column (612×792 pt). Errors (text overlap, margin overflow, tables at 6 pt) must be zero before delivery; warnings are inspected by eye. A 150 dpi pass on every page remains mandatory and is not replaced by the script.
+
+## CCF-A figure, caption, table and layout review (2026-11-14)
+
+Complements **`pvldb-paper-craft`**, **`amp-figure-design`**, **`write-pvldb`** and **`write-sigmod`**. Those folders are not modified.
+
+- **`ccfa-figure-layout-review`**: hard red lines R1–R16 for figures, captions, tables and page layout:
+  - arrows never cross boxes, and lines never run over labels;
+  - legends never cover data, and axis labels are never clipped;
+  - no text-on-text, a printed font of at least 6 pt, and no overflow or placeholders.
+
+  It also has style rules S1–S29, distilled from 26 accepted 2024–2026 SIGMOD/PVLDB/ICDE papers. The workflow uses two agents: a reviewer, and a separate fixer. The loop repeats until the reviewer reports 0 blocker and 0 major. A render + crop + lint script is included.
+
+```
+ccfa-figure-layout-review/  SKILL.md  references/FIGURE_PRINCIPLES.md  scripts/{figlint.py,fontcensus.py,montage.py,requirements.txt}
+```
+
+### Install
+```bash
+cp -r claude-skills/ccfa-figure-layout-review ~/.claude/skills/
+pip install -r claude-skills/ccfa-figure-layout-review/scripts/requirements.txt   # plus poppler-utils
+```
+
+### Use
+```bash
+python3 ccfa-figure-layout-review/scripts/figlint.py main.pdf out/ --log main.log --dpi 200
+```
+Then open every crop in `out/crops/` and write the review against R1–R16 and S1–S29. Review only pdfTeX/Overleaf builds.
