@@ -9,11 +9,13 @@ Use this skill when a manuscript needs more than a stylistic imitation of accept
 
 ## Evidence available here
 
-This initial corpus contains four purposively selected formal publications, not a representative venue census. Read only the relevant note:
+This corpus contains five purposively selected formal publications, not a representative venue census. Read only the relevant note:
 - Interactive text-to-SQL methods: [Sphinteract](references/sphinteract.md).
 - Benchmark validity and reevaluation: [Annotation-error audit](references/annotation-errors.md).
 - Industrial resource-management design: [ProRP](references/prorp.md).
 - Industrial architecture and governance: [BigLake](references/biglake.md).
+- Industrial metadata provenance and operational reasoning: [Goods close reading](references/goods-close-reading.md).
+- For finer abstract, method-paragraph and figure checks after the Sphinteract overview: [Sphinteract close reading](references/sphinteract-close-reading.md).
 
 Each note distinguishes observed paper structure, interpretation, proposed transfer, and reading limits. Neither acceptance rates nor hidden reviewer preferences can be inferred from this sample. Reference counts, section orders, and figure counts are descriptions, not targets.
 
@@ -32,6 +34,10 @@ Each note distinguishes observed paper structure, interpretation, proposed trans
 - **Method paper:** show the incremental mechanism against the closest runnable neighbour; test ablations and failure regimes, not just a champion score.
 - **EA&B:** seek insight about systems or measurement. A simple baseline winning, tied rankings, or a metric-dependent ordering can be a finding. Do not force an invented method victory.
 - **Industrial:** show requirements, design alternatives, deployment boundary, and operational lessons. Label rollout, replay, simulation, and case studies separately. Do not turn potential avoided work into realized cost savings.
+
+## Executable review worksheet
+
+For a candidate-level audit, use the [claim-to-evidence worksheet](references/claim-review-template.md). It connects per-metric outcomes and budget comparability to paragraph, figure, citation, repair and revalidation anchors. Keep completed candidate worksheets private.
 
 ## Output
 
