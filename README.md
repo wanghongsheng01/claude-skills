@@ -1,5 +1,21 @@
 # Claude skills
 
+## pvldb-data-validation-anatomy
+Section-, paragraph- and sentence-level anatomy of four published PVLDB papers on data quality, data validation and error explanation (SPADE PVLDB 17, Deequ PVLDB 11, YouTube CI/CD for data pipelines PVLDB 18, Scorpion PVLDB 6), with min/median/max bars for every element, a section-by-section review procedure that outputs met/partial/gap with file:line evidence, blocking conditions, and a two-gate reviewer/fixer loop: Gate A checks that the method beats every baseline on every reported metric (ties only at a proven bound such as 0% false alarms or 100% detection) and turns each failure into an algorithm-level requirement; Gate B checks title-to-references alignment with the published papers. 中文：数据质量/数据校验/错误解释方向的 PVLDB 范文解剖与双门审稿循环（说明文字为简体中文，句式模板为英文）。
+
+```
+pvldb-data-validation-anatomy/
+  SKILL.md                          when to use, workflow, quantitative bars, blocking conditions, two-gate loop
+  references/fingerprints.md        per-paper counts, min/median/max ranges, research-track bars
+  references/review-procedure.md    75 section/paragraph rules with exemplar evidence, blocking conditions, report format
+  references/two-gate-loop.md       all-metric dominance matrix, tie rule, reviewer/fixer rounds, approval
+  references/sentence-templates.md  English <slot> templates by section (abstract to conclusion, captions, related work)
+  references/<paper>.md             spade_pvldb17, deequ_pvldb11, youtube_cicd_pvldb18, scorpion_pvldb6 deconstructions
+  references/provenance.md          official PDF URLs, SHA256, sizes, selection rationale, verification method, restore steps
+```
+
+Install: `cp -r claude-skills/pvldb-data-validation-anatomy ~/.claude/skills/`. Use with `review-pvldb`, `submit-pvldb`, `write-pvldb`, `pvldb-paper-craft` and `vldb-exemplar-sop`.
+
 ## pvldb-cache-reuse-anatomy
 Section-by-section anatomy of four published PVLDB papers on caching, result reuse and access control (STsCache PVLDB 18, Crystal PVLDB 14, Microsoft Purview PVLDB 16, Sieve PVLDB 13), plus a two-gate reviewer loop for a candidate paper in that direction: Gate A checks that the method beats every baseline on every reported metric (and turns each failure into an algorithm-level requirement); Gate B checks title-to-references alignment with the published papers.
 
