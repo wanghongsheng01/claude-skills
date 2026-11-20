@@ -1,5 +1,20 @@
 # Claude skills
 
+## pvldb-cache-reuse-anatomy
+Section-by-section anatomy of four published PVLDB papers on caching, result reuse and access control (STsCache PVLDB 18, Crystal PVLDB 14, Microsoft Purview PVLDB 16, Sieve PVLDB 13), plus a two-gate reviewer loop for a candidate paper in that direction: Gate A checks that the method beats every baseline on every reported metric (and turns each failure into an algorithm-level requirement); Gate B checks title-to-references alignment with the published papers.
+
+```
+pvldb-cache-reuse-anatomy/
+  SKILL.md                         when to use, workflow, the ten shared practices, what not to copy
+  references/fingerprints.md       counted fingerprints of the four exemplars and comparison ranges
+  references/section-anatomy.md    rules per section, each with exemplar evidence
+  references/gate-a-all-metrics.md all-metric dominance matrix, tie and lifecycle rules
+  references/review-loop.md        reviewer/fixer round protocol and approval criteria
+  references/exemplars/*.md        full deconstructions (abstract sentence by sentence, intro paragraph by paragraph, every section, experiments, figures/tables, references)
+```
+
+Install: `cp -r claude-skills/pvldb-cache-reuse-anatomy ~/.claude/skills/`. Use with `review-pvldb`, `submit-pvldb` and `pvldb-paper-craft`.
+
 ## academic-latex-polish
 Polishes the English of a LaTeX research paper to the register of published PVLDB/SIGMOD papers. It does not change any fact, number, macro, citation or reference. A preservation checker verifies this after every edited file.
 
