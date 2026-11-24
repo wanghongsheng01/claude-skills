@@ -33,17 +33,19 @@ AI_TICS = [
 ]
 
 def strip_latex(tex: str) -> str:
-    # Remove comments, preamble, algorithms, tables, bibliography
     tex = re.sub(r'(?m)^%.*$', '', tex)
-    m = re.search(r'\\begin\{document\}', tex)
-    if m: tex = tex[m.end():]
+    m = re.search(r'\\begin\{abstract\}', tex)
+    if m: tex = tex[m.start():]
     m2 = re.search(r'\\bibliographystyle', tex)
     if m2: tex = tex[:m2.start()]
     for env in ('algorithm', 'tabular', 'CCSXML', 'quote'):
         tex = re.sub(rf'\\begin\{{{env}\*?\}}.*?\\end\{{{env}\*?\}}', ' ', tex, flags=re.S)
-    tex = re.sub(r'\\(?:cite|ref|label|includegraphics|caption|code|texttt|textbf|emph|textsc)\*?\[?[^\]]*\]?\{([^}]*)\}', r'\1', tex)
+    # Iteratively unwrap formatting commands without eating paragraphs
+    for _ in range(3):
+        tex = re.sub(r'\\(?:textbf|emph|texttt|code|underline|textsc)\{([^{}]*)\}', r'\1', tex)
+    tex = re.sub(r'\\(?:cite|ref|label|includegraphics)\*?\[?[^\]]*\]?\{[^{}]*\}', ' ', tex)
     tex = re.sub(r'\\[a-zA-Z]+\*?(?:\[[^\]]*\])?', ' ', tex)
-    tex = re.sub(r'[{}~]', ' ', tex)
+    tex = re.sub(r'[{}~$]', ' ', tex)
     return re.sub(r'\s+', ' ', tex).strip()
 
 def audit(path: str):
