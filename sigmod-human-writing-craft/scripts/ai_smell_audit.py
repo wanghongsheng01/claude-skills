@@ -30,6 +30,7 @@ AI_TICS = [
     (r'\btakeaway\s*\(rq', 'Takeaway(RQ)'),
     (r'reviewers?\s+rightly\s+ask', 'META:reviewers-rightly-ask'),
     (r'following\s+this\s+[a-z\-]+\s+discipline', 'CLICHE:following-discipline'),
+    (r'\b(?:international|domestic)\b[^\n]{0,35}\b(?:llm|llms|model|models)\b|\b(?:intl\.|dom\.)', 'BANNED:Intl/Dom-Model-Label'),
 ]
 
 def strip_latex(tex: str) -> str:
