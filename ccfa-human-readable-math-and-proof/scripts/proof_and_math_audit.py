@@ -28,11 +28,11 @@ def audit_tex_math_readability(tex: str):
     fails, warns = [], []
     clean = strip_comments(tex)
 
-    # 1. Check baseline-aligned geometric qedsymbol definition in acmart papers
-    if "acmart" in clean and "\\renewcommand{\\qedsymbol}" not in clean:
+    # 1. Enforce Cortex-AISQL / LOTUS clean proof style: ban trailing hollow □ / ■ QED boxes
+    if "\\begin{proof}" in clean and ("\\renewcommand{\\qed}{}" not in clean or "\\renewcommand{\\qedsymbol}{}" not in clean):
         fails.append(
-            "[FAIL][Preamble] Missing baseline-aligned \\renewcommand{\\qedsymbol}{...}; "
-            "default acmart txsya box floats above lowercase baseline."
+            "[FAIL][Preamble] Missing \\AtBeginDocument{\\renewcommand{\\qedsymbol}{}\\renewcommand{\\qed}{}}; "
+            "trailing hollow □ boxes at the right margin resemble missing-glyph tofu boxes in narrow 2-column layouts."
         )
 
     # 2. Check Theorem / Lemma / Proposition blocks for inline \sum / \prod / excessive length
@@ -96,11 +96,11 @@ def audit_pdf_proof_geometry(pdf_path: Path):
                     lines.append((l["bbox"], txt, l["spans"]))
 
         for idx, (bbox, txt, spans) in enumerate(lines):
-            # Check for default txsya tiny box if any slipped through
+            # Flag ANY hollow □ or solid ■ box glyph on proof pages
             for s in spans:
-                if s["text"].strip() == "□" and "txsya" in s["font"]:
+                if s["text"].strip() in {"□", "■", "\ufffd"}:
                     fails.append(
-                        f"[FAIL][PDF p.{pno}] Proof QED uses elevated tiny font '{s['font']}' instead of baseline-aligned geometric Halmos square."
+                        f"[FAIL][PDF p.{pno}] Found box/tofu glyph {repr(s['text'])} (font='{s['font']}') — remove trailing QED boxes via \\renewcommand{{\\qed}}{{}}."
                     )
 
             if txt.upper().startswith("PROOF."):
@@ -164,33 +164,12 @@ def audit_pdf_proof_geometry(pdf_path: Path):
         for r in qed_rects:
             if not any(abs(r.x1 - q.x1) < 6.0 and abs(r.y1 - q.y1) < 6.0 for q in dedup_qeds):
                 dedup_qeds.append(r)
-        if not dedup_qeds:
-            continue
-        lines = []
-        for b in page.get_text("dict")["blocks"]:
-            for l in b.get("lines", []):
-                t = "".join(s["text"] for s in l["spans"]).strip()
-                if t:
-                    lines.append((l["bbox"], t))
-        for qr in dedup_qeds:
-            col_left = 53.8 if qr.x1 < 305 else 317.9
-            matched = [
-                (bb, t) for (bb, t) in lines
-                if abs(bb[0] - col_left) < 30.0 and abs(bb[3] - qr.y1) < 5.0
-            ]
-            if not matched:
-                fails.append(f"[FAIL][PDF p.{pno}] Geometric QED square at y={qr.y1:.1f} is stranded on an empty line!")
-            else:
-                bb, t = matched[0]
-                fill = (bb[2] - bb[0]) / col_width
-                gap = qr.x0 - bb[2]
-                if fill < 0.40:
-                    fails.append(
-                        f"[FAIL][PDF p.{pno}] Proof closing line '{t}' fills only {fill*100:.0f}% "
-                        f"of column width (target 42%-88% so QED is not stranded across a wide blank gap)."
-                    )
-                if gap < 6.0:
-                    fails.append(f"[FAIL][PDF p.{pno}] Proof closing line '{t}' collides with QED square (gap={gap:.1f}pt)!")
+        if dedup_qeds:
+            for qr in dedup_qeds:
+                fails.append(
+                    f"[FAIL][PDF p.{pno}] Found right-margin Proof QED box at (x={qr.x1:.1f}, y={qr.y1:.1f}); "
+                    f"omit trailing □ boxes (Cortex-AISQL/LOTUS style) so no tofu-like box appears."
+                )
 
     return fails, warns
 
