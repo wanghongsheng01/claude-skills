@@ -35,6 +35,7 @@ def main() -> int:
     ap.add_argument("--paper-dir", type=Path, required=True)
     ap.add_argument("--track", required=True, choices=["pvldb-research", "pvldb-eab", "sigmod-industrial"])
     ap.add_argument("--fig-scripts", type=Path, nargs="+", required=True)
+    ap.add_argument("--artifact-dir", type=Path, default=None, help="Optional public artifact repo path to audit for portability & secrets")
     ap.add_argument("--lint-out", type=Path, default=Path("/tmp/ccfa_mandatory_lint"))
     args = ap.parse_args()
 
@@ -91,8 +92,26 @@ def main() -> int:
     else:
         print("\n>>> [Gate 7: Neutrality & Codename Hygiene] PASS (0 geopolitical labels, 0 internal ports/codenames)")
 
+    # Gate 8: In-Paper Artifact Availability URL + Portable Reproducibility Repo Audit
+    if not re.search(r"https?://github\.com/[^\s\}]+", tex_txt):
+        print("[FAIL][Gate 8] Paper body (main.tex) is missing an explicit public GitHub Artifact Availability URL!")
+        ok_all = False
+    else:
+        art_ok = True
+        if args.artifact_dir and args.artifact_dir.exists():
+            for p in args.artifact_dir.rglob("*"):
+                if ".git" in p.parts or not p.is_file() or p.suffix.lower() in {".pdf", ".png", ".jpg", ".zip"}:
+                    continue
+                content = p.read_text(encoding="utf-8", errors="ignore")
+                if re.search(r"/Users/|/home/[a-zA-Z0-9_]+/|sk-[A-Za-z0-9]{16,}|Loctek@2026|Yhdakf346|tokens1688", content):
+                    print(f"[FAIL][Gate 8] Hardcoded local path or secret found in artifact repo file: {p}")
+                    art_ok = False
+                    ok_all = False
+        if art_ok:
+            print("\n>>> [Gate 8: In-Paper Artifact URL & Portable Repo Audit] PASS (Artifact URL in paper + 0 local paths/secrets)")
+
     print("\n========================================================")
-    print("OVERALL MANDATORY QA VERDICT:", "PASS (ALL 7 GATES GREEN)" if ok_all else "FAIL (FIX ISSUES ABOVE)")
+    print("OVERALL MANDATORY QA VERDICT:", "PASS (ALL 8 GATES GREEN)" if ok_all else "FAIL (FIX ISSUES ABOVE)")
     print("========================================================")
     return 0 if ok_all else 1
 

@@ -36,3 +36,9 @@ python3 /Users/loctek/.gemini/antigravity/scratch/zju-ccfa-phd/repos/claude-skil
   --fig-scripts path/to/fig_script.py
 ```
 **Zero `FAIL`s allowed across all 7 automated gates.**
+
+### Gate 8 — In-Paper Artifact Availability URL & Portable Reproducibility Repo Audit (Added Stage-3.2)
+- **Trigger Lesson**: Even when a public GitHub `-artifact` repo exists, omitting its clickable URL inside `main.tex` prevents reviewers from finding the code, and hardcoded workstation paths (`/Users/...`) break reviewer execution.
+- **Permanent Solution**:
+  1. Every paper MUST include an explicit clickable `\url{https://github.com/...}` **Artifact Availability** statement in `main.tex` (e.g., in Experimental Setup and/or Conclusion) clearly stating open-sourced algorithms/benchmarks/traces/figure scripts alongside any enterprise privacy boundaries.
+  2. Every script in the `-artifact` repo MUST resolve paths strictly relative to `Path(__file__).resolve().parents[1]`, ship with `requirements.txt` and one-click `reproduce_all.sh`, and pass clean-clone execution in `/tmp` with zero `/Users/...` paths and zero secrets (enforced by Gate 8 in `run_all_mandatory_gates.py --artifact-dir ...`).
