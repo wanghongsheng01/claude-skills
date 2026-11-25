@@ -1,5 +1,11 @@
 # Claude skills
 
+## DASFAA 2027 Human-Craft, Review & Submission Suite (`write-dasfaa`, `review-dasfaa`, `submit-dasfaa`)
+Empirically distilled from **8 officially published human-authored DASFAA 2024–2026 full papers** (`DynamicPO` DASFAA '26 Best Paper, `OLLA` DASFAA '26, `Trans-RAG` DASFAA '26, `ScoringBias` DASFAA '26, `MAKGED` DASFAA '25 Full Oral, `PET-SQL` DASFAA '25, `KnowProb` DASFAA '25, `SecGraph` DASFAA '24) and unified with all historical `claude-skills` (`write-icde`, `write-pvldb`, `review-icde`, `review-pvldb`, `sigmod-human-writing-craft`, `results-presentation-review` S01–S11, `paper-presubmission-review`, `experiment-analysis-writing`, `manuscript-writing-review`).
+- `write-dasfaa`: Human DASFAA researcher thinking arc, 8-paper stylometric baseline, **10 Laws against Over-Honest AI Self-Sabotage & Self-Negation** (`0/8` published DASFAA papers have `Threats to Validity`, `0/8` self-negate in Abstract/Conclusion), side-by-side Human-vs-AI contrast guide, and `scripts/dasfaa_human_craft_audit.py`.
+- `review-dasfaa`: 5-stage DASFAA PC review simulation (desk screen, S01–S11 2-minute presentation pass, mandatory Self-Negation Audit Appendix, independent 3-reviewer personas + Senior PC Meta-Review, Revision Closure Table).
+- `submit-dasfaa`: DASFAA 2027 official CFP rules (≤ 16 pages A4 LNCS incl. refs, Abstract ≤ 200 words, strict double-blind), Overleaf Git sync, and the mandatory **dual-repo security rule** (neutral `anonymous.4open.science` link in the PDF + dedicated **PRIVATE** GitHub workspace backup repo per paper).
+
 ## ccfa-visual-table-ref-mastery
 End-to-end visual, tabular, float-proximity, proof-formatting, and reference-verification mastery skill distilled from 6 representative SIGMOD Industrial (`FinSQL` '24, `AlayaDB` '25, `Enzyme` '26) and PVLDB (`DAIL-SQL` '24, `LOTUS` '25, `DocETL` '25) papers. Includes `scripts/float_proximity_audit.py` and `scripts/latex_table_and_cite_lint.py`.
 
