@@ -737,3 +737,8 @@ ccfa-references-review/  SKILL.md  requirements.txt  references/{REFERENCE_PRINC
 pip install -r ccfa-references-review/requirements.txt
 python3 ccfa-references-review/scripts/reflint.py --tex main.tex --type method --online --own "MySystem" --out report.md
 ```
+
+### Stage-3 Track Calibration, Anti-Module-Stacking, Human-Readable Math & Permanent 7-Gate QA (Nov 2026)
+- ****: Venue/track novelty calibration matrix (PVLDB Research Foundations vs. Systems, PVLDB EA&B, SIGMOD/VLDB Industrial) + 6-move structural blueprint reverse-engineered from  ('23),  ('24),  ('25),  ('25), and  ('18) to defeat 'too engineering / module-stacking' critiques, with .
+- ****: 5 Golden Laws of breathable mathematical prose, baseline-aligned geometric Halmos QED squares (), and AST-based figure-to-prose formula/symbol consistency auditing ().
+- ****: Master permanent requirement-to-solution ledger + single-command 7-gate QA runner ().
