@@ -1,5 +1,8 @@
 # Claude skills
 
+## ccfa-visual-table-ref-mastery
+End-to-end visual, tabular, float-proximity, proof-formatting, and reference-verification mastery skill distilled from 6 representative SIGMOD Industrial (`FinSQL` '24, `AlayaDB` '25, `Enzyme` '26) and PVLDB (`DAIL-SQL` '24, `LOTUS` '25, `DocETL` '25) papers. Includes `scripts/float_proximity_audit.py` and `scripts/latex_table_and_cite_lint.py`.
+
 ## sigmod-carbon-stage2-craft & pvldb-carbon-stage2-craft & ccfa-carbon-figure-architect
 Permanent **Stage-2 High-Reasoning Scientific, Formal, Modeling, Verification & Figure Upgrade Suite** for ACM SIGMOD (Research & Industrial) and PVLDB (Vol. 17–20):
 - `sigmod-carbon-stage2-craft`: Reverse-engineered from `WAIR` (SIGMOD '26), `Enzyme` (SIGMOD '26 Ind), `AlayaDB` (SIGMOD '25 Ind), `Measures in SQL` (SIGMOD '24 Ind), and `FinSQL` (SIGMOD '24 Ind). Upgrades Stage-1 drafts across four high-barrier dimensions: (1) necessary-and-sufficient theorem derivations & constructive proofs, (2) multivariate risk/cost regime modeling, (3) 10,000-trial property-based / RQG formal verification, and (4) multi-scale estate & operating-point sensitivity sweeps, plus strict international-venue model naming neutrality (`0` "international/domestic" model labels).
