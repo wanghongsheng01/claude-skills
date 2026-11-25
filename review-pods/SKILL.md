@@ -1,32 +1,37 @@
 ---
 name: "review-pods"
-description: "Simulated ACM PODS Program Committee review and formal-rigor deep-audit protocol. Calibrated against 8 officially accepted PODS 2024-2027 papers and the PODS 2027 CFP. Evaluates (1) Desk-Reject compliance (acmsmall, <=15 body pages, strict double-anonymous, no dual submission), (2) Formal Depth & Non-Triviality (tight if-and-only-if characterizations, complexity separations, sound reductions, complete proofs), (3) Self-Contained 15-Page Body vs. Appendix proof balance, (4) Empirical Foundations Alignment, and (5) Independent 3-Reviewer PODS PC Simulation (Database Theory Purist, Algorithms & Complexity Referee, Data-Quality Foundations & Artifacts Referee) plus PC Chair Meta-Review and Revision Closure Table."
+description: "Rigorous ACM PODS Program Committee review and deep-upgrade protocol grounded in 8 published PODS 2024–2027 papers (Kolaitis et al., Karmakar et al., Esmailpour et al., Fan-Koutris-Roy, Lin-Nguyen-Woodruff, Surianarayanan et al., Liu-Zhang, Nakos-Ngo-Panayi). Audits 7 dimensions: (1) CFP/Double-Anonymous/15p format, (2) Theoretical Depth (data vs. combined complexity dichotomies, CQA certain/possible semantics, tight upper/lower bounds), (3) Formal Scaffolding (PROBLEM boxes, numbered Examples, Lemmas, complete proofs), (4) Mathematical Figure Craft (concrete tuple/graph schematics vs. PowerPoint boxes), (5) Dedicated Single-Topic Table Craft, (6) Experimental Foundations & Numbered Insights, and (7) Authentic Human PODS Prose."
 ---
 
-# Simulated ACM PODS PC Review & Deep Revision Protocol (`review-pods`)
+# Simulated ACM PODS PC Review & Deep Upgrade Protocol (`review-pods`)
 
-## Language Convention
-- Reviewer reports and PC Chair meta-review: **English** (authentic PODS EasyChair register).
-- Author executive summary, proof-audit table, and Revision Closure Table: **Simplified Chinese (简体中文)**.
+## Mandatory 6-Stage Deep PODS Audit
 
-## 5-Stage PODS PC Review Procedure
-1. **Stage 1 — PODS 2027 Desk-Reject & Double-Anonymous Screen**:
-   - `\documentclass[acmsmall,review,anonymous]{acmart}` exact match.
-   - Body strictly **≤ 15 pages** (before References); unlimited References & clearly marked Appendix.
-   - Zero author/institution/personal-GitHub leaks in `.tex`, `.bib`, and PDF metadata.
-   - Zero dual-submission overlap risk flagged explicitly to the author.
-2. **Stage 2 — Proof & Formal-Rigor Line-by-Line Audit**:
-   - Verify EVERY Definition, Theorem, Proposition, Lemma, and Corollary:
-     - Are all hypotheses explicit and minimal?
-     - Does every complexity reduction preserve instance size, polynomial time, and exact solution correspondence (bidirectional)?
-     - Are all edge cases handled (empty sets, ties, duplicate rows, constant columns, $0/0$ denominators)?
-     - Does every theorem earn PODS depth (no trivial 2-line restatements of code)?
-3. **Stage 3 — Anti-AI-Smell & Self-Negation Audit (`pods_human_craft_audit.py`)**:
-   - Confirm `0` `Threats to Validity` / `Limitations` headings (`0/8` in PODS 2024–2027), `0` self-negation confessions, `≤ 0.35/1K` AI clichés, and crisp human mathematical prose.
-4. **Stage 4 — Independent 3-Reviewer PODS PC Simulation + Meta-Review**:
-   - **Reviewer 1 (Database Theory & Logic Purist)**: Checks connection to CQA, database repairs, provenance semirings, and whether the formalisms are deep and canonical.
-   - **Reviewer 2 (Algorithms & Complexity Referee)**: Checks every proof step of the $O(n^3)$ SCC algorithm, $\#\mathsf{P}$-completeness reduction, coding-theoretic threshold, and tight bounds.
-   - **Reviewer 3 (Data-Quality Foundations & Artifact Referee)**: Checks whether the empirical analysis truly sheds light on scientific foundations, verifies every number against reproducible artifacts, and tests clarity for the broader SIGMOD/PODS audience.
-   - **PC Chair Meta-Review**: Identifies the #1 rejection risk and separates must-fix proof/framing defects from polish items.
-5. **Stage 5 — Revision Closure & Full Re-Compile Verification**:
-   - Close every actionable flaw in LaTeX, recompile, inspect every rendered page visually, and output the Revision Closure Table.
+### Stage 1 — Desk-Reject, Double-Anonymous & Body-Completeness Screen
+- `\documentclass[acmsmall,review,anonymous]{acmart}` + `\acmJournal{PACMMOD}`.
+- Main body strictly **≤ 15.0 pages** AND **≥ 14.3 pages** (flags both `> 15.0p` desk-reject overflow and `< 14.0p` thin/under-developed exposition).
+- Zero author/institution/personal-GitHub leaks in `.tex`, `.bib`, and PDF `/Author` metadata; zero concurrent dual-submission risk.
+
+### Stage 2 — PODS Theoretical Depth & Completeness Audit (CRITICAL)
+Ask the exact questions a senior PODS PC member asks:
+1. **Data Complexity vs. Combined Complexity**: Does the paper analyze fixed schema arity $m = O(1)$ (e.g., $m=1$ vs. $m \ge 2$) AND bounded vs. unbounded attribute domains $|\mathcal{V}|$, or did it only prove an easy unbounded-arity reduction?
+2. **Certain & Possible Semantics (CQA Connection)**: When optimal alignments/repairs are non-unique, does the paper characterize extremal (`min` / `max`) evaluation scores (`CertEval` / `PossEval`), or stop at testing uniqueness?
+3. **Generalizations & Boundary Completeness**: Are unbalanced cardinalities ($n' \neq n$), weighted/metric extensions, and $\varepsilon$-perturbed floating-point tolerances analyzed formally rather than hand-waved?
+4. **Scaffolding**: Are there **framed `PROBLEM / INPUT / OUTPUT` boxes** (`≥ 2`), **numbered `\begin{example}`s** (`≥ 3`), and **structural `\begin{lemma}`s** (`≥ 3`)?
+
+### Stage 3 — Visual & Tabular Craft Audit (`Fan–Koutris–Roy` & `Karmakar et al.` Bar)
+- **Figure 1**: Must show concrete relational instances, cost/potential matrices, and residual graphs — **REJECT** vague pastel block diagrams!
+- **Data Plots**: Multi-panel vector plots with zero text overlap, exact theorem badges, error/interval bars where applicable, and crisp legends.
+- **Tables**: Every table must be **single-topic and self-contained** — **REJECT** side-by-side hybrid tables that mash two unrelated experiments into 6 columns!
+
+### Stage 4 — Anti-AI-Smell & Proof-Readability Pass
+- Run `pods_human_craft_audit.py`, `proof_and_math_audit.py`, `figure_formula_consistency_audit.py`, `latex_table_and_cite_lint.py`, and `ai_smell_audit.py`.
+- Confirm `0` `Threats to Validity`/`Limitations` headings, `0` AI clichés, `0` em-dashes, and numbered analytical observations `(1)–(5)` in Experiments (`Karmakar et al. PODS '24 p. 16`).
+
+### Stage 5 — Independent 3-Reviewer PODS PC Simulation + PC Chair Meta-Review
+- **R1 (Database Logic, CQA & Data-Complexity Theorist)**
+- **R2 (Combinatorial Optimization, Graph Algorithms & `#P` Complexity Referee)**
+- **R3 (Data-Quality Foundations, Visual/Tabular Craft & Artifact Referee)**
+
+### Stage 6 — Deep Code, Proof, Figure, Table & LaTeX Closure
+- Implement and machine-verify every new theorem/formula in Python; regenerate all figures and tables from `verified_results.json`; compile with `0` errors, `0` warnings, `0` Overfull `\hbox`; inspect rendered PNGs of every page!

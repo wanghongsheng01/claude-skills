@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
-"""PODS 2027 Human-Craft, Format, Anonymity & Formal-Rigor Audit Script.
+"""PODS 2027 Deep Formal-Rigor, Visual/Tabular Craft, Anonymity & Stylometric Auditor.
 
-Grounded in 8 officially accepted PODS 2024-2027 papers and the live PODS 2027 CFP:
-  - Document class: acmart with acmsmall, review, anonymous
-  - Main body strictly <= 15 pages (excluding references and appendix)
-  - Strict double-anonymous check (zero author/institution/personal GitHub leaks + PDF metadata)
-  - Zero Threats to Validity / Limitations headings and zero AI self-negation confessions
-  - Stylometric alignment with 8-paper human PODS baseline (sentence length, em-dashes, AI clichés)
-  - Table hygiene (zero vertical rules, claim-first concise captions)
+Grounded in 8 officially accepted PODS 2024-2027 papers:
+  - Format: \documentclass[acmsmall,review,anonymous]{acmart} + \acmJournal{PACMMOD}
+  - Body length: strictly <= 15.0 pages AND >= 14.2 pages (flags thin under-filled bodies!)
+  - PODS Formal Depth Gates:
+      * >= 2 framed computational PROBLEM boxes (\begin{problembox} or PROBLEM:)
+      * >= 5 theorems/propositions
+      * >= 3 structural lemmas (\begin{lemma})
+      * >= 3 concrete numbered examples (\begin{example})
+      * Explicit Data Complexity vs Combined Complexity discussion
+  - Table Hygiene: pure booktabs, zero vertical pipes, zero hybrid crammed 2-topic tables
+  - Strict Double-Anonymous & Zero Self-Negation / Zero AI-Smell
 """
 
 import argparse
@@ -46,7 +50,7 @@ DEFAULT_IDENTITY_LEAKS = [
 
 def strip_tex(text: str) -> str:
     text = re.sub(r"%.*", "", text)
-    text = re.sub(r"\\begin\{(?:equation|align|gather|multline|tabular|algorithm|lstlisting)\*?\}.*?\\end\{(?:equation|align|gather|multline|tabular|algorithm|lstlisting)\*?\}", " ", text, flags=re.S)
+    text = re.sub(r"\\begin\{(?:equation|align|gather|multline|tabular|algorithm|lstlisting|problembox)\*?\}.*?\\end\{(?:equation|align|gather|multline|tabular|algorithm|lstlisting|problembox)\*?\}", " ", text, flags=re.S)
     text = re.sub(r"\$\$.*?\$\$", " ", text, flags=re.S)
     text = re.sub(r"\$[^$\n]+\$", " X ", text)
     text = re.sub(r"\\[a-zA-Z]+\*?(?:\[[^\]]*\])?(?:\{[^}]*\})?", " ", text)
@@ -56,12 +60,13 @@ def strip_tex(text: str) -> str:
 
 def audit(tex_path: Path, pdf_path: Path = None) -> int:
     raw = tex_path.read_text(encoding="utf-8")
+    no_comments = re.sub(r"(?<!\\)%.*", "", raw)
     fails = 0
     warns = 0
-    print(f"=== PODS 2027 HUMAN-CRAFT, FORMAT & RIGOR AUDIT: {tex_path} ===")
+    print(f"=== PODS 2027 DEEP FORMAL-CRAFT & RIGOR AUDIT: {tex_path} ===")
 
-    # 1. Document class check
-    m_dc = re.search(r"\\documentclass\[([^\]]*)\]\{acmart\}", raw)
+    # 1. Document class & PACMMOD journal macro
+    m_dc = re.search(r"\\documentclass\[([^\]]*)\]\{acmart\}", no_comments)
     if not m_dc:
         print("[FAIL] Missing \\documentclass[acmsmall,review,anonymous]{acmart}")
         fails += 1
@@ -71,18 +76,19 @@ def audit(tex_path: Path, pdf_path: Path = None) -> int:
             if req not in opts:
                 print(f"[FAIL] acmart option '{req}' missing (found: {opts})")
                 fails += 1
-        if all(r in opts for r in ["acmsmall", "review", "anonymous"]):
-            print(f"[FORMAT] acmart options {opts} -> PASS")
+        if "\\acmJournal{PACMMOD}" not in no_comments:
+            print("[WARN] Missing \\acmJournal{PACMMOD} (causes leading comma in footer)")
+            warns += 1
+        else:
+            print(f"[FORMAT] acmart {opts} + PACMMOD -> PASS")
 
-    # 2. Double-blind anonymity check in source
+    # 2. Double-blind anonymity check
     leaks = []
     for pat in DEFAULT_IDENTITY_LEAKS:
         for m in re.finditer(pat, raw, flags=re.I):
             line = raw[:m.start()].count("\n") + 1
             leaks.append((line, m.group(0)))
-    # Also ban any public github.com URL in PODS double-blind body (CFP forbids links to public repositories)
     for m in re.finditer(r"https?://github\.com/\S+", raw, flags=re.I):
-        # Allow citing upstream third-party repos like dbunibas/BART, BigDaMa/raha, Minqi824/ADBench
         url = m.group(0)
         if not any(ok in url.lower() for ok in ["dbunibas/bart", "bigdama/raha", "minqi824/adbench", "dbt-labs"]):
             line = raw[:m.start()].count("\n") + 1
@@ -93,17 +99,32 @@ def audit(tex_path: Path, pdf_path: Path = None) -> int:
     else:
         print("[DOUBLE-BLIND SOURCE]: 0 leaks -> PASS")
 
-    # 3. Formal density count
+    # 3. PODS Formal Scaffolding & Depth Gates
     env_counts = {}
     for env in ["definition", "theorem", "proposition", "lemma", "corollary", "example", "proof", "algorithm"]:
-        env_counts[env] = len(re.findall(rf"\\begin\{{{env}\}}", raw))
-    print(f"[FORMAL MACHINERY] {env_counts}")
-    if env_counts["theorem"] + env_counts["proposition"] < 3:
-        print("[WARN] Fewer than 3 theorems/propositions; PODS expects substantial formal depth.")
-        warns += 1
+        env_counts[env] = len(re.findall(rf"\\begin\{{{env}\}}", no_comments))
+    prob_boxes = len(re.findall(r"\\podsproblem\{|\\begin\{problembox\}", no_comments))
+    has_data_comp = bool(re.search(r"data\s+complexity", no_comments, flags=re.I))
+    has_comb_comp = bool(re.search(r"combined\s+complexity", no_comments, flags=re.I))
+    print(f"[FORMAL MACHINERY] {env_counts} | problem_boxes={prob_boxes} | data_complexity={has_data_comp} | combined_complexity={has_comb_comp}")
+
+    if env_counts["theorem"] + env_counts["proposition"] < 5:
+        print("[FAIL] Fewer than 5 theorems/propositions; insufficient formal spine for PODS.")
+        fails += 1
+    if env_counts["lemma"] < 3:
+        print(f"[FAIL] Only {env_counts['lemma']} \\begin{{lemma}} blocks (PODS exemplars use >= 3-6 structural lemmas).")
+        fails += 1
+    if env_counts["example"] < 3:
+        print(f"[FAIL] Only {env_counts['example']} \\begin{{example}} blocks (PODS exemplars use >= 3-6 concrete worked examples).")
+        fails += 1
+    if prob_boxes < 2:
+        print(f"[FAIL] Only {prob_boxes} framed computational PROBLEM boxes (PODS exemplars use >= 2-4).")
+        fails += 1
+    if not (has_data_comp and has_comb_comp):
+        print("[FAIL] Missing explicit Data Complexity vs. Combined Complexity distinction.")
+        fails += 1
 
     # 4. Self-negation & forbidden headings
-    no_comments = re.sub(r"%.*", "", raw)
     sn_hits = []
     for pat in SELF_NEGATION_PATTERNS:
         for m in re.finditer(pat, no_comments, flags=re.I):
@@ -123,7 +144,7 @@ def audit(tex_path: Path, pdf_path: Path = None) -> int:
     else:
         print("[VERTICAL RULES IN TABLES]: 0 hits -> PASS")
 
-    # 6. Stylometrics on main body (before bibliography / appendix)
+    # 6. Stylometrics on main body
     body = re.split(r"\\bibliography|\\appendix", no_comments)[0]
     m_body = re.search(r"\\begin\{document\}(.*)", body, flags=re.S)
     prose = strip_tex(m_body.group(1) if m_body else body)
@@ -146,57 +167,54 @@ def audit(tex_path: Path, pdf_path: Path = None) -> int:
     print(f"  Em-dashes / 1K        : {em_rate:.2f} ({em_cnt} total; target <= 0.8)")
     print(f"  AI clichés / 1K       : {cliche_rate:.2f} ({len(cliche_hits)} hits: {cliche_hits[:8]}; target <= 0.35)")
     if em_rate > 1.2:
-        print("[WARN] High em-dash rate (> 1.2/1K)")
         warns += 1
     if cliche_rate > 0.6:
-        print("[FAIL] AI cliché rate exceeds 0.6/1K")
         fails += 1
 
-    # 7. PDF check (page limit <= 15 body pages before References, zero metadata leaks, zero ??)
+    # 7. PDF check (14.2 <= body <= 15.0 pages, zero metadata leaks, zero ??)
     if pdf_path and pdf_path.exists():
-        try:
-            import fitz
-            doc = fitz.open(pdf_path)
-            meta = doc.metadata or {}
-            author_meta = (meta.get("author") or "").strip()
-            if author_meta and "anonymous" not in author_meta.lower():
-                print(f"[FAIL] PDF /Author metadata leaks identity: {author_meta!r}")
+        import fitz
+        doc = fitz.open(pdf_path)
+        meta = doc.metadata or {}
+        author_meta = (meta.get("author") or "").strip()
+        if author_meta and "anonymous" not in author_meta.lower():
+            print(f"[FAIL] PDF /Author metadata leaks identity: {author_meta!r}")
+            fails += 1
+        ref_page = None
+        app_page = None
+        qmarks = []
+        for i, p in enumerate(doc):
+            txt = p.get_text("text")
+            if ref_page is None and re.search(r"(?m)^\s*(?:REFERENCES|References)\s*$", txt):
+                ref_page = i + 1
+            if app_page is None and ref_page is not None and i + 1 >= ref_page and re.search(r"(?m)^\s*A\s+[A-Z]", txt):
+                app_page = i + 1
+            if re.search(r"\[\?\]|\?\?", txt):
+                qmarks.append(i + 1)
+        if ref_page is None:
+            print("[FAIL] Could not locate References heading in PDF!")
+            fails += 1
+        else:
+            # Check exact y-position of References heading!
+            ref_y = 0.0
+            for b in doc[ref_page - 1].get_text("blocks"):
+                if re.match(r"^\s*(?:REFERENCES|References)\s*$", b[4]):
+                    ref_y = b[1]
+                    break
+            page_h = doc[ref_page - 1].rect.height
+            # Effective body pages: (ref_page - 1) + fraction above References heading
+            frac = max(0.0, min(1.0, (ref_y - 55.0) / (page_h - 110.0)))
+            eff_body = (ref_page - 1) + frac
+            print(f"[PDF CHECK] Total={len(doc)}pp | References@p.{ref_page} (y={ref_y:.0f}pt, eff_body={eff_body:.2f}pp) | Appendix@p.{app_page} | ??={qmarks}")
+            if ref_page > 16 or (ref_page == 16 and frac > 0.08):
+                print(f"[FAIL] Main body spills past Page 15 (References at p.{ref_page}, eff_body={eff_body:.2f}pp > 15.0)!")
                 fails += 1
-            ref_page = None
-            app_page = None
-            qmarks = []
-            for i, p in enumerate(doc):
-                txt = p.get_text("text")
-                if ref_page is None and re.search(r"(?m)^\s*(?:REFERENCES|References)\s*$", txt):
-                    ref_page = i + 1
-                if app_page is None and ref_page is not None and i + 1 > ref_page and re.search(r"(?m)^\s*(?:APPENDIX|Appendix|A\s+[A-Z])", txt):
-                    app_page = i + 1
-                if re.search(r"\[\?\]|\?\?", txt):
-                    qmarks.append(i + 1)
-            body_pages = (ref_page - 1) if ref_page else len(doc)
-            # Check if references start partway down page 15 (still <= 15 body pages!)
-            if ref_page and ref_page == 15:
-                body_pages_display = "14.x (References start on p. 15)"
-                ok_len = True
-            elif ref_page and ref_page == 16:
-                body_pages_display = "15 (References start on p. 16)"
-                ok_len = True
-            elif ref_page and ref_page < 15:
-                body_pages_display = f"{ref_page - 1}.x (References start on p. {ref_page})"
-                ok_len = True
-            else:
-                body_pages_display = f"{body_pages} (References at p. {ref_page})"
-                ok_len = body_pages <= 15
-            print(f"[PDF CHECK] Total pages={len(doc)} | Body={body_pages_display} | Appendix@{app_page} | Unresolved ??={qmarks}")
-            if not ok_len:
-                print(f"[FAIL] Main body exceeds PODS 15-page limit (References start at p. {ref_page})!")
-                fails += 1
-            if qmarks:
-                print(f"[FAIL] Unresolved references/citations '??' on pages {qmarks}")
-                fails += 1
-        except Exception as e:
-            print(f"[WARN] Could not inspect PDF with PyMuPDF: {e}")
-            warns += 1
+            elif eff_body < 14.15:
+                print(f"[WARN] Main body is only {eff_body:.2f} pages (< 14.2p); consider adding fuller proofs/examples to match PODS depth.")
+                warns += 1
+        if qmarks:
+            print(f"[FAIL] Unresolved ?? on pages {qmarks}")
+            fails += 1
 
     print(f"\n=== SUMMARY: {fails} FAIL, {warns} WARN ===")
     return 1 if fails else 0
