@@ -151,6 +151,17 @@ def audit(tex_path: Path, pdf_path: Path = None) -> int:
         print("[WARN] #P-completeness proved in body, yet FPRAS is only mentioned in Conclusion as an open question — establish exact-vs-FPRAS closure in the body if reducible to bipartite permanent!")
         warns += 1
 
+    # 3C. PODS Story-Novelty, Anti-Folklore Frontier & Cross-Axis Coupling Gate
+    has_frontier_contrast = bool(re.search(r"coNP|NP-complete|NP-hard|APX", body_pre_concl))
+    has_cross_coupling = bool(re.search(r"non-commut|\\PiStar\(\\nu\(D", body_pre_concl, flags=re.I))
+    print(f"[PODS STORY NOVELTY & COHESION] TractabilityFrontier(NP/coNP)={has_frontier_contrast} | CrossAxisNonCommutativity={has_cross_coupling}")
+    if not has_frontier_contrast:
+        print("[WARN] Anti-Folklore Warning: Polynomial algorithms appear without an NP/coNP intractability boundary explaining where P-time breaks (e.g., row-separable vs. pairwise-coupled evaluation).")
+        warns += 1
+    if not has_cross_coupling and re.search(r"four-tuple|comparison\s+contract", body_pre_concl, flags=re.I):
+        print("[WARN] Anti-Collage Warning: Multi-axis contract defined without proving cross-axis non-commutativity / algebraic coupling between axes!")
+        warns += 1
+
     # 4. Self-negation & forbidden headings
     sn_hits = []
     for pat in SELF_NEGATION_PATTERNS:

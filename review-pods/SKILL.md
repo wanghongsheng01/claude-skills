@@ -19,7 +19,10 @@ Ask the exact questions a senior PODS PC member asks (`write-pods/references/pod
 3. **The Four-Way Evaluation Separation (Certain, Possible, Exact Expected/Counting, Approximate `FPRAS`)**: When exact counting/expected evaluation is `#P`-hard, does the paper resolve **approximability (`FPRAS` / `FPAUS`)** (e.g., via `Jerrum–Sinclair–Vigoda` on tight bipartite matchings) rather than embarrassingly listing a known permanent FPRAS as an open problem in Conclusion?
 4. **Beyond Unit Weights & Boundary Completeness**: Are unbalanced cardinalities ($n' \neq n$), **attribute-weighted / general additive costs** (e.g., fractional Dinkelbach matching when error denominators vary), and $\varepsilon$-perturbed tolerances proved formally rather than punted to Future Work?
 5. **Zero Orphan Artifacts & High-Taste Open Problems**: Does every benchmark in the experimental section map 1-to-1 to a formal theorem (zero unmodeled side-benchmarks), and do Conclusion open problems target genuine theoretical frontiers?
-6. **Scaffolding**: Are there **framed `PROBLEM / INPUT / OUTPUT` boxes** (`≥ 2`), **numbered `\begin{example}`s** (`≥ 3`), and **structural `\begin{lemma}`s** (`≥ 3`)?
+6. **Story Novelty, Anti-Folklore Boundary & Cross-Axis Coupling (`write-pods/references/pods-story-novelty-and-reviewer-recognition.md`)**:
+   - **Skeptical PC Test #1 ("Why isn't this folklore Hungarian/Tarjan?")**: Does the paper establish a **counter-intuitive complexity inversion** AND prove the **exact structural boundary** where polynomial time breaks into `NP`/`coNP`-hardness (e.g., row-separable vs. pairwise-coupled evaluation at $m=2$)?
+   - **Skeptical PC Test #2 ("Why isn't this 4 independent mini-notes bundled into a tuple?")**: Does the paper prove a **cross-axis non-commutativity / interaction theorem** (e.g., correspondence $\mathcal{I}_{\mathrm{min}}$ failing to commute with value endomorphism $\nu$) that algebraically couples the chapters?
+7. **Scaffolding**: Are there **framed `PROBLEM / INPUT / OUTPUT` boxes** (`≥ 2`), **numbered `\begin{example}`s** (`≥ 3`), and **structural `\begin{lemma}`s** (`≥ 3`)?
 
 ### Stage 3 — Visual & Tabular Craft Audit (`Fan–Koutris–Roy` & `Karmakar et al.` Bar)
 - **Figure 1**: Must show concrete relational instances, cost/potential matrices, and residual graphs — **REJECT** vague pastel block diagrams!
