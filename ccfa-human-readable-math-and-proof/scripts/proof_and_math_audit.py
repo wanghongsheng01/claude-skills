@@ -24,6 +24,15 @@ def strip_comments(tex: str) -> str:
     return re.sub(r"(?<!\\)%.*", "", tex)
 
 
+def visual_len(s: str) -> int:
+    for _ in range(3):
+        s = re.sub(r"\\(?:mathrm|mathsf|mathcal|mathbb|textbf|emph|texttt|textsc|operatorname|widetilde|widehat|overline|underline|bar|vec|hat|tilde)\{([^{}]*)\}", r"\1", s)
+    s = re.sub(r"\\(?:cite|ref|eqref|label)\{[^}]*\}", "X", s)
+    s = re.sub(r"\\[a-zA-Z]+", "X", s)
+    s = re.sub(r"[{}_^]", "", s)
+    return len(re.sub(r"\s+", " ", s).strip())
+
+
 def audit_tex_math_readability(tex: str):
     fails, warns = [], []
     clean = strip_comments(tex)
@@ -35,46 +44,64 @@ def audit_tex_math_readability(tex: str):
             "trailing hollow □ boxes at the right margin resemble missing-glyph tofu boxes in narrow 2-column layouts."
         )
 
-    # 2. Check Theorem / Lemma / Proposition blocks for inline \sum / \prod / excessive length
-    for m in re.finditer(r"\\begin\{(theorem|lemma|proposition)\}(.*?)\\end\{\1\}", clean, re.S):
+    # 2. Check Theorem / Lemma / Proposition / Definition blocks for inline \sum / \prod / excessive density
+    for m in re.finditer(r"\\begin\{(theorem|lemma|proposition|definition)\}(.*?)\\end\{\1\}", clean, re.S):
         kind, body = m.group(1), m.group(2)
         line_no = clean[: m.start()].count("\n") + 1
-        # Strip display math inside theorem if any
-        inline_only = re.sub(r"\\begin\{(equation\*?|align\*?)\}.*?\\end\{\1\}|\\\[.*?\\\]", "", body, flags=re.S)
-        inline_spans = re.findall(r"\$([^$]+)\$", inline_only)
-        math_chars = sum(len(s) for s in inline_spans)
-        total_chars = max(len(re.sub(r"\s+", " ", inline_only).strip()), 1)
+        # Strip display math inside environment
+        inline_only = re.sub(r"\\begin\{(equation\*?|align\*?|gather\*?)\}.*?\\end\{\1\}|\\\[.*?\\\]", "", body, flags=re.S)
+        inline_spans = [sp for sp in re.findall(r"\$([^$]+)\$", inline_only) if not re.fullmatch(r"[\d.,%+\-/\\\s]+", sp)]
+        compound_spans = [
+            sp for sp in inline_spans
+            if re.search(r"=|\\neq|\\le|\\ge|<|>|\\in\b|\\notin\b|\\subset|\\cup|\\cap|\\triangle|\\oplus|\\mapsto|\\to\b|\+|\-|/|\\\{", sp)
+            and visual_len(sp) >= 5
+        ]
+        math_chars = sum(visual_len(s) for s in compound_spans)
+        total_chars = max(visual_len(inline_only), 1)
         ratio = math_chars / total_chars
-        if len(inline_spans) > 10 or ratio > 0.34:
+        max_compound = 10 if kind in ("theorem", "definition") else 7
+        if len(compound_spans) > max_compound or ratio > 0.28:
             fails.append(
-                f"[FAIL][{kind} @ L{line_no}] Dense inline symbol wall: {len(inline_spans)} inline math spans "
-                f"({ratio*100:.1f}% math chars). Pre-define setup before \\begin{{{kind}}} or use display math."
+                f"[FAIL][{kind} @ L{line_no}] Dense inline symbol wall: {len(compound_spans)} compound inline formulas "
+                f"({ratio*100:.1f}% compound math chars). Pre-define setup before \\begin{{{kind}}} or use display math."
             )
         for sp in inline_spans:
-            if re.search(r"\\(sum|prod|bigcup|bigsqcup|frac)\b", sp):
+            if re.search(r"\\(sum|prod|bigcup|bigsqcup|frac|binom)\b", sp):
                 fails.append(
                     f"[FAIL][{kind} @ L{line_no}] Inline tall operator in {kind} ('${sp[:40]}...$'); "
                     f"move summation/fraction to display equation or pre-theorem definition."
                 )
 
-    # 3. Check Proof blocks: no inline \sum / \frac in final sentence, no massive inline walls
+    # 3. Check Proof blocks paragraph-by-paragraph: no >9-compound-formula bricks, no tall inline math in final sentence
     for m in re.finditer(r"\\begin\{proof\}(.*?)\\end\{proof\}", clean, re.S):
         body = m.group(1).strip()
         line_no = clean[: m.start()].count("\n") + 1
-        inline_only = re.sub(r"\\begin\{(equation\*?|align\*?)\}.*?\\end\{\1\}|\\\[.*?\\\]", " [DISP] ", body, flags=re.S)
-        inline_spans = re.findall(r"\$([^$]+)\$", inline_only)
-        if len(inline_spans) > 12:
-            fails.append(
-                f"[FAIL][proof @ L{line_no}] Proof packs {len(inline_spans)} inline math spans; "
-                f"move multi-step algebra into a clean centered display block."
-            )
+        inline_only = re.sub(r"\\begin\{(equation\*?|align\*?|gather\*?)\}.*?\\end\{\1\}|\\\[.*?\\\]", "\n\n", body, flags=re.S)
+        for p_idx, para in enumerate(re.split(r"\n\s*\n|\\item\b", inline_only), 1):
+            para_s = para.strip()
+            if not para_s:
+                continue
+            p_spans = [sp for sp in re.findall(r"\$([^$]+)\$", para_s) if not re.fullmatch(r"[\d.,%+\-/\\\s]+", sp)]
+            p_comp = [
+                sp for sp in p_spans
+                if re.search(r"=|\\neq|\\le|\\ge|<|>|\\in\b|\\notin\b|\\subset|\\cup|\\cap|\\triangle|\\oplus|\\mapsto|\\to\b|\+|\-|/|\\\{", sp)
+                and visual_len(sp) >= 5
+            ]
+            p_mchars = sum(visual_len(s) for s in p_comp)
+            p_tchars = max(visual_len(para_s), 1)
+            p_ratio = p_mchars / p_tchars
+            if len(p_comp) > 9 or (visual_len(para_s) >= 120 and p_ratio > 0.28):
+                fails.append(
+                    f"[FAIL][proof @ L{line_no}, para {p_idx}] Proof paragraph packs {len(p_comp)} compound inline formulas "
+                    f"({p_ratio*100:.1f}% compound math chars); break paragraph and move algebra into centered display blocks."
+                )
         tail = body[-220:]
         tail_inline = re.findall(r"\$([^$]+)\$", re.sub(r"\\\[.*?\\\]|\\begin\{.*?\}.*?\\end\{.*?\}", "", tail, flags=re.S))
         for sp in tail_inline:
             if re.search(r"\\(sum|prod|frac|bigl|Bigl|left)\b", sp):
                 fails.append(
                     f"[FAIL][proof @ L{line_no}] Tall inline math near proof ending ('${sp[:40]}$'); "
-                    f"stretches baseline leading above QED square."
+                    f"stretches baseline leading above QED."
                 )
 
     return fails, warns

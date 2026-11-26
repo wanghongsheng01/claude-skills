@@ -24,9 +24,14 @@ Ask the exact questions a senior PODS PC member asks:
 - **Data Plots**: Multi-panel vector plots with zero text overlap, exact theorem badges, error/interval bars where applicable, and crisp legends.
 - **Tables**: Every table must be **single-topic and self-contained** — **REJECT** side-by-side hybrid tables that mash two unrelated experiments into 6 columns!
 
-### Stage 4 — Anti-AI-Smell & Proof-Readability Pass
-- Run `pods_human_craft_audit.py`, `proof_and_math_audit.py`, `figure_formula_consistency_audit.py`, `latex_table_and_cite_lint.py`, and `ai_smell_audit.py`.
-- Confirm `0` `Threats to Validity`/`Limitations` headings, `0` AI clichés, `0` em-dashes, and numbered analytical observations `(1)–(5)` in Experiments (`Karmakar et al. PODS '24 p. 16`).
+### Stage 4 — Human Mathematical Readability, Visual Breathing Room & Anti-AI-Smell Pass (CRITICAL)
+- Run `pods_human_craft_audit.py`, `proof_and_math_audit.py`, `figure_formula_consistency_audit.py`, `latex_table_and_cite_lint.py`, and `ai_smell_audit.py` (`0 FAIL` across all 5!).
+- **Inspect for "Symbol-Soup / Wall-of-Math" Anti-Patterns** (`write-pods/references/pods-human-readable-math-and-prose.md`):
+  * **REJECT** paragraphs packing inline set-builders (`\{... : ...\}`), inline slash-fractions, or `> 32%` inline math characters without centered display equations;
+  * **REJECT** italic `\begin{theorem}` / `\begin{lemma}` blocks stuffed with inline parameter definitions or `\sum/\prod/\frac`;
+  * **REJECT** unbroken 15–25 line reduction bricks (enforce bulleted gadget construction + displayed distance/cost cases as in `Kolaitis et al. PODS '25 p. 16`);
+  * **REJECT** compressed inline-math bricks in the Appendix (PODS grants **unlimited Appendix pages** — every Appendix proof must breathe with short `4–7` line paragraphs and centered `align*` / `equation` / `cases` displays!).
+- Confirm `0` `Threats to Validity`/`Limitations` headings, `0` AI clichés, `0` em-dashes, mean sentence length `19–26` words, and clean analytical prose in Experiments.
 
 ### Stage 5 — Independent 3-Reviewer PODS PC Simulation + PC Chair Meta-Review
 - **R1 (Database Logic, CQA & Data-Complexity Theorist)**

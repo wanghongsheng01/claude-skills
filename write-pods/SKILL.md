@@ -31,10 +31,17 @@ Grounded in direct full-text and visual page dissection of **8 officially accept
 6. **Dedicated, Single-Purpose `booktabs` Tables (`Karmakar et al. '24`, `Surianarayanan et al. '26`)**:
    - Never cram two unrelated topics side-by-side into one hybrid table! Give each conceptual or experimental family its own clean, self-contained table with unified precision, explicit regime/complexity columns, and numbered analytical observations `(1)–(5)` in the prose (`Karmakar et al. PODS '24 p. 16`).
 7. **Human PODS Cadence & Zero Self-Sabotage (`0/8` `Threats to Validity` / `Limitations`)**:
-   - Mean sentence length **20–26 words** (SD 11–15), em-dashes **≤ 0.6/1K**, AI clichés **≤ 0.35/1K**, zero trailing `□` tofu glyphs, and complete line-by-line proofs in the body + Appendix.
+   - Mean sentence length **19–26 words** (SD 10–15), em-dashes **≤ 0.6/1K**, AI clichés **≤ 0.35/1K**, zero trailing `□` tofu glyphs, and complete line-by-line proofs in the body + Appendix.
+8. **Human-Pleasant Mathematical Typography & Visual Breathing Room (`references/pods-human-readable-math-and-prose.md`)**:
+   - **Never write inline symbol-soup bricks!** Follow `Kolaitis et al. (PODS '25)` and `Karmakar et al. (PODS '24)`:
+     * **English first, displayed formula second**: Never bury set-builders (`\{(i,a) : ...\}`), fractions, `\sum`, `\prod`, or `\binom` inline inside prose or italic theorem blocks.
+     * **Pre-define setup before `\begin{theorem}` / `\begin{lemma}`**: Define auxiliary counts, weights, or perturbation bounds in upright Roman prose (or a clean display) *before* opening an italic theorem environment, keeping every theorem/lemma concise (`2–7` lines, `≤ 34%` math share).
+     * **Bulleted constructions for reductions & mini-displays for examples**: Break `#P`/`NP` reductions into crisp bullet items (`• Dirty snapshot D'`, `• Clean snapshot D`) + a displayed invariant (`Kolaitis et al. p. 16`), and display example tuples/matchings cleanly (`Fan–Koutris–Roy p. 3`).
+     * **Spacious Appendix proofs (PODS Appendix is UNLIMITED!)**: Never compress Appendix proofs into 25-line inline-math walls! Break every proof into short `4–7` line paragraphs (`≤ 14` inline math spans and `≤ 32%` math chars per paragraph) with centered `equation` / `align*` / `cases` displays.
 
-## 3. Automated Audit Script
+## 3. Mandatory Automated Audit Scripts
 ```bash
 python3 write-pods/scripts/pods_human_craft_audit.py <paper_dir_or_main.tex> --pdf <main.pdf>
+python3 ccfa-human-readable-math-and-proof/scripts/proof_and_math_audit.py <main.tex> <main.pdf>
 ```
-Verifies format, double-anonymous hygiene, 14.2–15.0p body completeness, presence of framed `PROBLEM` boxes, `\begin{example}` & `\begin{lemma}` scaffolding, zero hybrid crammed tables, and human PODS stylometrics (`0 FAIL, 0 WARN`).
+Both scripts must pass with **`0 FAIL, 0 WARN`**.

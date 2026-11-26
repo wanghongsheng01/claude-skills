@@ -48,10 +48,20 @@ DEFAULT_IDENTITY_LEAKS = [
 ]
 
 
+def visual_math_text(s: str) -> str:
+    """Convert LaTeX math/prose string to approximate rendered character sequence."""
+    for _ in range(3):
+        s = re.sub(r"\\(?:mathrm|mathsf|mathcal|mathbb|textbf|emph|texttt|textsc|operatorname|widetilde|widehat|overline|underline|bar|vec|hat|tilde)\{([^{}]*)\}", r"\1", s)
+    s = re.sub(r"\\[a-zA-Z]+", "X", s)
+    s = re.sub(r"[{}_^]", "", s)
+    return re.sub(r"\s+", " ", s).strip()
+
+
 def strip_tex(text: str) -> str:
     text = re.sub(r"%.*", "", text)
-    text = re.sub(r"\\begin\{(?:equation|align|gather|multline|tabular|algorithm|lstlisting|problembox)\*?\}.*?\\end\{(?:equation|align|gather|multline|tabular|algorithm|lstlisting|problembox)\*?\}", " ", text, flags=re.S)
-    text = re.sub(r"\$\$.*?\$\$", " ", text, flags=re.S)
+    text = re.sub(r"\\begin\{(?:equation|align|gather|multline|tabular\*?|algorithm|lstlisting|problembox)\*?\}.*?\\end\{(?:equation|align|gather|multline|tabular\*?|algorithm|lstlisting|problembox)\*?\}", " ", text, flags=re.S)
+    text = re.sub(r"\\\[.*?\\\]|\$\$.*?\$\$", " ", text, flags=re.S)
+    text = re.sub(r"\\item\b", ". ", text)
     text = re.sub(r"\$[^$\n]+\$", " X ", text)
     text = re.sub(r"\\[a-zA-Z]+\*?(?:\[[^\]]*\])?(?:\{[^}]*\})?", " ", text)
     text = re.sub(r"[{}]", " ", text)
@@ -166,10 +176,61 @@ def audit(tex_path: Path, pdf_path: Path = None) -> int:
     print(f"  Sentence length       : mean={mean_sl:.1f}w, SD={sd_sl:.1f}w (PODS human: 19.9-26.4w, SD 11.5-15.0w)")
     print(f"  Em-dashes / 1K        : {em_rate:.2f} ({em_cnt} total; target <= 0.8)")
     print(f"  AI clichés / 1K       : {cliche_rate:.2f} ({len(cliche_hits)} hits: {cliche_hits[:8]}; target <= 0.35)")
+    if mean_sl > 28.0:
+        print(f"[WARN] Mean sentence length {mean_sl:.1f}w > 28.0w; split semicolon/parenthetical chains for smoother reading.")
+        warns += 1
     if em_rate > 1.2:
         warns += 1
     if cliche_rate > 0.6:
         fails += 1
+
+    # 6B. Paragraph-Level & Appendix-Level Math Readability / Anti-Symbol-Wall Gate
+    doc_body_m = re.search(r"\\begin\{document\}(.*)\\end\{document\}", no_comments, flags=re.S)
+    full_doc = doc_body_m.group(1) if doc_body_m else no_comments
+    # Replace display blocks, tables, figures, algorithms, and problem boxes with paragraph breaks
+    prose_scan = re.sub(
+        r"\\begin\{(?:table\*?|figure\*?|algorithm|equation\*?|align\*?|gather\*?|multline\*?|CCSXML)\}.*?\\end\{(?:table\*?|figure\*?|algorithm|equation\*?|align\*?|gather\*?|multline\*?|CCSXML)\}|\\\[.*?\\\]",
+        "\n\n",
+        full_doc,
+        flags=re.S,
+    )
+    prose_scan = re.sub(r"\\podsproblem\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}", "\n\n", prose_scan)
+    wall_hits = []
+    setb_hits = []
+    pos = 0
+    for blk in re.split(r"\n\s*\n|\\item\b", prose_scan):
+        idx = prose_scan.find(blk, pos)
+        lno = prose_scan[:idx].count("\n") + 1
+        pos = max(pos, idx + len(blk))
+        b = blk.strip()
+        if len(b) < 180:
+            continue
+        all_spans = [sp for sp in re.findall(r"\$([^$]+)\$", b) if not re.fullmatch(r"[\d.,%+\-/\\\s]+", sp)]
+        compound_spans = [
+            sp for sp in all_spans
+            if re.search(r"=|\\neq|\\le|\\ge|<|>|\\in\b|\\notin\b|\\subset|\\cup|\\cap|\\triangle|\\oplus|\\mapsto|\\to\b|\+|\-|/|\\\{", sp)
+            and len(visual_math_text(sp)) >= 5
+        ]
+        mchars = sum(len(visual_math_text(s)) for s in compound_spans)
+        tchars = max(1, len(visual_math_text(b)))
+        ratio = mchars / tchars
+        if len(compound_spans) > 10 or ratio > 0.28:
+            wall_hits.append((lno, len(compound_spans), round(ratio * 100, 1), re.sub(r"\s+", " ", b)[:65]))
+        for sp in all_spans:
+            if len(visual_math_text(sp)) >= 22 and re.search(r"\\\{.*(?::|\\mid).*\\\}", sp):
+                setb_hits.append((lno, sp[:55]))
+    if wall_hits:
+        print(f"[FAIL] Dense inline symbol-wall paragraphs ({len(wall_hits)} hits; max 16 spans & <=33% math chars):")
+        for h in wall_hits[:10]:
+            print(f"       L~{h[0]}: {h[1]} spans ({h[2]}% math) -> {h[3]!r}...")
+        fails += 1
+    if setb_hits:
+        print(f"[FAIL] Long inline set-builders buried in prose ({len(setb_hits)} hits; move to display math):")
+        for h in setb_hits[:8]:
+            print(f"       L~{h[0]}: '${h[1]}...$'")
+        fails += 1
+    if not wall_hits and not setb_hits:
+        print("[MATH READABILITY & BREATHING ROOM]: 0 symbol-wall paragraphs, 0 buried set-builders -> PASS")
 
     # 7. PDF check (14.2 <= body <= 15.0 pages, zero metadata leaks, zero ??)
     if pdf_path and pdf_path.exists():
