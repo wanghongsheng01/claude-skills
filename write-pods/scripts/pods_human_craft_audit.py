@@ -134,6 +134,23 @@ def audit(tex_path: Path, pdf_path: Path = None) -> int:
         print("[FAIL] Missing explicit Data Complexity vs. Combined Complexity distinction.")
         fails += 1
 
+    # 3B. PODS Mother-Tongue Alignment & Exact-vs-Approximate Completeness Gate
+    body_pre_concl = re.split(r"\\section\{Conclusion\}|\\bibliography|\\appendix", no_comments)[0]
+    concl_match = re.search(r"\\section\{Conclusion\}(.*?)(?:\\bibliography|\\appendix|\\end\{document\})", no_comments, flags=re.S)
+    concl_text = concl_match.group(1) if concl_match else ""
+    has_cqa_anchor = bool(re.search(r"consistent\s+query\s+answering", body_pre_concl, flags=re.I))
+    has_incomp_anchor = bool(re.search(r"incomplete\s+(?:database|representation|information|instance)|representation\s+system|valuation", body_pre_concl, flags=re.I))
+    has_sharpp = bool(re.search(r"#\\mathsf\{P\}|\\sharp\s*P|#P", body_pre_concl))
+    has_fpras_body = bool(re.search(r"\bFPRAS\b|\bFPAUS\b|fully\s+polynomial[- ]time\s+randomized\s+approximation", body_pre_concl, flags=re.I))
+    has_fpras_concl_only = (not has_fpras_body) and bool(re.search(r"\bFPRAS\b|randomized\s+approximation\s+scheme", concl_text, flags=re.I))
+    print(f"[PODS MOTHER-TONGUE & CLOSURE] CQA={has_cqa_anchor} | Incomplete/Valuations={has_incomp_anchor} | #P_in_body={has_sharpp} | FPRAS_in_body={has_fpras_body}")
+    if not has_cqa_anchor or not has_incomp_anchor:
+        print("[WARN] Weak PODS mother-tongue anchoring: explicitly ground the model in CQA and Incomplete Databases / Valuations vs. Completions (Suggestion 0.1).")
+        warns += 1
+    if has_sharpp and has_fpras_concl_only:
+        print("[WARN] #P-completeness proved in body, yet FPRAS is only mentioned in Conclusion as an open question — establish exact-vs-FPRAS closure in the body if reducible to bipartite permanent!")
+        warns += 1
+
     # 4. Self-negation & forbidden headings
     sn_hits = []
     for pat in SELF_NEGATION_PATTERNS:

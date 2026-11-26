@@ -12,12 +12,14 @@ description: "Rigorous ACM PODS Program Committee review and deep-upgrade protoc
 - Main body strictly **≤ 15.0 pages** AND **≥ 14.3 pages** (flags both `> 15.0p` desk-reject overflow and `< 14.0p` thin/under-developed exposition).
 - Zero author/institution/personal-GitHub leaks in `.tex`, `.bib`, and PDF `/Author` metadata; zero concurrent dual-submission risk.
 
-### Stage 2 — PODS Theoretical Depth & Completeness Audit (CRITICAL)
-Ask the exact questions a senior PODS PC member asks:
-1. **Data Complexity vs. Combined Complexity**: Does the paper analyze fixed schema arity $m = O(1)$ (e.g., $m=1$ vs. $m \ge 2$) AND bounded vs. unbounded attribute domains $|\mathcal{V}|$, or did it only prove an easy unbounded-arity reduction?
-2. **Certain & Possible Semantics (CQA Connection)**: When optimal alignments/repairs are non-unique, does the paper characterize extremal (`min` / `max`) evaluation scores (`CertEval` / `PossEval`), or stop at testing uniqueness?
-3. **Generalizations & Boundary Completeness**: Are unbalanced cardinalities ($n' \neq n$), weighted/metric extensions, and $\varepsilon$-perturbed floating-point tolerances analyzed formally rather than hand-waved?
-4. **Scaffolding**: Are there **framed `PROBLEM / INPUT / OUTPUT` boxes** (`≥ 2`), **numbered `\begin{example}`s** (`≥ 3`), and **structural `\begin{lemma}`s** (`≥ 3`)?
+### Stage 2 — PODS Theoretical Depth, Mother-Tongue Alignment & Completeness Audit (CRITICAL)
+Ask the exact questions a senior PODS PC member asks (`write-pods/references/pods-evaluation-and-mother-tongue-positioning.md`):
+1. **Community Mother-Tongue Alignment (建议 0.1)**: Does the paper open and reason in native PODS ontology (**Incomplete Representation Systems**, **Valuations vs. Completions**, **Certain / Possible / Expected Evaluation**, **Operational vs. State Repairs**, **Morphism Commutativity**, **Data vs. Combined Complexity**), or does it read like an ML/engineering pipeline audit with lemmas bolted on?
+2. **Data Complexity vs. Combined Complexity & Valuations vs. Completions**: Does the paper analyze fixed schema arity $m = O(1)$ ($m=1$ vs. $m \ge 2$) AND distinguish syntactic witness bijections (`valuations`) from induced target instances (`completions`, parsimonious `#P`-completeness)?
+3. **The Four-Way Evaluation Separation (Certain, Possible, Exact Expected/Counting, Approximate `FPRAS`)**: When exact counting/expected evaluation is `#P`-hard, does the paper resolve **approximability (`FPRAS` / `FPAUS`)** (e.g., via `Jerrum–Sinclair–Vigoda` on tight bipartite matchings) rather than embarrassingly listing a known permanent FPRAS as an open problem in Conclusion?
+4. **Beyond Unit Weights & Boundary Completeness**: Are unbalanced cardinalities ($n' \neq n$), **attribute-weighted / general additive costs** (e.g., fractional Dinkelbach matching when error denominators vary), and $\varepsilon$-perturbed tolerances proved formally rather than punted to Future Work?
+5. **Zero Orphan Artifacts & High-Taste Open Problems**: Does every benchmark in the experimental section map 1-to-1 to a formal theorem (zero unmodeled side-benchmarks), and do Conclusion open problems target genuine theoretical frontiers?
+6. **Scaffolding**: Are there **framed `PROBLEM / INPUT / OUTPUT` boxes** (`≥ 2`), **numbered `\begin{example}`s** (`≥ 3`), and **structural `\begin{lemma}`s** (`≥ 3`)?
 
 ### Stage 3 — Visual & Tabular Craft Audit (`Fan–Koutris–Roy` & `Karmakar et al.` Bar)
 - **Figure 1**: Must show concrete relational instances, cost/potential matrices, and residual graphs — **REJECT** vague pastel block diagrams!
