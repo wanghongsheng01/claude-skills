@@ -97,6 +97,6 @@ For each paper:
 
 1. Re-read `submit-pvldb` official pages (access date).
 2. Check caps, related submissions, template, page count, artifact (EA&B: full package).
-3. Scientific review on the dimensions of §2.
+3. Scientific review on the dimensions of §2 (for SQL lineage, schema/premise drift, or incremental validation papers, additionally apply all 7 red-team checks in `references/pvldb-drift-lineage-review-rubric.md`: compiled-PDF algorithm line-number check, per-branch `UNION ALL` soundness, 4-case edge testing, headline-range vs. min-cell CI audit, uncached latency & double-rounding prevention, `Combined-Classic` union baseline + standalone public-benchmark $p$-values, and 180 DPI serif/equation-tag check).
 4. Self-negation pass of §3.
 5. If the task is plan-only, **stop**: deliver the review and the rewrite plan; do not edit the manuscript until the author approves.
