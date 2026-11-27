@@ -1,5 +1,27 @@
 # Claude skills
 
+## 12-Venue CCF-A / Tsinghua-A Complete Writing + Adversarial Final-Review Suite (`write-*` + `review-*`)
+End-to-end paired writing & pre-submission Program Committee final-review protocols covering **12 top computer science venues**, built from official CFP / OpenReview / HotCRP / ACM SIGSOFT Empirical Standards rubrics, accepted-paper craft deconstructions, and real adversarial final-review catch patterns (proof-completeness red-teaming, white-box parser/crypto audits, `PYTHONHASHSEED` determinism guards, `Decimal(..., ROUND_HALF_UP)` zero-drift JSON reconciliation, 180 DPI visual proofread, wipe-first `/tmp` cleanroom reproduction, and strict venue-native formatting):
+
+| Venue (CCF-A / TH-CPL A) | Writing Skill | Adversarial PC Final-Review Skill | Signature Review Gates |
+|---|---|---|---|
+| **IEEE ICDE Industry** | `write-icde-industrial` | `review-icde-industrial` | Composite revision-fenced cache vs. out-of-band DDL, strongest safe same-catalog baselines, standalone public-benchmark validity, `<= 12p` 0-appendix, CMT `<= 2,000` chars |
+| **USENIX OSDI** | `write-osdi` | `review-osdi` | Clock-free safety vs. bounded-skew liveness, external consensus/2PC impossibility, crash-window superseded-version & Safe-GC stress tests, `SIGKILL` timeline + P99.9 CDF, `<= 12.0p` 0-appendix |
+| **ACM PODS** | `write-pods` | `review-pods` (+ `references/pods-view-rewriting-review-rubric.md`) | Singleton/FD EGD completeness in $\Pi_2^p$ reductions, anchor-free determinacy witnesses, feasible-init Dinkelbach, explicit `FPT` layering, `14.3–15.0p` body |
+| **PVLDB** | `write-pvldb` | `review-pvldb` (+ `references/pvldb-drift-lineage-review-rubric.md`) | Compiled-PDF `algorithmic` line-number verification, per-branch `UNION ALL` soundness, 4-case edge tests, `Combined-Classic` union baseline, `<= 12p`, anti-self-negation |
+| **ACL ARR (ACL/EMNLP)** | `write-acl-arr` | `review-acl-arr` | Decoupled Soundness/Excitement rubric, 3-family judge `Fleiss' \kappa`, exact paired McNemar & 10K bootstrap 95% CIs, `+Tok` / API-dollar accounting, mandatory `Limitations`, `<= 8.0p` |
+| **IJCAI** | `write-ijcai` | `review-ijcai` | Phase-1 general-AI triage, global vs. greedy $\Omega(T)$ trap proofs, Pineau/IJCAI Reproducibility 5-tuple + 9-point sensitivity sweep, strict `7+2=9p` 0-appendix |
+| **ACM SIGMETRICS / *POMACS*** | `write-sigmetrics` | `review-sigmetrics` | Modern L1 policies (`LFU/ARC/S3-FIFO/W-TinyLFU`) + Belady-MIN oracle + `B/entry` accounting, diurnal & Markov non-stationarity checks, warm-up & LP grid convergence, `<= 20.0p` |
+| **ACM SIGSOFT ISSTA** | `write-issta` | `review-issta` | Strict 4-axis `Threats to Validity` (incl. `Conclusion Validity`), actionable `Data Availability`, dual nonparametric tests (Wilcoxon/$\hat{A}_{12}$ + McNemar/Cliff's $\delta$), native `Answer to RQk` boxes |
+| **ACM SIGIR** | `write-sigir` | `review-sigir` | `PYTHONHASHSEED` cross-artifact determinism guard (`< 1e-6`), `>= 10,000` paired randomization + Holm–Bonferroni exact $p$-values across all tables, sub-ms `ms` latency accounting, `<= 9.0p` 0-appendix |
+| **ICML** | `write-icml` | `review-icml` | Line-by-line proof checks (ESS direction + deterministic upper-surrogate concentration), assumption-violation stress tests + 100-split risk quantiles, `Impact Statement`, PDF `/Author` scrub, `<= 8.0p` |
+| **USENIX ATC** | `write-atc` | `review-atc` | Zero Benchmarking Crimes (all sweep points disclosed), real-OS vs. harness scope boundary, Lifecycle Hygiene 3-pack (RCU GC + `SO_LINGER` zero-FD leak + live cross-channel isolation), `<= 12.00p` 0-appendix |
+| **USENIX Security** | `write-usenix-security` | `review-usenix-security` | White-box lexical-shadowing parser red-teaming, crypto `(kid, token)` revocation code-to-claim parity, multi-turn adaptive budgets ($k=1..16$), complex benign FPR, exact canonical `Ethical Considerations` (Menlo Report) & `Compliance with the Open Science Policy`, `<= 13.0p` |
+
+See also `ccfa-permanent-submission-ledger` (R1–R12) for the permanent **Prompt-First → Venue Peer-Review Absorption → Adversarial Final Review → Last-Mile Elevation → Skills Crystallization** closed-loop protocol.
+
+---
+
 ## PODS 2027 Human-Craft, Formal-Rigor Review & Submission Suite (`write-pods`, `review-pods`, `submit-pods`)
 Empirically distilled from **8 officially accepted ACM PODS 2024–2027 full papers** (`Karmakar et al.` PODS '24, `Kolaitis et al.` PODS '25, `Esmailpour et al.` PODS '25, `Fan et al.` PODS '25, `Lin–Nguyen–Woodruff` PODS '26, `Surianarayanan et al.` PODS '26, `Liu–Zhang` PODS '26, `Nakos–Ngo–Panayi` PODS '27 Cycle 1) and verified against the live PODS 2027 Call for Research Papers (`\documentclass[acmsmall,review,anonymous]{acmart}`, `<= 15` body pages excluding references and unlimited appendix, strict double-anonymous on EasyChair).
 - `write-pods`: Formal theory-plus-evidence paper architecture, 8-paper PODS stylometric & formal-density baseline (`0/8` `Threats to Validity`, `0/8` standalone `Limitations`, median `40` references, `0.00–0.35/1K` AI clichés), 15-page body vs. unlimited appendix proof discipline, and automated `scripts/pods_human_craft_audit.py`.
