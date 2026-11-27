@@ -46,10 +46,16 @@ Grounded in direct full-text and visual page dissection of **8 officially accept
    - **Broken-Premise Hook**: Open by contrasting classical DB theory's explicit premise (e.g., persistent tuple identifiers in optimal repairs, `Livshits–Kimelfeld–Roy PODS '18`) against quotiented/incomplete representations where witnesses are erased.
    - **Complexity Inversion + Anti-Folklore Frontier**: Pair every polynomial-time algorithm that uses classical graph/LP primitives (e.g., `CertEval` $\in \mathsf{P}$ for row-separable cell metrics despite `#P`-hard counting/`ExpEval`) with its **exact intractability boundary** (e.g., `NP`/`coNP`-completeness at fixed arity $m = 2$ the instant evaluation couples pairs of rows!), proving *why* tractability holds rather than looking like a folklore application.
    - **Cross-Axis Non-Commutativity (Defeating "4-Module Collage" Smell)**: Prove mathematically that the axes of a multi-part abstraction do **not** commute in general (e.g., $\Pi^*(\nu(D), \nu(D')) \cap \Pi^*(D, D') = \emptyset$), demonstrating algebraic coupling across sections.
+11. **Pre-Submission 3-Reviewer PODS PC Final Review, Vector Box-Overflow Audit & Cleanroom Artifact Gate (`references/pods-pc-final-review-rubric.md`)**:
+   - Execute a final 3-reviewer simulated PODS PC review (Complexity & Proof Soundness, Algorithms & Operating Regimes, Visual Geometry & Page Budget):
+     * Seal subtle proof traps: distinguish reductions **parsimonious on positive instances** when solution spaces are always non-empty (`|\mathcal{T}^*| >= 1`), ban vague `"and similarly..."` parentheticals in hardness proofs, state explicit multi-metric threshold mappings (`Prec/Rec/F1`) and Hoeffding TV-bias splits, and anchor non-identifiability in information-theoretic **query determinacy** (`Nash–Segoufin–Vianu TODS '10`).
+     * Include a native-prose `\paragraph{Operating Regimes and Algorithmic Crossovers.}` (no engineering `Limitations` sections or bold `Takeaway:` badges), `0% arXiv` verified publisher DOIs, and a cleanroom-tested anonymous `reviewer_repo/` (`0` `/Users/` paths, `0` leaks, verbatim Appendix C filenames).
+     * Run `scripts/figure_overlap_audit.py` on every vector figure PDF to eliminate box-border text overflow (e.g., wide math formulas colliding with arrowheads) before 155+ DPI visual sign-off, and guarantee **exact `≤ 15.00` main-body pages** (`0` body lines on Page 16).
 
 ## 3. Mandatory Automated Audit Scripts
 ```bash
 python3 write-pods/scripts/pods_human_craft_audit.py <paper_dir_or_main.tex> --pdf <main.pdf>
 python3 ccfa-human-readable-math-and-proof/scripts/proof_and_math_audit.py <main.tex> <main.pdf>
+python3 write-pods/scripts/figure_overlap_audit.py <paper_dir>/figures
 ```
-Both scripts must pass with **`0 FAIL, 0 WARN`**.
+All three scripts must pass with **`0 FAIL, 0 WARN`**.
