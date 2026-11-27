@@ -45,3 +45,4 @@ Ask the exact questions a senior PODS PC member asks (`write-pods/references/pod
 
 ### Stage 6 — Deep Code, Proof, Figure, Table & LaTeX Closure
 - Implement and machine-verify every new theorem/formula in Python; regenerate all figures and tables from `verified_results.json`; compile with `0` errors, `0` warnings, `0` Overfull `\hbox`; inspect rendered PNGs of every page!
+- For papers involving **view determinacy, authorization-safe query rewriting, TGDs/EGDs, $\Pi_2^p$/$\mathrm{coNP}$ reductions, or Dinkelbach fractional repair**, additionally run every red-team proof check in `references/pods-view-rewriting-review-rubric.md` (singleton-value & FD EGD completeness, zero implicit anchor-tuple assumptions, feasible-assignment Dinkelbach initialization, explicit `FPT` layering, and 1-to-1 body-to-appendix proof accounting).
