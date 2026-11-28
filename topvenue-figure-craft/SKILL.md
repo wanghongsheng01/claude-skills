@@ -132,6 +132,46 @@ accent hue) in one table. If two rows share archetype and layout, change one of 
 whose intent fits its second-choice archetype better. Shared house style (palette, fonts, stroke widths) is
 fine. A shared template is not.
 
+## Portfolio-Wide Before/After Redesign Retrospective (12-Venue Production Practice)
+Applying this workflow end-to-end across a 12-paper portfolio spanning all 12 venues replaced 12 homogeneous
+"pipeline + running-example" diagrams with **12 visually distinct Figure 1 archetypes** and eliminated **352 FAIL
+and 139 WARN** geometry defects (`491 → 0`) under `--strict` automated audit plus 180 DPI visual proofread:
+
+| Venue | Paper Domain | Redesigned Figure 1 Archetype | Tooling | Strict Geometry Audit |
+|---|---|---|---|---|
+| ICDE Ind | Access-control rewriting | A8 Authorization Grid Before/After + Flat Deployment Anchor | Native TikZ | 67 FAIL / 11 WARN → 0/0 |
+| OSDI | Distributed lease recovery | A3 Dual-Lane Shared Timeline (Prior Crash vs. Guarded Takeover) | Native TikZ | 62 FAIL / 18 WARN → 0/0 |
+| PODS | Complexity classification | A10 Three-Lane Complexity Landscape (instance moved to Table) | Native TikZ | 16 FAIL / 5 WARN → 0/0 |
+| PVLDB | Multi-plane catalog drift | A4 Four-Plane Color-Paired Alignment + Quantitative 2×2 Matrix | Native TikZ | 30 FAIL / 11 WARN → 0/0 |
+| ACL ARR | Claim staleness verification | A7 Single-Column Page-1 Right-Column Text-Span Teaser | Native TikZ | 45 FAIL / 14 WARN → 0/0 |
+| IJCAI | Constrained agent planning | A5 Planar State-Transition Trellis + Right Impact Strip | Native TikZ | 31 FAIL / 7 WARN → 0/0 |
+| SIGMETRICS | Cache freshness modeling | A5 Continuous Phase Map + Oracle Floor & Tail Evidence | Matplotlib (`STIX`) | 41 FAIL / 30 WARN → 0/0 |
+| ISSTA | Conformance mutation testing | A6 Minimal Reproducing Code (lines 01–09) + Diff Oracle Witness | Native TikZ | 3 FAIL / 0 WARN → 0/0 |
+| USENIX ATC | Proxy fault/drift isolation | A9 Log-Log Granularity Pareto Trajectory + Normalized Failure Bars | Matplotlib (`STIX`) | 10 FAIL / 2 WARN → 0/0 |
+| SIGIR | Post-purchase outcome ranking | A1 Single-Column Page-1 Right-Column Empirical Motivation Scatter | Matplotlib (`STIX`) | 15 FAIL / 21 WARN → 0/0 |
+| ICML | Conformal risk under premise shift | A5/A13 Boolean Premise-Lattice Partition + Coverage-Collapse Curve | Matplotlib (`STIX`) | 8 FAIL / 18 WARN → 0/0 |
+| USENIX Sec | Multi-app gateway security | A2 2×2 Isomorphic Attack/Defense Contrast Matrix (Split Channel) | Native TikZ | 24 FAIL / 2 WARN → 0/0 |
+
+### Cross-Venue Native TikZ Production Recipes
+1. **Compile standalone previews with the exact target venue class and font packages** (`IEEEtran` + `courier`, `acmart` with `acmsmall,nonacm`, `usenix-2020-09`, `ijcai27.sty`, etc.). Templates such as `ijcai27.sty` enlarge `\footnotesize` to 9 pt; specify explicit `\fontsize{8}{9.6}\selectfont` inside TikZ styles when strict parity is required.
+2. **Always load `\usepackage[T1]{fontenc}`** whenever TikZ nodes contain underscores (`\_`). Without `T1`, TeX draws `\_` as a separate vector rule that triggers false-positive `TEXT_ON_LINE` audit failures.
+3. **Eliminate cross-hair dividers in 2×2 and aligned grids**: draw short independent rules under each header and a single horizontal row separator with 4–6 mm white gutters between columns rather than a crossing `+` wireframe.
+4. **Never stack rounded containers**: encode architecture hierarchy with flat background regions (no border stroke) or physically split input shapes (e.g., trusted credential channel above untrusted payload channel) so edges connect straight to borders without piercing parent frames.
+
+### Cross-Venue Matplotlib Production Recipes
+1. **Safe `twinx()` dual-axis tick hiding**: `twinx()` draws duplicate x-tick text on top of the primary axis (`TEXT_OVERLAP`). Hide only the secondary axis tick labels via `ax_r.tick_params(axis="x", which="both", bottom=False, labelbottom=False)` and `for lbl in ax_r.get_xticklabels(): lbl.set_visible(False)` — **never** call `ax_r.set_xticks([])`, which wipes the shared primary ticks.
+2. **Decouple text from callout arrows**: place callout prose in clean whitespace using `ax.text(...)`, then draw an empty-text pointer `ax.annotate("", xy=..., xytext=...)` stopping 2–4 pt short of the curve/bar so arrowheads never clip text or data markers. Use `textcoords="offset points"` on log-scale bars.
+3. **Avoid filled triangle (`^`, `v`) and diamond (`D`) scatter markers near axes or annotations**: static vector-PDF audits parse tiny filled polygons as arrowheads (`DANGLING_ARROW`); prefer circles (`o`), squares (`s`), hollow rings, or crosses.
+4. **Match body serif typography at 1:1 width**: author figures at exact single-column (`3.30–3.35 in`) or double-column (`6.9–7.0 in`) width with `font.serif = ["Times New Roman", "Times", "STIXGeneral"]`, `mathtext.fontset = "stix"`, and `pdf.fonttype = 42`. Guard against missing Unicode symbols in `STIXGeneral` (e.g., render stars via `$\star$` or `DejaVu Sans`, not bare `★`).
+5. **Prevent legend collisions cleanly**: keep top legends strictly inside the `[0, 1]` figure box via explicit `subplots_adjust(top=...)`; for paired subplots sharing baselines, replace two per-axis legends with one centered `fig.legend(..., ncol=N)`. On direct-labeled horizontal bars, drop vertical gridlines and allocate a dedicated clean lane (`> 3 pt` clearance) for `0.0%` baseline labels.
+
+### Narrow-Column Formatting Coupling (Fix Together With Figures)
+Before final sign-off, pair the figure geometry audit with a narrow-column LaTeX formatting pass targeting **0 body `Underfull \hbox (badness >= 2000)`**:
+1. **Upright theorem list labels**: inside italic `theorem`/`proposition` environments, use `\begin{enumerate}[label=\textup{\arabic*.}]` so item numbers stay upright Roman and never mix italic digits with upright colons.
+2. **Lift unbreakable wide inline formulas**: move long `sup`/probability/fraction inline formulas out of 3.3-inch columns into display equations to cure giant inter-word gaps.
+3. **Tame long monospace identifiers**: scale monospace fonts to match Times x-height (e.g., `\usepackage[scaled=0.88]{zi4}` in USENIX/IEEE instead of unscaled Courier), enable breakable underscores (`\_\penalty0\hspace{0pt}`) or `\allowbreak`, and add `\hyphenation{...}` guards for technical words and system names.
+4. **Audit `.bbl` capitalization and bibliography raggedness**: add `\raggedright` around `named.bst` bibliographies if narrow columns stretch DOIs/titles, and inspect `main.bbl` directly to brace-protect proper nouns and title words following `?` or `!` under `plain.bst`.
+
 ## Final checklist (all must be true)
 - [ ] Intent sentence written; the figure shows it without the caption.
 - [ ] Archetype chosen from the table; unique within the portfolio.
