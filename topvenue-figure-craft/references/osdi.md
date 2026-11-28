@@ -29,3 +29,11 @@ Llumnix (OSDI'24, Fig. 1). Open-access PDFs: usenix.org/system/files/osdi2X-<aut
 ## Avoid
 A large generic boxes-and-arrows architecture on page 1 with no data or contrast; crossing leader lines; labels on lines;
 text below 6 pt; a sentence inside every box; many colours without meaning.
+
+## Lessons from a real Figure 1 redesign (systems crash-consistency / fencing paper)
+1. Replace sprawling architecture box-and-arrow diagrams with an A3 dual-lane timeline on a shared physical time axis (top lane = unguarded failure path in alert hue, bottom lane = guarded path in accent hue): it naturally eliminates crossing edges and conveys fault mechanism + empirical outcome numbers in 3 seconds.
+2. In 8 pt Times TikZ cards (`mathptmx` + `[T1]{fontenc}`), avoid negative line spacing (`\\[-1pt]`) and combined prime+subscript short math tokens (e.g., `$X_2'$`), which trigger PyMuPDF inter-line bounding-box overlap flags; use positive spacing (`\\[1.5pt]`) and local bolding for titles/numbers rather than bolding entire nodes.
+3. In matplotlib dual-y-axis timelines (`ax.twinx()`), explicitly hide the secondary axis x-ticks (`ax_r.tick_params(axis="x", which="both", bottom=False, top=False, labelbottom=False, labeltop=False)` and `ax_r.xaxis.set_visible(False)`) to eliminate duplicate overlaid x-tick text collisions.
+4. Decouple matplotlib annotation text from arrows (`ax.text(...)` in whitespace + empty-string `ax.annotate("", ...)` stopping short of curves) so the annotation bounding box never spans across plotted lines; on log-scale bar charts spanning 4–5 orders of magnitude, place value labels using physical `textcoords="offset points", xytext=(0, 3.8)` rather than multiplicative y-offsets.
+5. Keep shared top legends strictly inside the `[0, 1]` figure canvas (`bbox_to_anchor=(0.5, 0.99)` with `tight_layout(rect=[0, 0, 1, 0.84])` and `+0.3 in` height) to avoid `TEXT_OUTSIDE_CANVAS` failures.
+6. Under `usenix-2020-09.sty` + `amsthm`, enforce upright theorem list numbers (`\setlist[enumerate]{font=\normalfont}`), insert `\allowbreak` in long monospace identifiers, add `[T1]{fontenc}` + `\hyphenation{}`, and wrap proper system names in `{...}` in BibTeX because `plain.bst` lowercases non-initial title words.
