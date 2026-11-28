@@ -31,3 +31,11 @@ Blinded by Generated Contexts (ACL'24, Fig. 1, 3).
 ## Avoid
 Text < 6 pt (aim for ≥ 7 pt); a full-width architecture or multi-panel pipeline on page 1; piles of raster icons; decorative colours with no meaning;
 long loop-back connectors (use numbered panels or regroup repeated elements to show iteration).
+
+## Lessons from a real Figure 1 redesign (ACL single-column page-1 teaser)
+1. For a page-1 right-column A7 text-span teaser, avoid inline `\colorbox` tight boxes around spans (they disrupt Times line rhythm and trigger `TEXT_ON_BORDER`); instead use bold semantic-color spans in clean running text paired with spacious (`>= 16 pt` tall, `>= 3.5 pt` vertical clearance) softly tinted verdict-comparison rows below.
+2. In narrow ACL 11 pt columns, set TikZ paragraph nodes with `align=flush left`, `\footnotesize` (9 pt, 81.8% of body), and `anchor=base` for aligned column headers/metrics so node interiors stay free of `Underfull \hbox` and baseline jitter.
+3. Keep page-1 teaser cross-references anchored inside the Introduction (pages 1–2): referencing a page-1 Figure 1 again for the first time in a later Method section (page 3) can trigger `float_proximity_audit` `|\Delta p| > 1` flags if the intro mention is skipped by automated parsers—discuss the concrete example by name in Section 3 instead.
+4. On grouped horizontal/vertical bar charts, add sibling bar gaps (`bar_width ≈ 0.68 × step`), suppress gridlines crossing bars, and place bar-end values with `annotate(..., xytext=(4.5, 0), textcoords="offset points")` to clear `TEXT_ON_BORDER` in both `run` and `pdf` audit modes.
+5. Place vertical threshold labels on line plots inside an open whitespace band *above* the highest curve (`+8–10%` `ylim` headroom) directly beside the dashed line, avoiding horizontal callout arrows crossing rising curves.
+6. Clear ACL narrow-column `Underfull \hbox >= 2000` stretches by adding `\_\allowbreak` + `{\small\texttt{...}}` for long field names, lifting long inline math ranges into compact 2-line `gather*` blocks, distinguishing upright method names from monospace dataset tags, protecting proper nouns/surnames via `\hyphenation{}`, and using `>{\raggedright\arraybackslash}p{...}` in wide text appendix tables.
