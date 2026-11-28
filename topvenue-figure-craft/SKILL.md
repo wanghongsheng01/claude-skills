@@ -7,10 +7,16 @@ description: "Design, redraw and audit Figure 1 / overview figures for top-venue
 
 A reviewer decides in about ten seconds whether Figure 1 makes a point. In a reverse-engineering study of
 about fifty Figure 1s from 2023–2026 papers at twelve venues (per-venue notes in `references/`), only about
-28% were architecture diagrams. Most of those were industry or platform papers or background figures, and
-several were weak. The "pipeline band on top + running-example band below" template appeared once, and it
-worked there only because its lower band stated numbered guarantees instead of retelling the pipeline.
-**Strong Figure 1s argue why something matters. They do not catalogue what was built.**
+28% were architecture diagrams (mostly industry, platform, or workflow-integration papers). **Strong Figure 1s
+argue why something matters rather than merely cataloguing modules.**
+
+Importantly, **do not blanket-ban or label the "top pipeline + bottom running-example" dual-band layout as a
+weak archetype.** It is a legitimate, effective Figure 1 design when a paper genuinely benefits from pairing an
+end-to-end mechanism overview with a concrete visual trace, step-by-step data transformation, or numbered
+guarantees (e.g., *C-RAG*, ICML'24, Fig. 1). What fails in practice is **(1) portfolio sameness** — stamping
+every paper in a submission batch with the exact same template regardless of contribution type — and **(2) poor
+execution** (nested box-in-box crossings, prose walls instead of visual instances, rainbow equal-weight boxes,
+tiny non-body fonts). Choose the archetype **case-by-case** to fit the paper's core claim.
 
 Use this skill together with any venue-specific layout or review skill you already have. It does not replace them.
 
@@ -51,7 +57,7 @@ keep the one in which the claim is visible without reading the caption.
 | Software testing / repair | A6 minimal reproducing code with oracles as comments | A2 | pipeline on page 1 |
 | Security defence | A2 2×2: existing/ours × benign/attack, with the real attack string | threat model with only the attack path coloured | icons without any concrete attack |
 | AI / neuro-symbolic / constrained decoding | A5 trellis or path sketch, or A2 N+1 panels | A13 | clip-art |
-| Industry / platform paper | A12 annotated architecture with ①②③ zoom-ins and one contribution colour | A4 | unfocused all-module diagram |
+| Industry / platform / multi-stage certified workflow | A12 annotated architecture (incl. well-crafted top-pipeline + bottom visual-trace/guarantee dual band when the lower band adds concrete evidence) | A4 | unfocused all-module diagram or prose-wall lower band |
 
 ### 3. Composition
 - **One reading path** (left→right, or top→bottom), ending at the claim or the number.
@@ -123,14 +129,17 @@ and rewrite them. Never run a figure generator inside a directory you are not al
 - Plotting-library default fonts at 5–6 pt next to a serif body text. Raster exports.
 - Clip-art, emoji, logos and comic fonts in a research figure.
 - Caption opening with "Overview of X" or "Illustration of …".
-- **Portfolio sameness:** every paper's Figure 1 built from the same template (top pipeline band + bottom example band).
+- **Portfolio sameness:** mechanically stamping every paper's Figure 1 with the same layout (for instance, forcing every paper into a top-pipeline + bottom-example template) regardless of whether that archetype fits the paper's core contribution. *(The dual-band form itself is valid when well-matched to a paper and executed cleanly; blanket reuse across a whole portfolio is the anti-pattern.)*
 
 ## Portfolio uniqueness rule
 When several papers are prepared together (one group, one author, one submission season), no two Figure 1s may
 share an archetype *and* layout. Before drawing, list each paper's (intent sentence, archetype, layout,
 accent hue) in one table. If two rows share archetype and layout, change one of them, starting with the paper
 whose intent fits its second-choice archetype better. Shared house style (palette, fonts, stroke widths) is
-fine. A shared template is not.
+fine. A shared template across every paper is not. **Never blanket-ban any valid archetype** (including the
+top-pipeline + bottom-running-example dual band): keep it whenever it is genuinely the clearest fit for a
+specific paper, provided the lower band draws a real visual trace/data/guarantee instance (not a prose wall),
+one accent hue establishes visual focus, and geometry passes `0 FAIL / 0 WARN`.
 
 ## Portfolio-Wide Before/After Redesign Retrospective (12-Venue Production Practice)
 Applying this workflow end-to-end across a 12-paper portfolio spanning all 12 venues replaced 12 homogeneous

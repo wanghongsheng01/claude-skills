@@ -136,13 +136,19 @@ Sketch legend: `[box]`, `==>` accent edge, `-->` neutral edge, `xx` failure mark
 
 ---
 
-## Why the "pipeline band + running-example band" template reads as generic
-1. It shows what was built, not why it matters.
-2. Every box has equal weight, so there is no focal point.
-3. Two horizontal bands mean two reading paths.
-4. The example is written as prose, not drawn.
-5. Nested containers force edges through borders and titles.
-6. The same template across many papers reads as mass-produced.
-7. A full-width page-1 figure crowds out the introduction.
+## Evaluating the "pipeline band + running-example band" dual-band layout (Case-by-Case, Never Blanket-Ban)
+**Do not categorize the top-pipeline + bottom-running-example dual band as an inherently weak figure type.**
+It is a completely valid, strong Figure 1 choice when a paper's contribution genuinely requires both an end-to-end
+stage overview and a concrete visual walkthrough or formal guarantee band.
 
-The one published case where it works (C-RAG, ICML'24) uses the lower band for *numbered guarantees*. That is new information, not a retelling of the pipeline.
+### When it works well (use and support it)
+1. **End-to-end transformation or certified pipeline papers** where the core contribution is how each stage transforms an input or establishes a formal guarantee (e.g., *C-RAG*, ICML'24, Fig. 1, where the lower band states numbered risk guarantees rather than repeating prose).
+2. **Vertical alignment between bands:** each element in the lower concrete instance (real data tuple, code diff, intermediate state, or formal guarantee) aligns cleanly beneath the corresponding upper stage so the eye follows one unified flow.
+3. **High-craft execution:** flat (non-nested) stage layout, one contribution accent hue + one alert hue, body serif typography ($\ge 80\%$ body size), zero border/title crossings (`0 FAIL / 0 WARN`), and visual instances instead of prose paragraphs.
+
+### When it fails (the execution & portfolio pitfalls to avoid — not the layout itself)
+1. **Portfolio-wide mechanical repetition:** forcing *every* paper in a multi-paper batch into the exact same dual-band template even when a motivation plot, 2×2 contrast, code diff, or timeline would argue the point far more directly.
+2. **Equal-weight rainbow boxes with no focal point:** 4–6 saturated hues giving every module identical visual weight so the contribution disappears.
+3. **Prose walls in the lower band:** writing 3–4 line English sentences that merely retell the upper boxes instead of drawing a concrete data cell, code line, state transition, or numbered guarantee.
+4. **Deep box-in-box nesting:** multi-layer rounded containers that force arrows across borders and title bands.
+5. **Tooling & sizing mismatch:** 5–6 pt default plotting-library sans-serif fonts next to a 10 pt serif paper, or an oversized page-1 banner crowding out the introduction when single-column fits better.
