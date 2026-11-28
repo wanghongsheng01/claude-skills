@@ -32,3 +32,11 @@ A faster FPRAS for #NFA (PODS'24, Fig. 1); control: Rewriting Consistent Answers
 ## Avoid
 Slide-style architectures with icons, shadows or gradients (they read as a systems paper posing as theory); box-and-arrow pipelines without
 any concrete query, instance, class or reduction; decorative colours; text < 6 pt; undeclared encodings.
+
+## Lessons from a real Figure 1 redesign (database theory / complexity landscape paper)
+1. Inside `acmsmall`'s narrow `396 pt` single-column text width, replace filled lane rectangles with thin light-gray horizontal divider rules starting to the right of the vertical lane labels (with small breaks where cross-lane dashed edges pass): this preserves minimalist PODS elegance and prevents nested-container `LINE_CROSSES_BORDER` collisions.
+2. Use concise single-line 90°-rotated lane labels on the left margin to recover ~30 pt of horizontal room, keeping ≥ 55 pt clean arrow-annotation corridors between 3 complexity columns while holding font size ≥ 8.0 pt (80% of 10 pt body).
+3. Under `acmart`'s `newtxmath`, stacked complexity classes with both subscript and superscript (such as `\Pi_2^p`) can be split by PDF line extraction into tightly touching vertical fragments flagged as `TEXT_OVERLAP`; inserting a tiny horizontal kern (`\Pi_2\kern0.4pt^{p}`) preserves standard mathematical appearance while eliminating horizontal bbox collision.
+4. Compile standalone TikZ preview audits with `\documentclass[acmsmall,nonacm]{acmart}` and `\pagestyle{empty}` (cropped to content) rather than `standalone.cls`, guaranteeing pixel-exact `LinLibertineT` + `newtxmath` metrics identical to the submission PDF.
+5. Keep concrete 5–8 row running relational instances as native `booktabs` LaTeX tables (with underlined primary keys `\underline{id}`) instead of cramming them into Figure 1, letting Figure 1 focus strictly on the tight complexity boundaries and theorem roadmap.
+6. For accompanying empirical matplotlib plots in theory papers, match serif fonts (`STIX Two Text` / `STIXGeneral`), hide `twinx()` duplicate bottom x-ticks explicitly, and decouple text (`ax.text`) from arrows (`ax.annotate("", ...)`) so annotations never intersect plotted curves.
