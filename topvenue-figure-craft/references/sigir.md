@@ -29,3 +29,11 @@ counter-example: Evaluating Retrieval Quality in Retrieval-Augmented Generation 
 ## Avoid
 Default plotting styles pasted as is (gray grid, legend over axis label, 5–6 pt); one colour per method with no meaning; low-resolution rasters
 (≥ 300 dpi effective if raster at all); large gray text blocks in Figure 1; a full-width architecture on page 1.
+
+## Lessons from a real Figure 1 redesign (IR empirical motivation scatter paper)
+1. When placing a single-column A1 motivating scatter plot at the top of page 1 (right column) in ACM `sigconf`, explicitly cite Figure 1 inside the opening Introduction paragraph directly below it so `float_proximity_audit` records exact same-page proximity (`p.1 -> p.1, delta=0`).
+2. Put global correlation statistics and sample size (`Spearman ρ = ..., p = ... · N items`) cleanly on a single subtitle line above the axes rather than inside the scatter canvas, keeping the plot interior free of boxed legends or outlier label collisions.
+3. On `twinx()` dual-y sensitivity curves, never call `ax2.set_xticks([])` (which clears the shared bottom axis ticks on `ax1`); instead hide only secondary tick labels (`ax2.tick_params(axis="x", which="both", bottom=False, labelbottom=False)` plus `lbl.set_visible(False)` for `ax2.get_xticklabels()`).
+4. On horizontal grouped bar plots, keep each bar height near ~20% of group pitch with `>= 3 pt` intra-group gap and center dashed group dividers inside the open gap so end-of-bar value labels clear adjacent borders cleanly.
+5. When switching matplotlib to `STIXGeneral` (to match `acmart`'s Linux Libertine), check stderr for `Glyph missing` warnings on decorative Unicode characters like `★` (U+2605) and replace them with standard ASCII/STIX text or math symbols for zero fallback glyphs.
+6. Use filled vs. hollow circles and squares (`o`/`s` + `mfc="white"`) instead of solid triangles/diamonds on Pareto scatter plots, and turn off background gridlines behind directly annotated bars/scatters.
