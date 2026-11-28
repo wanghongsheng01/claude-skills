@@ -33,3 +33,11 @@ supplementary systems paper on prefix-cache sharing for LLM serving (POMACS 10(3
 ## Avoid
 Saturated default plot colours mixed with highlighter colours; our curve overlapping the baselines (use an inset or log axis); small slide-software text and raster icons;
 noun-phrase or duplicated captions; curves leaving the axes without clipping or annotation.
+
+## Lessons from a real Figure 1 redesign (performance modeling / caching paper)
+1. Pairing a 2D closed-form regime map (left panel: analytical decision boundary separating gain/over-cost/degenerate regimes overlaid with real workload optima) with an empirical evidence curve anchored to an offline oracle lower bound (right panel: multi-policy tail latency + single bidirectional gap arrow) convinces both theory and systems *POMACS* reviewers in 10 seconds.
+2. Match `acmsmall` serif body typography in matplotlib with `STIXGeneral` + `mathtext.fontset="stix"`, and position all labels and shared top legends strictly inside `[0, 1] × [0, 1]` via explicit `subplots_adjust` (avoiding implicit `bbox_inches="tight"` cropping) so median text stays `>= 8.2 pt` with zero `TEXT_OUTSIDE_CANVAS`.
+3. On dual-y (`twinx()`) plots, hide secondary x-ticks explicitly with `ax_r.tick_params(axis="x", which="both", bottom=False, top=False, labelbottom=False, labeltop=False)` in addition to `ax_r.xaxis.set_visible(False)` to prevent duplicate overlaid bottom tick text.
+4. Keep curve callouts collision-free by decoupling `ax.text` in open whitespace from an empty-text short arrow `ax.annotate("", xy=..., xytext=...)` stopping 2–3 pt outside the target curve, and truncate vertical threshold lines below legend boxes so `LEGEND_OVER_DATA` never fires.
+5. Replace full 2D gridlines with subtle horizontal-only major gridlines (`yaxis.grid(alpha=0.35)`) and swap filled triangle/diamond markers for circles, squares, or pluses (`o`, `s`, `P`) to keep curves airy and prevent false arrowhead detection in static PDF audits.
+6. In long `acmsmall` theory+measurement manuscripts, load `enumitem` with `\setlist[enumerate]{label=\textup{(\arabic*)}, ref=\textup{\arabic*}}` for upright theorem numbering, protect proper names in `\hyphenation{}`, keep method names upright vs. monospace dataset/trace names, and clear all `Underfull \hbox >= 2000` stretches.
