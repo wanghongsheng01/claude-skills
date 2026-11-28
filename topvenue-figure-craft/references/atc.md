@@ -32,3 +32,11 @@ Distributed Transactions at Scale (ATC'23, Fig. 1, 2).
 ## Avoid
 Raster exports; rotated labels; low-density full-width figures; diagonals crossing containers or each other;
 diagram-software default colours used without meaning; lightning-bolt connectors; mixing emoji or clip-art with line art.
+
+## Lessons from a real Figure 1 redesign (systems gateway / isolation paper)
+1. Replace nested box-and-arrow gateway diagrams with an A9 log-log design-space Pareto trajectory plot showing how competing granularities scale across catalog size against a hard protocol/context ceiling while the proposed system anchors the optimal lower-left corner—conveying systems contribution in 5 seconds with zero box crossings.
+2. When a systems paper resolves three heterogeneous failure modes with different units (drop %, tail ms, miss %), place them in a companion horizontal bar panel normalized to `Baseline = 100%` severity while printing the exact raw physical values and reduction factors to the right of each bar—eliminating dual-y clutter while preserving full quantitative honesty.
+3. Highlight Pareto or optimal zones using borderless softly tinted `Rectangle(..., edgecolor="none")` regions with `>= 4 pt` clearance from adjacent labels and trajectories rather than hard-stroked inner boxes.
+4. Set all matplotlib figures in USENIX systems papers to `STIXGeneral` / Times serif (`>= 7.2–8.5 pt`, Type 42 vector embedding), distinguishing curves by filled vs. hollow circles/squares and line styles rather than solid triangle/diamond markers.
+5. Place horizontal frameless legends (`frameon=False`) centered in top subplot padding with `tight_layout(rect=[0, 0, 1, 0.96])` instead of corner boxed legends that crowd bar labels.
+6. Clear USENIX narrow-column `Underfull \hbox >= 2000` stretches with `[T1]{fontenc}`, upright `enumitem` lists, `\hyphenation{}` proper-noun guards, `\allowbreak` inside long monospace identifiers/inline sets, lifting multi-parameter recurrences to display equations, and wrapping proper nouns / special-symbol terms (e.g., `{$\mu$Kernel}`) in `{...}` in BibTeX for `plain.bst`.
