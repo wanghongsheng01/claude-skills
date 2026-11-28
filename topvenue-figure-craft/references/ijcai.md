@@ -29,3 +29,11 @@ Resolving Conflicting Evidence in Automated Fact-Checking: A Study on Retrieval-
 ## Avoid
 Comic fonts, cartoon emoji and logo piles; mixing four font families; span or background arrows leaving boxes or crossing text;
 one saturated colour per baseline in bar charts; "Overview of …" / "Illustration of …" captions; typos.
+
+## Lessons from a real Figure 1 redesign (neuro-symbolic constrained decoding paper)
+1. Watch out for `ijcai27.sty` redefining `\footnotesize` to 9 pt (instead of 8 pt in standard `article`): a wide TikZ figure that fits in a standalone preview will crowd once embedded. Either compile previews with the real IJCAI `.sty` or explicitly lock `\fontsize{8}{9.6}\selectfont` (exact 80% of 10 pt body).
+2. For sequential neuro-symbolic / state-machine papers, draw an A5 state-transition trellis using subtle gray grid dots instead of full-span horizontal/vertical gridlines, and pick a real trace where the compared trajectories maintain a clean vertical partial order—yielding a strictly planar, zero-crossing contrast between illegal jumps, greedy local traps, and the globally optimal legal path.
+3. Avoid filled triangle/diamond markers at polyline endpoints in matplotlib plots: static PDF geometry analyzers interpret 3–4-vertex solid polygons near line ends as arrowheads, triggering false dangling-arrow flags; prefer solid/hollow circles, squares, or hexagons.
+4. On horizontal grouped bar charts with end-of-bar value labels, derive row spacing from actual point height (`>= 7.5 pt` per bar pitch), drop redundant vertical gridlines, and place legends strictly inside `[0, 1]` to achieve `0 FAIL` in both `run` and `pdf` audit modes.
+5. On Pareto / budget-sweep curves, truncate vertical reference markers to a local dashed delta segment spanning *only* between the baseline and proposed curve at the target budget (preventing full-height `axvline` from cutting through legends), and decouple unboxed whitespace labels from leader lines.
+6. Eliminate IJCAI narrow-column `Underfull \hbox >= 2000` stretches by lifting wide inline recurrences into display equations, forcing upright `\textup{(i)}`/`\textup{(1)}` list labels inside theorems, and wrapping `named.bst` bibliographies in `\raggedright` to prevent white-space rivers caused by long hanging `[Author et al., Year]` citations.
