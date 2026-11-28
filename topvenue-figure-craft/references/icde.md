@@ -29,3 +29,11 @@ An Efficient and Effective Evaluator for Text2SQL Models on Unseen and Unlabeled
 ## Avoid
 Noun-phrase captions over a screen of identical boxes; clip-art; one colour used for both "problem" and "our result"; 4–5 pt annotations;
 semi-transparent overlays carrying key information; raster figures; figures overlapping their captions; labels sitting on polylines.
+
+## Lessons from a real Figure 1 redesign (industry track, authorization paper)
+1. Standalone TikZ previews for IEEEtran must load `\usepackage[T1]{fontenc}` and `\usepackage{courier}`; IEEEtran typesets `\ttfamily` in the wider Courier, so a preview compiled with the narrower default typewriter font can pass the audit and then collide once embedded.
+2. Use `anchor=base` for grid column headers so words with and without descenders sit on one baseline.
+3. Under OT1, `\_` is drawn as a separate rule that a PDF audit reports as text-on-line; T1 encoding renders it as a glyph (check that no Type 3 fonts appear).
+4. An A8 before/after matrix works for industry papers when paired with a flat 3–4 node deployment anchor on the left (25–30% width, no nesting), leaving about 70% of the width for the aligned grids and ending each grid with the production number.
+5. Horizontal grouped bars pass the 2 pt clearance only when the gap between paired bars exceeds half the bar height plus about 0.08 and value labels sit 3–4% of the axis width beyond the bar end.
+6. On log-scale line plots, place the annotation for a real production point in the whitespace to the right of the last data point, with a short horizontal arrow, instead of between curves.
