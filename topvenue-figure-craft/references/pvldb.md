@@ -27,3 +27,11 @@ Membrane: Safe and Performant Data Access Controls in Apache Spark in the Presen
 ## Avoid
 A background architecture (for example a stock engine diagram) in Figure 1 with the change not marked; 3–5 pt gray italic explanations;
 6 or more hues, logos or icon piles; long dashed loops across containers; labels on colour-block borders; raster figures.
+
+## Lessons from a real Figure 1 redesign (multi-plane lineage / validation paper)
+1. For multi-representation / multi-plane database problems, align one concrete metric across equal-width columns separated only by thin `0.45 pt` vertical hairlines and pair matching elements strictly by semantic color (accent blue = controlled premise, alert vermilion = silent disagreement)—eliminating every box-in-box nesting and cross-container arrow.
+2. In native TikZ bottom contrast strips, avoid vertical divider lines drawn inside a rounded outer frame (they trigger `LINE_THROUGH_TITLE`); instead place three flat side-by-side cards (dashed prior blind-spot card, solid method card, short orthogonal border-to-border arrow, solid outcome-numbers card) for zero nesting and zero dangling arrows.
+3. Compile standalone PVLDB TikZ previews with the exact `acmart.cls` + `pvldb.sty` + `[T1]{fontenc}` + `anchor=base` so Linux Libertine (9 pt body) and Inconsolata metrics match 1:1; setting readable text/code at `\footnotesize` (8 pt, 88.9% of body) avoids `\resizebox` scaling distortion.
+4. Decouple matplotlib annotation text (`ax.text` in whitespace) from arrows (`ax.annotate("", ...)`) on line and sensitivity curves so combined annotation bboxes never cross plotted lines.
+5. On paired horizontal bar charts (e.g., FNR vs. FPR), remove vertical gridlines (`axis="x"`), use `h = 0.24`, `offset = ±0.19`, and `>= 4` data units of right-end clearance so labels pass the 2 pt border clearance rule cleanly.
+6. Eliminate PVLDB narrow-column `Underfull \hbox >= 2000` stretches caused by long Inconsolata table/column names by inserting `\_\allowbreak`, splitting adjacent inline math tokens (`$\mathcal{P}_1$, $\mathcal{P}_2$`), sizing multi-table code lists with `{\small\texttt{...}}`, and adding `\hyphenation{}` + BibTeX `?`/proper-noun capitalization braces.
