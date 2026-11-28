@@ -22,6 +22,9 @@ See also `ccfa-permanent-submission-ledger` (R1–R12) for the permanent **Promp
 
 ---
 
+## topvenue-figure-craft
+Figure 1 and overview-figure design reverse-engineered from about 50 published papers across 12 CCF-A venues (OSDI, ATC, USENIX Security, ISSTA, ICDE, PVLDB, PODS, SIGMETRICS/POMACS, ACL, SIGIR, ICML, IJCAI), with each figure analyzed at four levels: intent, composition, contribution emphasis, execution. It contains a catalog of 13 figure archetypes and a paper-type decision table, per-venue references, a rule that papers in one portfolio never share a Figure 1 template, `scripts/figure_geometry_audit.py`, and a TikZ style library with a demo. The audit script checks matplotlib scripts or vector PDFs for text on lines, text on borders, arrows running through containers or title bands, overlapping text, and text off the canvas.
+
 ## PODS 2027 Human-Craft, Formal-Rigor Review & Submission Suite (`write-pods`, `review-pods`, `submit-pods`)
 Empirically distilled from **8 officially accepted ACM PODS 2024–2027 full papers** (`Karmakar et al.` PODS '24, `Kolaitis et al.` PODS '25, `Esmailpour et al.` PODS '25, `Fan et al.` PODS '25, `Lin–Nguyen–Woodruff` PODS '26, `Surianarayanan et al.` PODS '26, `Liu–Zhang` PODS '26, `Nakos–Ngo–Panayi` PODS '27 Cycle 1) and verified against the live PODS 2027 Call for Research Papers (`\documentclass[acmsmall,review,anonymous]{acmart}`, `<= 15` body pages excluding references and unlimited appendix, strict double-anonymous on EasyChair).
 - `write-pods`: Formal theory-plus-evidence paper architecture, 8-paper PODS stylometric & formal-density baseline (`0/8` `Threats to Validity`, `0/8` standalone `Limitations`, median `40` references, `0.00–0.35/1K` AI clichés), 15-page body vs. unlimited appendix proof discipline, and automated `scripts/pods_human_craft_audit.py`.

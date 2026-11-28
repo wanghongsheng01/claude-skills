@@ -1,0 +1,93 @@
+% topvenue_tikz_styles.tex -- reusable TikZ styles for top-venue Figure 1 / overview figures
+%
+% Usage (preamble):
+%   \usepackage{tikz}
+%   \input{topvenue_tikz_styles}
+%
+% Design rules encoded here (see SKILL.md):
+%   * one accent hue reserved for the paper's own contribution (tvfOurs);
+%     one alert hue for failures / attacks / violations (tvfAlert); everything else neutral gray
+%   * Okabe-Ito colour-blind-safe hues; at most 4-5 hues + neutrals in one figure
+%   * text uses the document font at >= 80% of the body size (\tvffont)
+%   * orthogonal edges: write paths with |- and -| ; anchors on node borders
+%   * edge labels sit in whitespace beside the line (above/below/left/right) with a white
+%     halo (fill=white, inner sep) so a clearance gap always exists -- never "midway" on the line
+%   * containers have a title band; edges must target the container border or a child,
+%     and must never be routed through the title band
+%   * uniform stroke widths and corner radii
+%
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc,shapes.misc,decorations.pathreplacing}
+
+% ---------------------------------------------------------------- palette (Okabe-Ito)
+\definecolor{tvfBlue}{HTML}{0072B2}
+\definecolor{tvfVermilion}{HTML}{D55E00}
+\definecolor{tvfGreen}{HTML}{009E73}
+\definecolor{tvfOrange}{HTML}{E69F00}
+\definecolor{tvfSky}{HTML}{56B4E9}
+\definecolor{tvfPurple}{HTML}{CC79A7}
+\definecolor{tvfInk}{HTML}{222222}     % text
+\definecolor{tvfGray}{HTML}{6B6B6B}    % secondary strokes / prior work
+\definecolor{tvfLight}{HTML}{F2F2F2}   % neutral fills
+% semantic roles -- change these two lines to re-theme a whole figure
+\colorlet{tvfOurs}{tvfBlue}
+\colorlet{tvfAlert}{tvfVermilion}
+\colorlet{tvfOk}{tvfGreen}
+
+% ---------------------------------------------------------------- sizes
+% \tvffont: >= 80% of body. 10pt body -> \footnotesize (8pt). 9pt body (acmart sigconf) -> \small.
+\providecommand{\tvffont}{\footnotesize}
+\providecommand{\tvfsmall}{\footnotesize}   % never go below 80% of body for anything a reader must read
+\newcommand{\tvfstroke}{0.6pt}
+\newcommand{\tvfstrokeOurs}{1.0pt}
+\newcommand{\tvfradius}{2pt}
+
+\tikzset{
+  tvf/.style={font=\tvffont, text=tvfInk, line join=round, line cap=round,
+              node distance=6mm and 8mm, >={Stealth[length=4pt,width=3.2pt]}},
+  % ---- nodes
+  tvf node/.style={draw=tvfGray, line width=\tvfstroke, rounded corners=\tvfradius, fill=white,
+                   inner xsep=4pt, inner ysep=3pt, align=center, minimum height=6mm},
+  tvf prior/.style={tvf node, draw=tvfGray!70, fill=tvfLight, text=tvfGray!60!black},
+  tvf ours/.style={tvf node, draw=tvfOurs, line width=\tvfstrokeOurs, fill=tvfOurs!8,
+                   text=tvfOurs!70!black, font=\tvffont\bfseries},
+  tvf alert/.style={tvf node, draw=tvfAlert, fill=tvfAlert!8, text=tvfAlert!80!black},
+  tvf ok/.style={tvf node, draw=tvfOk, fill=tvfOk!8, text=tvfOk!70!black},
+  tvf data/.style={tvf node, rounded corners=0pt, font=\tvffont\ttfamily, fill=white},
+  tvf plain/.style={inner sep=1pt, align=center},
+  % ---- containers: draw with \tvfcontainer below (fit + title band)
+  tvf container/.style={draw=tvfGray!60, line width=0.5pt, rounded corners=3pt, fill=none,
+                        inner xsep=5pt, inner ysep=5pt},
+  tvf container ours/.style={tvf container, draw=tvfOurs, line width=\tvfstrokeOurs, fill=tvfOurs!4},
+  tvf title/.style={font=\tvffont\bfseries, text=tvfInk, inner xsep=3.5pt, inner ysep=3.5pt, anchor=north west},
+  % ---- edges (write orthogonal paths with |- / -| ; node anchors put endpoints on borders)
+  tvf edge/.style={->, draw=tvfGray!80!black, line width=\tvfstroke, rounded corners=1.5pt},
+  tvf edge ours/.style={tvf edge, draw=tvfOurs, line width=\tvfstrokeOurs},
+  tvf edge alert/.style={tvf edge, draw=tvfAlert},
+  tvf edge async/.style={tvf edge, dashed, dash pattern=on 2pt off 1.5pt},
+  tvf link/.style={draw=tvfGray!70, line width=0.4pt},                % undirected association
+  tvf zoom/.style={draw=tvfGray!60, line width=0.4pt, dashed},        % zoom-in guides
+  % ---- labels: always beside the line, with a white halo for guaranteed clearance
+  tvf lbl/.style={font=\tvfsmall, text=tvfGray!40!black, fill=white, inner sep=1.5pt, align=center},
+  tvf lbl ours/.style={tvf lbl, text=tvfOurs!80!black, font=\tvfsmall\bfseries},
+  % ---- emphasis devices
+  tvf badge/.style={circle, fill=tvfOurs, text=white, font=\scriptsize\bfseries, inner sep=0pt,
+                    minimum size=3.2mm},          % numbered step marker (only decorative, so may be smaller)
+  tvf num/.style={font=\tvffont\bfseries, text=tvfOurs!80!black},  % headline number call-out
+  tvf num alert/.style={font=\tvffont\bfseries, text=tvfAlert!85!black},
+  tvf cross/.style={cross out, draw=tvfAlert, line width=1.1pt, minimum size=2.2mm, inner sep=0pt},
+  tvf check/.style={font=\tvffont\bfseries, text=tvfOk},
+  tvf brace/.style={decorate, decoration={brace, amplitude=3pt, raise=1pt}, draw=tvfGray, line width=0.5pt},
+  tvf bar/.style={draw=none, rounded corners=0.8pt, minimum height=2.4mm, inner sep=0pt},
+}
+
+% \tvfcontainer[<style>]{<name>}{<fit list>}{<title>}
+% Draws a container on the background layer around <fit list>, reserving a title band on top.
+% Children keep their own names; edges from outside should end on the container border
+% (e.g. (name.west)) or enter at a point below the title band.
+\newcommand{\tvfcontainer}[4][tvf container]{%
+  \node[fit={#3}, inner xsep=5pt, inner ysep=5pt] (#2-body) {};
+  \begin{scope}[on background layer]
+    \node[#1, fit={(#2-body) ($(#2-body.north west)+(0pt,15pt)$)}, inner sep=0pt] (#2) {};
+  \end{scope}
+  \node[tvf title] (#2-title) at (#2.north west) {#4};%
+}

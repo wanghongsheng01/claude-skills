@@ -1,0 +1,105 @@
+% demo_figure.tex -- minimal compilable demo of a NON-template Figure 1.
+% Archetype: problem-contrast on a shared timeline (prior lane vs. ours lane).
+% Compile:  pdflatex demo_figure.tex   (needs topvenue_tikz_styles.tex in the same folder)
+% The scenario is a generic textbook example; the counts are properties of the drawn toy
+% instance, not experimental results. In a real paper every number comes from results files.
+\documentclass[10pt,twocolumn]{article}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{mathptmx}   % Times-like body; the figure inherits the same font
+\usepackage{tikz}
+\input{topvenue_tikz_styles}
+\renewcommand{\tvffont}{\footnotesize}   % 8pt on a 10pt body = 80%
+
+\begin{document}
+\section{Introduction}
+Rolling restarts of a gateway's control plane are routine, yet every restart of a coupled
+gateway terminates requests that straddle it. Figure~\ref{fig:demo} contrasts the two
+behaviours on one shared time axis, so the reader compares a single variable: what happens
+to requests that are in flight at the restart instant~$t_r$.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[tvf, x=0.85cm, y=1cm]
+  \def\tR{3.4}
+  % ---------- helpers
+  \newcommand{\req}[4][tvfGray!45]{\fill[#1, rounded corners=0.8pt] (#2,#4-0.1) rectangle (#3,#4+0.1);}
+  \newcommand{\lost}[3]{\draw[tvfAlert, dashed, dash pattern=on 1.6pt off 1.2pt, line width=0.5pt,
+                         rounded corners=0.8pt] (#1,#3-0.1) rectangle (#2,#3+0.1);}
+
+  % ---------- lane titles + headline counts (same row, left/right aligned)
+  \node[anchor=base west, font=\tvffont\bfseries, text=tvfGray!60!black] at (0,4.42) {Prior: coupled gateway};
+  \node[tvf num alert, anchor=base east] at (9.8,4.42) {2 dropped $\cdot$ 1 delayed};
+  \node[anchor=base west, font=\tvffont\bfseries, text=tvfOurs!80!black] at (0,2.12) {Ours: epoch-pinned data plane};
+  \node[tvf num, anchor=base east] at (9.8,2.12) {0 dropped $\cdot$ 0 delayed};
+
+  % ---------- prior lane
+  \fill[tvfAlert!10] (\tR,2.72) rectangle (4.6,4.22);            % gateway unavailable
+  \draw[tvfAlert, line width=0.6pt, dashed, dash pattern=on 2pt off 1.5pt] (\tR,2.72) -- (\tR,4.22);
+  \req{0.2}{2.6}{4.05}
+  \req{1.4}{\tR}{3.67} \lost{\tR}{5.2}{3.67}
+  \req{2.6}{\tR}{3.29} \lost{\tR}{6.0}{3.29}
+  \node[tvf cross] at (\tR,3.67) {}; \node[tvf cross] at (\tR,3.29) {};
+  \draw[tvfAlert, line width=0.5pt, dotted] (3.6,2.91) -- (4.6,2.91);  % request waits
+  \fill[tvfAlert] (3.6,2.91) circle (0.8pt);
+  \req{4.6}{6.6}{2.91}
+  \node[tvf lbl, text=tvfAlert!85!black, anchor=west] at (5.25,3.67) {dropped};
+  \node[tvf lbl, text=tvfAlert!85!black, anchor=west] at (6.05,3.29) {dropped};
+  \node[tvf lbl, text=tvfAlert!85!black, anchor=west] at (6.65,2.91) {delayed};
+
+  % ---------- ours lane
+  \draw[tvfOurs, line width=0.6pt, dashed, dash pattern=on 2pt off 1.5pt] (\tR,0.25) -- (\tR,1.92);
+  \req{0.2}{2.6}{1.75}
+  \req{1.4}{5.2}{1.37}
+  \req{2.6}{6.0}{0.99}
+  \req[tvfOurs]{3.6}{6.6}{0.61}
+  \node[tvf lbl, anchor=west] at (5.25,1.37) {finishes on epoch $e$};
+  \node[tvf lbl, anchor=west] at (6.05,0.99) {finishes on $e$};
+  \node[tvf lbl ours, anchor=west] at (6.65,0.61) {served by $e{+}1$};
+
+  % ---------- shared time axis
+  \draw[->, tvfGray, line width=0.5pt] (0,0.25) -- (9.8,0.25);
+  \node[anchor=north east, tvf plain, text=tvfGray!60!black] at (9.8,0.2) {time};
+  \node[anchor=north, tvf plain, text=tvfGray!60!black] at (\tR,0.2) {$t_r$: control-plane restart};
+\end{tikzpicture}
+\caption{\textbf{An epoch-pinned data plane makes control-plane restarts invisible to in-flight
+requests.} Both lanes replay the same four requests. Top: the coupled gateway drops the two
+requests that straddle $t_r$ and is unavailable for a while (shaded). Bottom: in-flight requests
+finish on epoch~$e$ while a new request is served by $e{+}1$ (\textcolor{tvfOurs}{blue}) without waiting.}
+\label{fig:demo}
+\end{figure}
+
+The figure follows the rules of the accompanying style file: one accent hue for the
+contribution, one alert hue for the failure, neutral gray for everything shared; labels sit
+beside the marks they name; numbers are placed where the eye ends each lane; the caption opens
+with the claim. Nothing in the figure is boxed for the sake of boxing.
+
+When an architecture view is genuinely needed (usually Figure~2 or~3, not Figure~1),
+Figure~\ref{fig:demo-arch} shows the container and edge styles: the container has a title band
+that no edge crosses, external edges end on the container border, internal edges are
+orthogonal ($|\!-$ / $-\!|$ paths) and every edge label sits in whitespace beside its line.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[tvf, node distance=5mm and 7mm]
+  \node[tvf prior] (client) {Client};
+  \node[tvf node, right=15mm of client] (router) {Router};
+  \node[tvf ours, right=of router] (epoch) {Epoch table};
+  \tvfcontainer[tvf container ours]{gw}{(router) (epoch)}{Data plane}
+  \node[tvf prior, above=9mm of gw.north east, anchor=south east] (ctrl) {Control plane};
+  \node[tvf node, below=8mm of gw.south east, anchor=north east] (up) {Upstream tools};
+  % external edges end on the container border, never on a child inside it
+  \draw[tvf edge] (client.east) -- (client.east -| gw.west)
+        node[tvf lbl, midway, above=1pt] {request};
+  \draw[tvf edge ours] (ctrl.south) -- (ctrl.south |- gw.north)
+        node[tvf lbl ours, pos=0.5, left=1pt] {publish $e{+}1$};
+  \draw[tvf edge] (gw.south -| up.north) -- (up.north)
+        node[tvf lbl, pos=0.5, left=1pt] {forward};
+  % internal edge between children
+  \draw[tvf edge] (router.east) -- (epoch.west);
+\end{tikzpicture}
+\caption{\textbf{External edges stop at the container border; no edge crosses a title band.}
+Demo of the container, edge and label styles.}
+\label{fig:demo-arch}
+\end{figure}
+
+\end{document}

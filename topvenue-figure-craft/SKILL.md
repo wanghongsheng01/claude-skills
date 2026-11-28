@@ -1,0 +1,148 @@
+---
+name: topvenue-figure-craft
+description: "Design, redraw and audit Figure 1 / overview figures for top-venue papers (OSDI, ATC, USENIX Security, ISSTA, ICDE, PVLDB, PODS, SIGMETRICS, ACL, SIGIR, ICML, IJCAI). Use when a paper's first figure is a generic boxes-and-arrows pipeline, when every paper in a portfolio shares one figure template, when arrows cross container borders or titles, labels sit on lines, text is too small or walls of text fill boxes, or when choosing what Figure 1 should argue. Provides an archetype decision table distilled from ~50 published Figure 1s, an intent -> composition -> emphasis -> execution workflow, measurable execution rules, an anti-pattern list, a portfolio uniqueness rule, a geometry audit script (matplotlib hook + vector-PDF mode) and reusable TikZ styles."
+---
+
+# Top-venue figure craft
+
+A reviewer decides in about ten seconds whether Figure 1 makes a point. In a reverse-engineering study of
+about fifty Figure 1s from 2023–2026 papers at twelve venues (per-venue notes in `references/`), only about
+28% were architecture diagrams. Most of those were industry or platform papers or background figures, and
+several were weak. The "pipeline band on top + running-example band below" template appeared once, and it
+worked there only because its lower band stated numbered guarantees instead of retelling the pipeline.
+**Strong Figure 1s argue why something matters. They do not catalogue what was built.**
+
+Use this skill together with any venue-specific layout or review skill you already have. It does not replace them.
+
+## Files
+
+| Path | What it is |
+|---|---|
+| `references/archetypes.md` | 13 Figure 1 archetypes with ASCII sketches, when to use each, published examples |
+| `references/<venue>.md` | Observed figure profile + transferable practices for each of the 12 venues |
+| `scripts/figure_geometry_audit.py` | Collision audit: `run` (hooks matplotlib `savefig`), `pdf` (any vector PDF incl. TikZ), `selftest` |
+| `assets/topvenue_tikz_styles.tex` | TikZ styles: palette with semantic roles, nodes, containers with title band, orthogonal edges, haloed labels, badges |
+| `assets/demo_figure.tex` | Compilable demo: a problem-contrast timeline Figure 1 plus a container/edge style sheet figure |
+
+## Workflow (do the steps in order; do not start by drawing)
+
+### 1. Intent: write one sentence
+Write what the reviewer must believe after 10 seconds, as a claim with a cause:
+"*X fails because Y; our Z avoids it by W*", "*A and B look equivalent but differ on C*",
+"*the trade-off between P and Q is not fundamental*". If the sentence names modules, it is not an intent.
+Also write the one number (from the results files) that would make the claim concrete.
+
+### 2. Archetype: pick from the decision table
+Choose the archetype that turns the intent into something *visible*. Draw 2–3 candidate thumbnails on paper and
+keep the one in which the claim is visible without reading the caption.
+
+| Paper type / core contribution | First choice | Alternative | Avoid |
+|---|---|---|---|
+| Systems: the problem is measurable (tail latency, dropped requests, overhead) | A1 motivating measurement | A3, A9 | full-width architecture on page 1 |
+| Systems: correctness or timing bug (crash, lease, concurrency) | A3 success-vs-failure timeline | A4 minimal counterexample | nested pipeline boxes |
+| Systems: breaks a trade-off (granularity, cost, memory) | A9 positioning plot | A1 | listing every module |
+| Caching / reuse / access-control rewriting | A8 aligned before/after data units | A4 | component boxes |
+| Databases: query- or data-level problem | A4 real query/data instance + one result number | A2 | system name card |
+| Database theory: classification / complexity | A10 complexity or reduction landscape | A4 minimal pair of instances | slide-style architecture |
+| Performance modelling / queueing / cache theory | A5 policy in state space or on a timeline, next to an evidence curve | A11 | system diagram |
+| ML guarantees / conformal / theory | A5 insight sketch (+ small result inset) | A10 proof roadmap | module list |
+| NLP verification / hallucination / RAG | A7 text-span teaser, single column, page 1 right column | A1 | full-width method figure on page 1 |
+| IR ranking | A1 problem evidence or A9 positioning | A2 paradigm grid | default plotting-library style |
+| Software testing / repair | A6 minimal reproducing code with oracles as comments | A2 | pipeline on page 1 |
+| Security defence | A2 2×2: existing/ours × benign/attack, with the real attack string | threat model with only the attack path coloured | icons without any concrete attack |
+| AI / neuro-symbolic / constrained decoding | A5 trellis or path sketch, or A2 N+1 panels | A13 | clip-art |
+| Industry / platform paper | A12 annotated architecture with ①②③ zoom-ins and one contribution colour | A4 | unfocused all-module diagram |
+
+### 3. Composition
+- **One reading path** (left→right, or top→bottom), ending at the claim or the number.
+- **Single column first.** Most Figure 1s in the sample were single column (about 240 pt wide, 120–200 pt tall). Use
+  full width only for overview figures (usually Fig. 2–5) or industry platforms.
+- **Controlled comparison:** panels share one input and one grid; only one visual variable changes.
+- **Show the instance.** Draw a real query, code line, timeline, data cell or text span instead of prose in boxes.
+  At most 1–3 words per box. Any sentence longer than that belongs in the caption.
+- **Avoid nesting.** A box inside a box inside a box forces edges through borders. Prefer flat layouts,
+  uncoloured background regions (no stroke), or edges that end on the container border.
+
+### 4. Emphasis (pick one main device)
+- Reserve **one accent hue for "ours"** and **one alert hue for failure/attack**. Everything else is gray.
+- Desaturate what is shared or prior. Saturate only the contribution.
+- Put **1–3 result numbers at the end of the reading path** (for example "> 5 min → 1.67 s"). Do not label everything.
+- Use numbered badges ①②③ only when the same numbers appear in the text or caption.
+- In the caption, use colour words as the legend ("blue = served by the new epoch") instead of a legend box.
+
+### 5. Execution rules (measurable)
+1. **Font:** same family as the body text; every readable glyph ≥ 80% of the body size (10 pt body → ≥ 8 pt;
+   9 pt acmart body → ≥ 7.2 pt). Badge digits are the only exception.
+2. **Colour:** ≤ 4–5 hues + neutrals, colour-blind-safe (Okabe–Ito). Each hue has one meaning across all
+   figures of the paper. One accent is reserved for the contribution.
+3. **Edges:** orthogonal only (TikZ `|-` / `-|`). Endpoints sit on node borders, normally at side midpoints.
+   Diagonals are allowed only for one-to-many fan-out.
+4. **No crossings:** an edge never passes through any container that is not its source or target, and never
+   through any container's title band. Edges from outside a container end **on the container border**.
+   They do not dive through it to a child box. Edges do not cross each other.
+5. **Labels:** labels go in whitespace beside the line (above/below/left/right), with ≥ 2 pt clearance from any
+   line or border. Never place a label midway on a line. A white halo (`fill=white, inner sep`) is a safety margin,
+   not a licence to sit on the line.
+6. **Geometry consistency:** one corner radius, two stroke widths (regular 0.6 pt, contribution 1.0 pt),
+   one arrowhead style.
+7. **Numbers** come only from results files (JSON/CSV), read by the plotting script or pasted from a checked
+   table. Never type a number by hand.
+8. **Caption** opens with the claim in one sentence (bold where the template allows), then explains how to read
+   the figure. Do not open with "Overview of X".
+9. **Tooling:** use TikZ for structure figures (same font, exact alignment); use matplotlib for data
+   (`font.family` set to the body font, `pdf.fonttype 42`). Export vector graphics only.
+10. **Gate:** `figure_geometry_audit.py` reports 0 FAIL, and every page is inspected at 180 DPI.
+
+### 6. Audit
+```bash
+# matplotlib script: ALWAYS run a copy, with saves redirected (scripts often hard-code absolute output paths)
+python scripts/figure_geometry_audit.py run gen_figs.py --match fig1 --out-dir /tmp/fig_audit
+# any vector PDF (TikZ output, exported figure, or a single page of the paper)
+python scripts/figure_geometry_audit.py pdf figures/fig1.pdf
+python scripts/figure_geometry_audit.py selftest
+```
+Options: `--clearance 2` (pt), `--endpoint-tol 3` (pt), `--strict` (WARN→FAIL), `--allow-parent-entry`
+(downgrades border crossings into a container to WARN; use only when the venue's published figures clearly do it), `--json out.json`.
+Checks: `TEXT_ON_LINE`, `TEXT_ON_BORDER`, `TEXT_OVERLAP`, `TEXT_OUTSIDE_CANVAS`, `LINE_THROUGH_CONTAINER`,
+`LINE_CROSSES_BORDER`, `LINE_THROUGH_TITLE`, plus WARNs `ENDPOINT_INSIDE_BOX`, `LINE_CROSSING`,
+`LEGEND_OVER_DATA`, `DANGLING_ARROW`. Exit code 1 on any FAIL. Each finding prints its location in points and,
+for matplotlib, in data coordinates, so you can find the offending line in the script.
+
+**Safety:** the `run` mode only intercepts `savefig`. Before running, grep the copied script for absolute paths
+and rewrite them. Never run a figure generator inside a directory you are not allowed to modify.
+
+## Anti-patterns (each one was observed, in our drafts or in published papers)
+- **Edge through a container title** (the edge enters a container across its title text).
+- **Edge through a container border to reach a child box**, and the label beside it sitting on the border.
+- Label sitting on a line or touching a box edge. Two labels overlapping.
+- Arrow starting or ending inside a box instead of on its border, or an arrowhead floating short of its target.
+- Curved or diagonal connectors leaving a panel, looping around it, or crossing each other.
+- **Gray box stacking:** 2–3 levels of nested rounded boxes, all the same visual weight.
+- **Text walls:** 2–4 lines of prose per box. A "running example" written as sentences instead of drawn.
+- 4–6 hues without meaning. Default palettes from diagram tools. The same colour used for "problem" and for "ours".
+- Plotting-library default fonts at 5–6 pt next to a serif body text. Raster exports.
+- Clip-art, emoji, logos and comic fonts in a research figure.
+- Caption opening with "Overview of X" or "Illustration of …".
+- **Portfolio sameness:** every paper's Figure 1 built from the same template (top pipeline band + bottom example band).
+
+## Portfolio uniqueness rule
+When several papers are prepared together (one group, one author, one submission season), no two Figure 1s may
+share an archetype *and* layout. Before drawing, list each paper's (intent sentence, archetype, layout,
+accent hue) in one table. If two rows share archetype and layout, change one of them, starting with the paper
+whose intent fits its second-choice archetype better. Shared house style (palette, fonts, stroke widths) is
+fine. A shared template is not.
+
+## Final checklist (all must be true)
+- [ ] Intent sentence written; the figure shows it without the caption.
+- [ ] Archetype chosen from the table; unique within the portfolio.
+- [ ] One reading path; the claim or number is at its end.
+- [ ] One accent hue for the contribution, one alert hue, everything else neutral; ≤ 4–5 hues in total.
+- [ ] Real instance shown (query, code, timeline, data cells, text spans); ≤ 3 words per box.
+- [ ] Every number traced to a results file.
+- [ ] Body font family; every glyph ≥ 80% of body size (measure it: PyMuPDF spans or the pdf audit).
+- [ ] Orthogonal edges, endpoints on borders, no edge through any non-endpoint container or title band.
+- [ ] Labels in whitespace with ≥ 2 pt clearance; no overlapping text; nothing outside the canvas.
+- [ ] `figure_geometry_audit.py`: 0 FAIL (and WARNs reviewed).
+- [ ] 180 DPI render inspected by a person or agent other than the one who drew it.
+- [ ] Caption opens with the claim; colour words decode the figure; symbols match the body text.
+- [ ] Single column unless it is an overview or platform figure; page count unchanged.
